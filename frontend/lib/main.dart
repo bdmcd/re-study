@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restudy/login_view.dart';
 
 void main() => runApp(MyApp());
 
@@ -90,15 +91,16 @@ class _MyHomePageState extends State<MyHomePage> {
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
+          children: <Widget>[LoginView()],
+          // children: <Widget>[
+          //   Text(
+          //     'You have pushed the button this many times:',
+          //   ),
+          //   Text(
+          //     '$_counter',
+          //     style: Theme.of(context).textTheme.display1,
+          //   ),
+          // ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
