@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restudy/widgets/card_widget.dart';
 
 void main() => runApp(MyApp());
 
@@ -59,6 +60,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final button = RaisedButton(
+      onPressed: () {
+        // CardWidget(context,)
+      },
+      child: Text('View widget'),
+    );
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -98,6 +105,8 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.display1,
             ),
+            button,
+            CardWidget(questionText: "test question", answerText: "test answer", front: true),
           ],
         ),
       ),
