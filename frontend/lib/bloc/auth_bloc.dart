@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:restudy/auth/auth.dart';
 import 'package:restudy/model/user.dart';
@@ -125,6 +124,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try {
       await _authenticater.signOut();
+      yield AuthUnauthenticatedState();
     } catch(e) {
       yield* _flashError(AuthErrorState("Could not sign out the user"), savedState);
     }
