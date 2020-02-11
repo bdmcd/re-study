@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "206995771295",
+    "firebase_url": "https://restudy-20acc.firebaseio.com",
+    "project_id": "restudy-20acc",
+    "storage_bucket": "restudy-20acc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206995771295:android:ad681a6328552bd445f7aa",
+        "android_client_info": {
+          "package_name": "com.example.bloc_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206995771295-qun915vufcrq7cuqdamfa0gahki8ab1a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsmunbvacTfzOdALKqEHpHFpnQrqbQPsA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206995771295-qun915vufcrq7cuqdamfa0gahki8ab1a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "206995771295-hon51hntqvegkthhkj997uoj4uhecnba.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cs.428.restudy"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206995771295:android:186d9e5c007538fd45f7aa",
+        "android_client_info": {
+          "package_name": "cs.u428.restudy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206995771295-qun915vufcrq7cuqdamfa0gahki8ab1a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsmunbvacTfzOdALKqEHpHFpnQrqbQPsA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206995771295-qun915vufcrq7cuqdamfa0gahki8ab1a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "206995771295-hon51hntqvegkthhkj997uoj4uhecnba.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cs.428.restudy"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
