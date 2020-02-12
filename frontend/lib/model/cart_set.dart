@@ -5,6 +5,6 @@
   name: string
 */
 
-class Set {
+class CardSet {
 
 }

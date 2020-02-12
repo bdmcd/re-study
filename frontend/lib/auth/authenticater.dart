@@ -1,22 +1,23 @@
 
 
-import 'package:restudy/auth/authenticated_user.dart';
+import 'package:restudy/auth/auth_user.dart';
 import 'package:flutter/foundation.dart';
 
 abstract class Authenticater {
-  Future<AuthenticatedUser> get currentUser;
+  Future<AuthUser> get currentUser;
+  Future<bool> get signedIn;
 
-  Future<AuthenticatedUser> registerWithEmail({
+  Future<AuthUser> registerWithEmail({
     @required String email, 
     @required String password,
   });
 
-  Future<AuthenticatedUser> signInWithEmail({
+  Future<AuthUser> signInWithEmail({
     @required String email, 
     @required String password,
   });
 
-  Future<AuthenticatedUser> signInWithGoogle();
+  Future<AuthUser> signInWithGoogle();
 
   Future<void> signOut();
 }

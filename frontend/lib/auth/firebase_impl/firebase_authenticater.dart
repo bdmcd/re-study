@@ -1,11 +1,12 @@
+import 'package:flutter/services.dart';
 import 'package:restudy/auth/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthenticater implements Authenticater {
-
-  Future<AuthenticatedUser> get currentUser async {
+  @override
+  Future<AuthUser> get currentUser async {
     final firebaseUser = await FirebaseAuth.instance.currentUser();
     if (firebaseUser == null) {
       return null;
@@ -13,31 +14,57 @@ class FirebaseAuthenticater implements Authenticater {
     return _userFromFirebaseUser(firebaseUser);
   }
 
-  Future<AuthenticatedUser> registerWithEmail({
+  @override
+  Future<bool> get signedIn async => (await currentUser) != null;
+
+  @override
+  Future<AuthUser> registerWithEmail({
     @required String email, 
     @required String password,
   }) async {
-    final authResult = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: email, 
-      password: password,
-    );
 
-    return _userFromFirebaseUser(authResult.user);
+    try {
+      final authResult = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email, 
+        password: password,
+      );
+
+      return _userFromFirebaseUser(authResult.user);
+    } on PlatformException catch(e) {
+      switch(e.code) {
+        case "ERROR_EMAIL_ALREADY_IN_USE":
+          throw UserAlreadyExistsException();
+        default:
+          throw e;
+      }
+    }
   }
 
-  Future<AuthenticatedUser> signInWithEmail({
+  @override
+  Future<AuthUser> signInWithEmail({
     @required String email, 
     @required String password,
   }) async {
-    final authResult = await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: email, 
-      password: password,
-    );
 
-    return _userFromFirebaseUser(authResult.user);
+    try {
+      final authResult = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email, 
+        password: password,
+      );
+
+      return _userFromFirebaseUser(authResult.user);
+    } on PlatformException catch(e) {
+      switch(e.code) {
+        case "ERROR_WRONG_PASSWORD":
+          throw InvalidEmailOrPasswordException();
+        default:
+          throw e;
+      }
+    }
   }
 
-  Future<AuthenticatedUser> signInWithGoogle() async {
+  @override
+  Future<AuthUser> signInWithGoogle() async {
       final GoogleSignIn googleSignIn = GoogleSignIn();
 
       //NOTE: This will throw an exception that isn't caught if the user cancels the sign in, 
@@ -57,12 +84,13 @@ class FirebaseAuthenticater implements Authenticater {
       return _userFromFirebaseUser(authResult.user);
   }
 
+  @override
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
   }
 
-  AuthenticatedUser _userFromFirebaseUser(FirebaseUser firebaseUser) {
-    return AuthenticatedUser(
+  AuthUser _userFromFirebaseUser(FirebaseUser firebaseUser) {
+    return AuthUser(
       email: firebaseUser.email,
       name: firebaseUser.displayName,
       uid: firebaseUser.uid,
