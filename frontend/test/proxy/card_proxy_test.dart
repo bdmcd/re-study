@@ -1,12 +1,12 @@
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:restudy/proxy/mock_impl/mock_card_proxy.dart';
-import 'package:restudy/request/create_card_request.dart';
+import 'package:restudy/request/create_flashcard_request.dart';
 
 void main() {
   final cardProxy = MockCardProxy();
   test('Should be able to create a card', () async {
-    CreateCardRequest request = CreateCardRequest(
+    final request = CreateFlashCardRequest(
       creatorId: "creator",
       setId: "set",
       question: "What is the square root of -1?",

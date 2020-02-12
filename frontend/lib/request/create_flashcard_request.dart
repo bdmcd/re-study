@@ -1,14 +1,11 @@
 // Run 'flutter pub run build_runner' to generate the *.g.dart
 import 'package:json_annotation/json_annotation.dart';
 
-part 'card.g.dart';
+part 'create_flashcard_request.g.dart';
 
 @JsonSerializable()
-class Card {
-
-  @JsonKey(name: 'guid')
-  final String id;
-
+class CreateFlashCardRequest {
+  
   @JsonKey(name: 'creatorGuid')
   final String creatorId;
 
@@ -17,33 +14,26 @@ class Card {
 
   final String question;
   final String answer;
-  final double retentionScore;
 
-  Card({
-    this.id,
+  CreateFlashCardRequest({
     this.creatorId,
     this.setId,
     this.question,
     this.answer,
-    this.retentionScore,
   });
 
-  Card copyWith({
-    String id,
+  CreateFlashCardRequest copyWith({
     String creatorId,
     String setId,
     String question,
     String answer,
-    double retentionScore,
-  }) => Card(
-    id: id ?? this.id,
+  }) => CreateFlashCardRequest(
     creatorId: creatorId ?? this.creatorId,
     setId: setId ?? this.setId,
     question: question ?? this.question,
     answer: answer ?? this.answer,
-    retentionScore: retentionScore ?? this.retentionScore,
   );
 
-  factory Card.fromJson(Map<String, dynamic> json) => _$CardFromJson(json);
-  Map<String, dynamic> toJson() => _$CardToJson(this);
+  factory CreateFlashCardRequest.fromJson(Map<String, dynamic> json) => _$CreateFlashCardRequestFromJson(json);
+  Map<String, dynamic> toJson() => _$CreateFlashCardRequestToJson(this);
 }

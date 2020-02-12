@@ -12,7 +12,7 @@ class AWSProxyFactory implements ProxyFactory {
   CardProxy get cardProxy => AWSCardProxy();
 
   @override
-  SetProxy get setProxy => AWSSetProxy();
+  FlashCardSetProxy get setProxy => AWSSetProxy();
 
   @override
   UserProxy get userProxy => AWSUserProxy();

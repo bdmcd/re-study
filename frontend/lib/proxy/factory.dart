@@ -15,6 +15,6 @@ abstract class ProxyFactory {
   }
 
   CardProxy get cardProxy;
-  SetProxy get setProxy;
+  FlashCardSetProxy get setProxy;
   UserProxy get userProxy;
 }

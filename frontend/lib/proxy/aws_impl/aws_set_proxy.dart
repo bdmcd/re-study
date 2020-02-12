@@ -1,23 +1,6 @@
 
-import 'package:restudy/model/cart_set.dart';
 import 'package:restudy/proxy/set_proxy.dart';
 
-class AWSSetProxy implements SetProxy {
-  @override
-  Future<void> createSet(CardSet cardSet) async {
-    // TODO: implement createSet
-    return null;
-  }
+class AWSSetProxy implements FlashCardSetProxy {
 
-  @override
-  Future<void> getCards(CardSet cardSet) async {
-    // TODO: implement getCards
-    return null;
-  }
-
-  @override
-  Future<void> updateSet(CardSet cardSet) async {
-    // TODO: implement updateSet
-    return null;
-  }
 }
