@@ -6,8 +6,8 @@ part of 'flash_card.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-FlashCard _$FlashCardFromJson(Map<String, dynamic> json) {
-  return FlashCard(
+Flashcard _$FlashcardFromJson(Map<String, dynamic> json) {
+  return Flashcard(
     id: json['guid'] as String,
     creatorId: json['creatorGuid'] as String,
     setId: json['setGuid'] as String,
@@ -17,7 +17,7 @@ FlashCard _$FlashCardFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$FlashCardToJson(FlashCard instance) => <String, dynamic>{
+Map<String, dynamic> _$FlashcardToJson(Flashcard instance) => <String, dynamic>{
       'guid': instance.id,
       'creatorGuid': instance.creatorId,
       'setGuid': instance.setId,

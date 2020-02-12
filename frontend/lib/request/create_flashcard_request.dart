@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'create_flashcard_request.g.dart';
 
 @JsonSerializable()
-class CreateFlashCardRequest {
+class CreateFlashcardRequest {
   
   @JsonKey(name: 'creatorGuid')
   final String creatorId;
@@ -15,25 +15,25 @@ class CreateFlashCardRequest {
   final String question;
   final String answer;
 
-  CreateFlashCardRequest({
+  CreateFlashcardRequest({
     this.creatorId,
     this.setId,
     this.question,
     this.answer,
   });
 
-  CreateFlashCardRequest copyWith({
+  CreateFlashcardRequest copyWith({
     String creatorId,
     String setId,
     String question,
     String answer,
-  }) => CreateFlashCardRequest(
+  }) => CreateFlashcardRequest(
     creatorId: creatorId ?? this.creatorId,
     setId: setId ?? this.setId,
     question: question ?? this.question,
     answer: answer ?? this.answer,
   );
 
-  factory CreateFlashCardRequest.fromJson(Map<String, dynamic> json) => _$CreateFlashCardRequestFromJson(json);
-  Map<String, dynamic> toJson() => _$CreateFlashCardRequestToJson(this);
+  factory CreateFlashcardRequest.fromJson(Map<String, dynamic> json) => _$CreateFlashcardRequestFromJson(json);
+  Map<String, dynamic> toJson() => _$CreateFlashcardRequestToJson(this);
 }

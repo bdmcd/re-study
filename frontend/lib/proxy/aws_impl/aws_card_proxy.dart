@@ -5,7 +5,7 @@ import 'package:restudy/request/create_flashcard_request.dart';
 
 class AWSCardProxy implements CardProxy {
   @override
-  Future<FlashCard> createCard(CreateFlashCardRequest cardRequest) async {
+  Future<Flashcard> createCard(CreateFlashcardRequest request) async {
     // TODO: implement createCard
     return null;
   }

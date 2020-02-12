@@ -1,6 +1,6 @@
 
 import 'package:restudy/proxy/set_proxy.dart';
 
-class AWSSetProxy implements FlashCardSetProxy {
+class AWSSetProxy implements FlashcardSetProxy {
 
 }

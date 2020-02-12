@@ -1,7 +1,6 @@
 
-import 'package:restudy/model/user.dart';
 
 abstract class UserProxy {
-  // registerUser
-  // getCards
+  // Future<User> registerUser(RegisterUserRequest request);
+  // Future<List<FlashcardSet> getSets(GetSetsRequest request);
 }

@@ -12,7 +12,7 @@ class MockProxyFactory implements ProxyFactory {
   CardProxy get cardProxy => MockCardProxy();
 
   @override
-  FlashCardSetProxy get setProxy => MockSetProxy();
+  FlashcardSetProxy get setProxy => MockSetProxy();
 
   @override
   UserProxy get userProxy => MockUserProxy();

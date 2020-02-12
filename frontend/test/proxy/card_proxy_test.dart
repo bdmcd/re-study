@@ -6,7 +6,7 @@ import 'package:restudy/request/create_flashcard_request.dart';
 void main() {
   final cardProxy = MockCardProxy();
   test('Should be able to create a card', () async {
-    final request = CreateFlashCardRequest(
+    final request = CreateFlashcardRequest(
       creatorId: "creator",
       setId: "set",
       question: "What is the square root of -1?",

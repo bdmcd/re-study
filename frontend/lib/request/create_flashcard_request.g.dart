@@ -6,8 +6,8 @@ part of 'create_flashcard_request.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CreateFlashCardRequest _$CreateFlashCardRequestFromJson(Map<String, dynamic> json) {
-  return CreateFlashCardRequest(
+CreateFlashcardRequest _$CreateFlashcardRequestFromJson(Map<String, dynamic> json) {
+  return CreateFlashcardRequest(
     creatorId: json['creatorGuid'] as String,
     setId: json['setGuid'] as String,
     question: json['question'] as String,
@@ -15,7 +15,7 @@ CreateFlashCardRequest _$CreateFlashCardRequestFromJson(Map<String, dynamic> jso
   );
 }
 
-Map<String, dynamic> _$CreateFlashCardRequestToJson(CreateFlashCardRequest instance) =>
+Map<String, dynamic> _$CreateFlashcardRequestToJson(CreateFlashcardRequest instance) =>
     <String, dynamic>{
       'creatorGuid': instance.creatorId,
       'setGuid': instance.setId,

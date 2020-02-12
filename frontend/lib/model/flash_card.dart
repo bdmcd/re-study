@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'flash_card.g.dart';
 
 @JsonSerializable()
-class FlashCard {
+class Flashcard {
 
   @JsonKey(name: 'guid')
   final String id;
@@ -19,7 +19,7 @@ class FlashCard {
   final String answer;
   final double retentionScore;
 
-  FlashCard({
+  Flashcard({
     this.id,
     this.creatorId,
     this.setId,
@@ -28,14 +28,14 @@ class FlashCard {
     this.retentionScore,
   });
 
-  FlashCard copyWith({
+  Flashcard copyWith({
     String id,
     String creatorId,
     String setId,
     String question,
     String answer,
     double retentionScore,
-  }) => FlashCard(
+  }) => Flashcard(
     id: id ?? this.id,
     creatorId: creatorId ?? this.creatorId,
     setId: setId ?? this.setId,
@@ -44,6 +44,6 @@ class FlashCard {
     retentionScore: retentionScore ?? this.retentionScore,
   );
 
-  factory FlashCard.fromJson(Map<String, dynamic> json) => _$FlashCardFromJson(json);
-  Map<String, dynamic> toJson() => _$FlashCardToJson(this);
+  factory Flashcard.fromJson(Map<String, dynamic> json) => _$FlashcardFromJson(json);
+  Map<String, dynamic> toJson() => _$FlashcardToJson(this);
 }
