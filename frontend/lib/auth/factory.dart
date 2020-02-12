@@ -1,16 +1,16 @@
 
 import 'package:restudy/auth/authenticater.dart';
-import 'package:restudy/auth/firebase_impl/firebase_authenticater.dart';
 
-import 'impl.dart';
+import '_impl.dart';
 
-class AuthenticatorFactory {
-  static Authenticater create() {
-    switch(impl) {
-      case AuthenticaterImpl.FIREBASE:
-        return FirebaseAuthenticater();
+abstract class AuthFactory {
+  static AuthFactory _instance;
+  static AuthFactory get instance {
+    if (_instance == null) {
+      _instance = AuthImplementation.createInstance();
     }
 
-    return null;
+    return _instance;
   }
+  Authenticater get authenticater;
 }

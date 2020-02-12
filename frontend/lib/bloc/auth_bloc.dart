@@ -13,7 +13,7 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   static AuthBloc of(BuildContext context) => BlocProvider.of<AuthBloc>(context);
 
-  Authenticater _authenticater = AuthenticatorFactory.create();
+  Authenticater _auth = AuthFactory.instance.authenticater;
 
   AuthBloc() {
     init();
@@ -44,7 +44,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Stream<AuthState> _initialize(AuthInitEvent event) async* {
-    final authUser = await _authenticater.currentUser;
+    final authUser = await _auth.currentUser;
     if (authUser == null) {
       yield AuthUnauthenticatedState();
     } else {
@@ -57,22 +57,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     yield AuthLoadingState();
 
     try {
-      final firebaseUser = await _authenticater.registerWithEmail(
+      final firebaseUser = await _auth.registerWithEmail(
         email: event.email,
         password: event.password,
       );
       yield _stateFromAuthUser(firebaseUser);
 
-    } on PlatformException catch(e) {
-      switch(e.code) {
-        case "ERROR_EMAIL_ALREADY_IN_USE":
-        yield* _flashError(AuthErrorState("This email is already in use"), savedState);
-          break;
-        default:
-          yield* _flashError(AuthErrorState("Error registering user"), savedState);
-          break;
-      }
+    } on UserAlreadyExistsException {
+      yield* _flashError(AuthErrorState("This email is already in use"), savedState);
     } catch(e) {
+      print('Unknown exception caught in AuthBloc._register() $e');
       yield* _flashError(AuthErrorState("Error registering user"), savedState);
     }
   }
@@ -82,22 +76,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     yield AuthLoadingState();
 
     try {
-      final firebaseUser = await _authenticater.signInWithEmail(
+      final firebaseUser = await _auth.signInWithEmail(
         email: event.email,
         password: event.password,
       );
       yield _stateFromAuthUser(firebaseUser);
 
-    } on PlatformException catch(e) {
-      switch(e.code) {
-        case "ERROR_WRONG_PASSWORD":
-          yield* _flashError(AuthErrorState("Incorrect Email or Password"), savedState);
-          break;
-        default:
-          yield*  _flashError(AuthErrorState("Error signing in"), savedState);
-          break;
-      }
+    } on InvalidEmailOrPasswordException {
+      yield* _flashError(AuthErrorState("Incorrect Email or Password"), savedState);
     } catch(e) {
+      print('Unknown exception caught in AuthBloc._signIn() $e');
       yield* _flashError(AuthErrorState("Error signing in"), savedState);
     }
   }
@@ -107,13 +95,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     yield AuthLoadingState();
 
     try {
-      final firebaseUser = await _authenticater.signInWithGoogle();
+      final firebaseUser = await _auth.signInWithGoogle();
       yield _stateFromAuthUser(firebaseUser);
 
     } on UserCancelledException {
       yield savedState;
     } catch(e) {
-      print(e.toString());
+      print('Unknown exception caught in AuthBloc._signInWithGoogle() $e');
       yield* _flashError(AuthErrorState("Error signing in with Google"), savedState);
     }
   }
@@ -123,9 +111,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     yield AuthLoadingState();
 
     try {
-      await _authenticater.signOut();
+      await _auth.signOut();
       yield AuthUnauthenticatedState();
     } catch(e) {
+      print('Unknown exception caught in AuthBloc._signOut() $e');
       yield* _flashError(AuthErrorState("Could not sign out the user"), savedState);
     }
   }
@@ -135,7 +124,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     yield afterErrorState;
   }
 
-  AuthState _stateFromAuthUser(AuthenticatedUser authUser) {
+  AuthState _stateFromAuthUser(AuthUser authUser) {
     if (authUser == null) {
       return AuthUnauthenticatedState();
     }

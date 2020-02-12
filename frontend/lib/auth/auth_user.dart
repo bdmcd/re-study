@@ -1,7 +1,7 @@
 
 import 'package:flutter/foundation.dart';
 
-class AuthenticatedUser {
+class AuthUser {
   final String name;
   final String email;
   final String uid;
@@ -9,7 +9,7 @@ class AuthenticatedUser {
 
   final Future<String> Function() token;
 
-  AuthenticatedUser({
+  AuthUser({
     @required this.email,
     @required this.uid,
     @required this.token,
