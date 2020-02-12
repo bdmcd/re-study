@@ -1,4 +1,4 @@
-// Run 'flutter pub run build_runner' to generate the *.g.dart
+// Run 'flutter pub run build_runner build' to generate the *.g.dart
 import 'package:json_annotation/json_annotation.dart';
 
 part 'create_flashcard_request.g.dart';
