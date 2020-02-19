@@ -1,56 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:restudy/styles/spacings.dart';
+import 'package:restudy/styles/colors.dart';
 
 // Create a Form widget.
-class TestFieldInputWidget extends StatefulWidget {
+class TestFieldInputFieldWidget extends StatefulWidget {
+  final String header;
+  final ValueChanged<String> userInput;
+  final String Function(String) validator;
+
+  TestFieldInputFieldWidget({
+    @required this.header,
+    @required this.userInput,
+    @required this.validator
+  });
+
   @override
-  TestFieldInputWidgetState createState() {
-    return TestFieldInputWidgetState();
+  TestFieldInputFieldWidgetState createState() {
+    return TestFieldInputFieldWidgetState();
   }
 }
 
-// Create a corresponding State class.
-// This class holds data related to the form.
-class TestFieldInputWidgetState extends State<TestFieldInputWidget> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<MyCustomFormState>.
-  final _formKey = GlobalKey<FormState>();
+class TestFieldInputFieldWidgetState extends State<TestFieldInputFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
-    return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: STD_HOR_MARGIN, right: STD_HOR_MARGIN), 
+          child:
+          Text(widget.header, 
+            style: new TextStyle(
+              fontSize: TEXT_FIELD_HEADER_FONT_SIZE,
+              color: TEXT_HEADER_GREY,
+            )
+          ),
+        ),
+        Padding(  
+          padding: const EdgeInsets.symmetric(horizontal: STD_HOR_MARGIN),
+          child:
           TextFormField(
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
+            onChanged: (text) {
+              widget.userInput(text);
             },
+            validator: widget.validator,
+            style: TextStyle(fontSize: TEXT_FIELD_INPUT_FONT_SIZE),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: RaisedButton(
-              onPressed: () {
-                // Validate returns true if the form is valid, or false
-                // otherwise.
-                if (_formKey.currentState.validate()) {
-                  // If the form is valid, display a Snackbar.
-                  Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('Processing Data')));
-                }
-              },
-              child: Text('Submit'),
-            ),
-          ),
-        ],
-      ),
+        )
+      ],
     );
   }
 }
