@@ -1,3 +1,4 @@
+// Run 'flutter pub run build_runner build' to generate the *.g.dart
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user.g.dart';

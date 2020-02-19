@@ -28,7 +28,7 @@ class TestFieldInputFieldWidgetState extends State<TestFieldInputFieldWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(left: STD_HOR_MARGIN, right: STD_HOR_MARGIN), 
+          padding: const EdgeInsets.only(left: STD_HORIZONTAL_MARGIN, right: STD_HORIZONTAL_MARGIN), 
           child:
           Text(widget.header, 
             style: new TextStyle(
@@ -38,7 +38,7 @@ class TestFieldInputFieldWidgetState extends State<TestFieldInputFieldWidget> {
           ),
         ),
         Padding(  
-          padding: const EdgeInsets.symmetric(horizontal: STD_HOR_MARGIN),
+          padding: const EdgeInsets.symmetric(horizontal: STD_HORIZONTAL_MARGIN),
           child:
           TextFormField(
             onChanged: (text) {

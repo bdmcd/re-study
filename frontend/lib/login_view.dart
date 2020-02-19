@@ -16,22 +16,21 @@ class LoginView extends StatefulWidget {
 }
 
 class LoginViewState extends State<LoginView> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
+  // Form key allows field validation
   final _formKey = GlobalKey<FormState>();
   String email = "";
   String password = "";
 
   @override
   Widget build(BuildContext context) {
-    // Build a Form widget using the _formKey created above.
+    // Form uses _formKey
     return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(top: STD_VERT_MARGIN),
+            padding: const EdgeInsets.only(top: STD_VERTICAL_MARGIN * 2),
             child: TestFieldInputFieldWidget(
               header: "E-mail:",
               userInput: (email) {
@@ -39,16 +38,14 @@ class LoginViewState extends State<LoginView> {
               },
               validator: (String userEmail) {
                 if (userEmail.isEmpty) {
-                  return 'Email empty';
-                } else if (userEmail.length < 3) {
-                  return 'Email too short';
+                  return 'Enter a valid email address';
                 }
                 return null;
               },
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: STD_VERT_MARGIN),
+            padding: const EdgeInsets.only(top: STD_VERTICAL_MARGIN),
             child: TestFieldInputFieldWidget(
               header: "Password:",
               userInput: (password) {
@@ -56,9 +53,7 @@ class LoginViewState extends State<LoginView> {
               },
               validator: (String userPassword) {
                 if (userPassword.isEmpty) {
-                  return 'Password empty';
-                } else if (userPassword.length < 3) {
-                  return 'PasswordShort';
+                  return 'Enter a password';
                 }
                 return null;
               },
@@ -66,13 +61,13 @@ class LoginViewState extends State<LoginView> {
           ),
           Padding(
             padding: const EdgeInsets.only(
-                top: STD_VERT_MARGIN * 2,
-                left: STD_HOR_MARGIN,
-                right: STD_HOR_MARGIN,
-                bottom: STD_VERT_MARGIN / 2),
+                top: STD_VERTICAL_MARGIN * 2,
+                left: STD_HORIZONTAL_MARGIN,
+                right: STD_HORIZONTAL_MARGIN,
+                bottom: STD_VERTICAL_MARGIN / 2),
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: STD_BUT_HEIGHT,
+              height: STD_BUTTON_HEIGHT,
               child: RaisedButton(
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
@@ -87,10 +82,10 @@ class LoginViewState extends State<LoginView> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: STD_HOR_MARGIN),
+            padding: const EdgeInsets.symmetric(horizontal: STD_HORIZONTAL_MARGIN),
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: STD_BUT_HEIGHT,
+              height: STD_BUTTON_HEIGHT,
               child: OutlineButton(
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
@@ -105,22 +100,22 @@ class LoginViewState extends State<LoginView> {
           ),
           Padding(
             padding: const EdgeInsets.only(
-                top: STD_VERT_MARGIN,
-                left: STD_HOR_MARGIN,
-                right: STD_HOR_MARGIN,
-                bottom: STD_VERT_MARGIN),
+                top: STD_VERTICAL_MARGIN,
+                left: STD_HORIZONTAL_MARGIN,
+                right: STD_HORIZONTAL_MARGIN,
+                bottom: STD_VERTICAL_MARGIN),
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: STD_BUT_HEIGHT,
+              height: STD_BUTTON_HEIGHT,
               child: Stack(
                 children: <Widget>[
                   Positioned(
                     child: CustomPaint(
                         painter: DividerLinePainter(
-                            width: MediaQuery.of(context).size.width -
-                                (STD_HOR_MARGIN * 2),
+                            width: (MediaQuery.of(context).size.width -
+                                (STD_HORIZONTAL_MARGIN * 2)),
                             horizontalOffset: 0)),
-                    top: STD_VERT_MARGIN,
+                    top: STD_VERTICAL_MARGIN,
                   ),
                   Positioned(
                     child: Container(
@@ -129,14 +124,14 @@ class LoginViewState extends State<LoginView> {
                       color: COLOR_APP_BG,
                     ),
                     left: (MediaQuery.of(context).size.width / 2 -
-                            STD_HOR_MARGIN) -
+                            STD_HORIZONTAL_MARGIN) -
                         20,
                   ),
                   Positioned(
                     child:
                         Text("OR", style: TextStyle(color: TEXT_HEADER_GREY)),
                     left: (MediaQuery.of(context).size.width / 2 -
-                            STD_HOR_MARGIN) -
+                            STD_HORIZONTAL_MARGIN) -
                         10,
                     top: 12,
                   ),
@@ -145,10 +140,10 @@ class LoginViewState extends State<LoginView> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: STD_HOR_MARGIN),
+            padding: const EdgeInsets.symmetric(horizontal: STD_HORIZONTAL_MARGIN),
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: STD_BUT_HEIGHT,
+              height: STD_BUTTON_HEIGHT,
               child: OutlineButton(
                 onPressed: () {
                   googleSignIn(context);
@@ -173,6 +168,7 @@ class LoginViewState extends State<LoginView> {
   }
 
   login(BuildContext context) {
+    print("login with $email and $password");
     final authBloc = BlocProvider.of<AuthBloc>(context);
     authBloc.add(AuthSignInEvent(
       email: this.email,
@@ -182,7 +178,7 @@ class LoginViewState extends State<LoginView> {
   }
 
   register(BuildContext context) {
-    print("registering with $email and $password");
+    print("register with $email and $password");
     final authBloc = BlocProvider.of<AuthBloc>(context);
     authBloc.add(AuthRegisterEvent(
       email: this.email,

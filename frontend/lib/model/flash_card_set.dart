@@ -2,12 +2,9 @@
 
   id: string (json property => guid)
   creatorId: string (json property => creatorGuid)
-  setId: string (json property => setGuid)
-  question: string
-  answer: string
-  retentionScore: int
+  name: string
 */
 
-class Card {
+class FlashcardSet {
 
 }
