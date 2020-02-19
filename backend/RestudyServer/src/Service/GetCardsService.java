@@ -8,6 +8,7 @@ import Result.GetCardsResult;
 
 public class GetCardsService {
     public static GetCardsResult processRequest(GetCardsRequest request){
+//        DaoFactoryInterface daoFactory = new DaoFactoryDynamoDB();
         DaoFactoryInterface daoFactory = new DaoFactoryDynamoDB();
         CardDaoInterface cDao = daoFactory.createCardDao();
         return cDao.GetCards(request);

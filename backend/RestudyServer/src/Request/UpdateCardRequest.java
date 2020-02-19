@@ -5,8 +5,6 @@ public class UpdateCardRequest {
     private String question;
     private String answer;
     private String setReference;
-    private long nextSession; // todo not needed? should be internal
-    private long nextIncrement; // todo not needed? should be internal
     private int retentionScore;
     private boolean deleted;
 
@@ -26,13 +24,6 @@ public class UpdateCardRequest {
         return setReference;
     }
 
-    public long getNextSession() {
-        return nextSession;
-    }
-
-    public long getNextIncrement() {
-        return nextIncrement;
-    }
 
     public int getRetentionScore() {
         return retentionScore;
@@ -56,14 +47,6 @@ public class UpdateCardRequest {
 
     public void setSetReference(String setReference) {
         this.setReference = setReference;
-    }
-
-    public void setNextSession(long nextSession) {
-        this.nextSession = nextSession;
-    }
-
-    public void setNextIncrement(long nextIncrement) {
-        this.nextIncrement = nextIncrement;
     }
 
     public void setRetentionScore(int retentionScore) {
