@@ -7,6 +7,7 @@ public class CreateCardRequest {
     private String creatorGuid;
     private int retentionScore;
     private boolean deleted;
+    private String token;
 
     public String getQuestion() {
         return question;
@@ -32,6 +33,8 @@ public class CreateCardRequest {
         return deleted;
     }
 
+    public String getToken() { return token; }
+
     public void setQuestion(String question) {
         this.question = question;
     }
@@ -55,4 +58,6 @@ public class CreateCardRequest {
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
+
+    public void setToken(String token) { this.token = token; }
 }

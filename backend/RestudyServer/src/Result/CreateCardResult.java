@@ -7,6 +7,13 @@ public class CreateCardResult {
     private String error;
     private Card body;
 
+    public CreateCardResult(){}
+    public CreateCardResult(int statusCode, String error, Card body) {
+        setStatusCode(statusCode);
+        setError(error);
+        setBody(body);
+    }
+
     public int getStatusCode() {
         return statusCode;
     }

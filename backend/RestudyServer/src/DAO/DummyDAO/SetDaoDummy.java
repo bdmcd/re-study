@@ -11,16 +11,19 @@ import Result.UpdateSetResult;
 public class SetDaoDummy implements SetDaoInterface {
     @Override
     public CreateSetResult CreateSet(CreateSetRequest request) {
-        return null;
+        CreateSetResult result = new CreateSetResult();
+        return result;
     }
 
     @Override
     public UpdateSetResult UpdateSet(UpdateSetRequest request) {
-        return null;
+        UpdateSetResult result = new UpdateSetResult();
+        return result;
     }
 
     @Override
     public GetSetsResult GetSets(GetSetsRequest request) {
-        return null;
+        GetSetsResult result = new GetSetsResult();
+        return result;
     }
 }
