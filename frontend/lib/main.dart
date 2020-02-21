@@ -28,8 +28,31 @@ class Root extends StatelessWidget {
       appBar: AppBar(),
       body: BlocProvider(
         create: (_) => AuthBloc(),
-        child: AuthTestView(),
+        child: AuthenticationRoot(),
       ),
+    );
+  }
+}
+
+class AuthenticationRoot extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state is AuthUnauthenticatedState) {
+          return LoginView();
+        }
+        return Container(
+          child: Center(
+            child: RaisedButton(
+              child: Text("Sign Out"),
+              onPressed: () {
+                AuthBloc.of(context).add(AuthSignOutEvent());
+              },
+            )
+          ),
+        );
+      },
     );
   }
 }
