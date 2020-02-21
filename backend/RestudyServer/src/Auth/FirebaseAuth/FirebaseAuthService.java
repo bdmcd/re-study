@@ -15,15 +15,7 @@ public class FirebaseAuthService implements AuthServiceInterface {
     @Override
     public void authenticate(String token) throws AuthException {
         try {
-            FileInputStream serviceAccount =
-                    new FileInputStream("../../../../keys/restudy/restudy-fe85d-firebase-adminsdk-6v08x-498efd7c8e.json");
-
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setDatabaseUrl("https://restudy-fe85d.firebaseio.com")
-                    .build();
-
-            FirebaseApp.initializeApp(options);
+            FirebaseAppInitializer.initialize();
 
         } catch (java.io.FileNotFoundException e) {
             throw new AuthException("Error: Could not load the Firebase Configuration");

@@ -17,7 +17,7 @@ public class GetSetsHandler {
             AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
             authFactory.createAuthService().authenticate(request.getToken());
         } catch(AuthException e) {
-            System.out.println(e);
+            e.printStackTrace();
             return new GetSetsResult(Codes.UNAUTHORIZED, "User not authorized", null);
         }
 
