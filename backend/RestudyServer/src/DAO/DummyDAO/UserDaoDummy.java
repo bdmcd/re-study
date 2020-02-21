@@ -7,6 +7,7 @@ import Result.RegisterUserResult;
 public class UserDaoDummy implements UserDAOInterface {
     @Override
     public RegisterUserResult RegisterUser(RegisterUserRequest Request) {
-        return null;
+        RegisterUserResult result = new RegisterUserResult();
+        return result;
     }
 }

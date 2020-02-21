@@ -1,11 +1,20 @@
 package Result;
 
+import Model.Card;
 import Model.Set;
 
 public class UpdateSetResult {
     private int statusCode;
     private String error;
     private Set body;
+
+    public UpdateSetResult() {}
+    public UpdateSetResult(int statusCode, String error, Set body) {
+        this.statusCode = statusCode;
+        this.error = error;
+        this.body = body;
+    }
+
 
     public int getStatusCode() {
         return statusCode;

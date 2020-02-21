@@ -17,11 +17,13 @@ public class CardDaoDummy implements CardDaoInterface {
 
     @Override
     public UpdateCardResult UpdateCard(UpdateCardRequest request) {
-        return null;
+        UpdateCardResult result = new UpdateCardResult();
+        return result;
     }
 
     @Override
     public GetCardsResult GetCards(GetCardsRequest request) {
-        return null;
+        GetCardsResult result = new GetCardsResult();
+        return result;
     }
 }

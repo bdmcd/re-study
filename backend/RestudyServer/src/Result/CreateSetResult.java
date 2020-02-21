@@ -7,6 +7,13 @@ public class CreateSetResult {
     private String error;
     private Set body;
 
+    public CreateSetResult() {}
+    public CreateSetResult(int statusCode, String error, Set body) {
+        this.statusCode = statusCode;
+        this.error = error;
+        this.body = body;
+    }
+
     public int getStatusCode() {
         return statusCode;
     }
