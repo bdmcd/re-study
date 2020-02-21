@@ -1,4 +1,4 @@
-# re_study
+# restudy
 
 A new Flutter project.
 
