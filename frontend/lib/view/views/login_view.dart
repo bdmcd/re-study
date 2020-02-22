@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/widgets/divider_line_painter.dart';
-
-import 'bloc/auth_bloc.dart';
-import 'widgets/text_input_field_widget.dart';
-import 'styles/spacings.dart';
-import 'styles/colors.dart';
+import 'package:restudy/bloc/auth_bloc.dart';
+import 'package:restudy/widgets/text_input_field_widget.dart';
+import 'package:restudy/styles/spacings.dart';
+import 'package:restudy/styles/colors.dart';
 
 const Pattern EMAIL_VALIDATION = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
@@ -25,7 +23,6 @@ class LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(title: Text("Re:Study"),),
       body: Form(
