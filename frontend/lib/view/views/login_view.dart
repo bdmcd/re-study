@@ -7,7 +7,6 @@ import 'package:restudy/styles/colors.dart';
 
 const Pattern EMAIL_VALIDATION = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
-// Create a Form widget.
 class LoginView extends StatefulWidget {
   @override
   LoginViewState createState() {
@@ -82,7 +81,7 @@ class LoginViewState extends State<LoginView> {
                     },
                     child:
                         Text("Register", style: TextStyle(fontSize: BUT_FONT_SIZE)),
-                    color: Colors.blue,
+                    color: APP_MAIN_COLOR,
                     textColor: Colors.white,
                   ),
                 ),
@@ -100,7 +99,7 @@ class LoginViewState extends State<LoginView> {
                     },
                     child: Text("Login", style: TextStyle(fontSize: BUT_FONT_SIZE)),
                     color: Colors.white,
-                    textColor: Colors.blue,
+                    textColor: APP_MAIN_COLOR,
                   ),
                 ),
               ),
@@ -119,8 +118,7 @@ class LoginViewState extends State<LoginView> {
                         child: CustomPaint(
                             painter: DividerLinePainter(
                                 width: (MediaQuery.of(context).size.width -
-                                    (STD_HORIZONTAL_MARGIN * 2)),
-                                horizontalOffset: 0)),
+                                    (STD_HORIZONTAL_MARGIN * 2)),)),
                         top: STD_VERTICAL_MARGIN,
                       ),
                       Positioned(

@@ -33,7 +33,7 @@ class TestFieldInputFieldWidgetState extends State<TestFieldInputFieldWidget> {
           padding: const EdgeInsets.only(left: STD_HORIZONTAL_MARGIN, right: STD_HORIZONTAL_MARGIN), 
           child:
           Text(widget.header, 
-            style: new TextStyle(
+            style: TextStyle(
               fontSize: TEXT_FIELD_HEADER_FONT_SIZE,
               color: TEXT_HEADER_GREY,
             )
