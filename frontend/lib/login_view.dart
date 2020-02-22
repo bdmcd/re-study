@@ -7,6 +7,8 @@ import 'widgets/text_input_field_widget.dart';
 import 'styles/spacings.dart';
 import 'styles/colors.dart';
 
+const Pattern EMAIL_VALIDATION = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
 // Create a Form widget.
 class LoginView extends StatefulWidget {
   @override
@@ -26,12 +28,8 @@ class LoginViewState extends State<LoginView> {
     
     return Scaffold(
       appBar: AppBar(title: Text("Re:Study"),),
-      body: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
-          
-        },
-        // Form uses _formKey
-        child: Form(
+      body: Form(
+          // Form uses _formKey
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,6 +44,9 @@ class LoginViewState extends State<LoginView> {
                   validator: (String userEmail) {
                     if (userEmail.isEmpty) {
                       return 'Enter a valid email address';
+                    }
+                    if (!(RegExp(EMAIL_VALIDATION).hasMatch(userEmail))) {
+                        return "Invalid Email";
                     }
                     return null;
                   },
@@ -173,7 +174,6 @@ class LoginViewState extends State<LoginView> {
             ],
           ),
         ),
-      ),
     );
   }
 
