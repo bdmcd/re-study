@@ -24,12 +24,9 @@ class MyApp extends StatelessWidget {
 class Root extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: BlocProvider(
-        create: (_) => AuthBloc(),
-        child: AuthenticationRoot(),
-      ),
+    return BlocProvider(
+      create: (_) => AuthBloc(),
+      child: AuthenticationRoot(),
     );
   }
 }
@@ -42,16 +39,19 @@ class AuthenticationRoot extends StatelessWidget {
         if (state is AuthUnauthenticatedState) {
           return LoginView();
         }
+        else {
         return Container(
           child: Center(
-            child: RaisedButton(
-              child: Text("Sign Out"),
-              onPressed: () {
-                AuthBloc.of(context).add(AuthSignOutEvent());
-              },
-            )
+            child: CircularProgressIndicator(),
+            // RaisedButton(
+            //   child: Text("Sign Out"),
+            //   onPressed: () {
+            //     AuthBloc.of(context).add(AuthSignOutEvent());
+            //   },
+            // )
           ),
         );
+        }
       },
     );
   }
