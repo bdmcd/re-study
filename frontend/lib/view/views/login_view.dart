@@ -81,7 +81,7 @@ class LoginViewState extends State<LoginView> {
                     },
                     child:
                         Text("Register", style: TextStyle(fontSize: BUT_FONT_SIZE)),
-                    color: APP_MAIN_COLOR,
+                    color: APP_PRIMARY_COLOR,
                     textColor: Colors.white,
                   ),
                 ),
@@ -99,7 +99,7 @@ class LoginViewState extends State<LoginView> {
                     },
                     child: Text("Login", style: TextStyle(fontSize: BUT_FONT_SIZE)),
                     color: Colors.white,
-                    textColor: APP_MAIN_COLOR,
+                    textColor: APP_PRIMARY_COLOR,
                   ),
                 ),
               ),

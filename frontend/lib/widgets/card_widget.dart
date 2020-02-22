@@ -33,8 +33,8 @@ class _CardWidgetState extends State<CardWidget> {
             this._flipCard();
           },
           child: Container(
-            width: 300,
-            height: 150,
+            width: MediaQuery.of(context).size.width,
+            height: 120,
             child: Padding(
               padding: EdgeInsets.only(top: 40,),
               child: Column(
