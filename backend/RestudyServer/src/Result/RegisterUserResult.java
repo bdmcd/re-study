@@ -1,11 +1,20 @@
 package Result;
 
+import Model.Card;
 import Model.User;
 
 public class RegisterUserResult {
     private int statusCode;
     private String error;
     private User body;
+
+    public RegisterUserResult() {}
+    public RegisterUserResult(int statusCode, String error, User body) {
+        this.statusCode = statusCode;
+        this.error = error;
+        this.body = body;
+    }
+
 
     public int getStatusCode() {
         return statusCode;
