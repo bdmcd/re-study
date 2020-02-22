@@ -39,19 +39,23 @@ class AuthenticationRoot extends StatelessWidget {
         if (state is AuthUnauthenticatedState) {
           return LoginView();
         }
-        else {
+        else if (state is AuthLoadingState) {
+          return Container(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
         return Container(
           child: Center(
-            child: CircularProgressIndicator(),
-            // RaisedButton(
-            //   child: Text("Sign Out"),
-            //   onPressed: () {
-            //     AuthBloc.of(context).add(AuthSignOutEvent());
-            //   },
-            // )
+            child: RaisedButton(
+              child: Text("Sign Out"),
+              onPressed: () {
+                AuthBloc.of(context).add(AuthSignOutEvent());
+              },
+            )
           ),
         );
-        }
       },
     );
   }

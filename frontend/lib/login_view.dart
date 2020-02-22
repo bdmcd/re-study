@@ -58,6 +58,7 @@ class LoginViewState extends State<LoginView> {
                   userInput: (password) {
                     this.password = password;
                   },
+                  obscureText: true,
                   validator: (String userPassword) {
                     if (userPassword.isEmpty) {
                       return 'Enter a password';
