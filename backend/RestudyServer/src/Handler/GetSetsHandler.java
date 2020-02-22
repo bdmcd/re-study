@@ -13,8 +13,8 @@ import Service.GetSetsService;
 public class GetSetsHandler {
     public GetSetsResult HandleRequest(GetSetsRequest request) {
         try {
-//            AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
-            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
+            AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
+//            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
             authFactory.createAuthService().authenticate(request.getToken());
         } catch(AuthException e) {
             e.printStackTrace();

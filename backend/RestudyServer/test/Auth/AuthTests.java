@@ -1,6 +1,5 @@
-import Auth.AuthException;
-import Auth.AuthServiceFactoryInterface;
-import Auth.AuthServiceInterface;
+package Auth;
+
 import Auth.FirebaseAuth.FirebaseAuthService;
 import Auth.FirebaseAuth.FirebaseAuthServiceFactory;
 import Auth.FirebaseAuth.FirebaseTokenGenerator;
@@ -46,7 +45,7 @@ public class AuthTests {
         AuthServiceInterface authService = factory.createAuthService();
 
         assertThrows(AuthException.class, () -> {
-            authService.authenticate("invalid_token");
+            authService.authenticate(AuthServiceInterface.BAD_TEST_TOKEN);
         });
 
         assertThrows(AuthException.class, () -> {

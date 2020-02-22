@@ -12,9 +12,17 @@ import Service.CreateSetService;
 
 public class CreateSetHandler {
     public CreateSetResult HandleRequest(CreateSetRequest request) {
+        if (request == null) {
+            return new CreateSetResult(Codes.BAD_REQUEST, "Received null request", null);
+        } else if (request.getCreatorGuid() == null || request.getCreatorGuid().isEmpty()) {
+            return new CreateSetResult(Codes.BAD_REQUEST, "Request CreatorGuid cannot be null or empty", null);
+        } else if (request.getName() == null || request.getName().isEmpty()) {
+            return new CreateSetResult(Codes.BAD_REQUEST, "Request Name cannot be null or empty", null);
+        }
+
         try {
-//            AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
-            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
+            AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
+//            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
             authFactory.createAuthService().authenticate(request.getToken());
         } catch(AuthException e) {
             e.printStackTrace();

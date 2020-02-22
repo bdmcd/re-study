@@ -25,14 +25,6 @@ public class CreateCardRequest {
         return creatorGuid;
     }
 
-    public int getRetentionScore() {
-        return retentionScore;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
     public String getToken() { return token; }
 
     public void setQuestion(String question) {
@@ -49,14 +41,6 @@ public class CreateCardRequest {
 
     public void setCreatorGuid(String creatorGuid) {
         this.creatorGuid = creatorGuid;
-    }
-
-    public void setRetentionScore(int retentionScore) {
-        this.retentionScore = retentionScore;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
     }
 
     public void setToken(String token) { this.token = token; }
