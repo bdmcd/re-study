@@ -13,11 +13,11 @@ import Service.GetCardsService;
 public class GetCardsHandler {
     public GetCardsResult HandleRequest(GetCardsRequest request) {
         try {
-//            AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
-            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
+            AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
+//            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
             authFactory.createAuthService().authenticate(request.getToken());
         } catch(AuthException e) {
-            System.out.println(e);
+            e.printStackTrace();
             return new GetCardsResult(Codes.UNAUTHORIZED, "User not authorized", null);
         }
 

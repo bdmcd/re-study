@@ -13,11 +13,11 @@ import Service.UpdateSetService;
 public class UpdateSetHandler {
     public UpdateSetResult HandleRequest(UpdateSetRequest request) {
         try {
-//            AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
-            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
+            AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
+//            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
             authFactory.createAuthService().authenticate(request.getToken());
         } catch(AuthException e) {
-            System.out.println(e);
+            e.printStackTrace();
             return new UpdateSetResult(Codes.UNAUTHORIZED, "User not authorized", null);
         }
 
