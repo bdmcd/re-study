@@ -40,3 +40,5 @@ lib/generated_plugin_registrant.dart
 ios/Runner/GoogleService-Info.plist
 ios/Runner/Info.plist
 android/*/google-services.json
+
+ios
