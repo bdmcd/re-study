@@ -7,6 +7,14 @@ public class UpdateCardResult {
     private String error;
     private Card body;
 
+    public UpdateCardResult() {}
+    public UpdateCardResult(int statusCode, String error, Card body) {
+        this.statusCode = statusCode;
+        this.error = error;
+        this.body = body;
+    }
+
+
     public int getStatusCode() {
         return statusCode;
     }

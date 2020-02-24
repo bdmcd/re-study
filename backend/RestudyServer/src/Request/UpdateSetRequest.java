@@ -3,6 +3,7 @@ package Request;
 public class UpdateSetRequest {
     private String guid;
     private String name;
+    private String token;
 
     public String getGuid() {
         return guid;
@@ -12,6 +13,8 @@ public class UpdateSetRequest {
         return name;
     }
 
+    public String getToken() { return token; }
+
     public void setGuid(String guid) {
         this.guid = guid;
     }
@@ -19,4 +22,6 @@ public class UpdateSetRequest {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setToken() { this.token = token; }
 }
