@@ -7,11 +7,13 @@ class TestFieldInputFieldWidget extends StatefulWidget {
   final String header;
   final ValueChanged<String> userInput;
   final String Function(String) validator;
+  final bool obscureText;
 
   TestFieldInputFieldWidget({
     @required this.header,
     @required this.userInput,
-    @required this.validator
+    @required this.validator,
+    this.obscureText = false
   });
 
   @override
@@ -31,7 +33,7 @@ class TestFieldInputFieldWidgetState extends State<TestFieldInputFieldWidget> {
           padding: const EdgeInsets.only(left: STD_HORIZONTAL_MARGIN, right: STD_HORIZONTAL_MARGIN), 
           child:
           Text(widget.header, 
-            style: new TextStyle(
+            style: TextStyle(
               fontSize: TEXT_FIELD_HEADER_FONT_SIZE,
               color: TEXT_HEADER_GREY,
             )
@@ -44,6 +46,7 @@ class TestFieldInputFieldWidgetState extends State<TestFieldInputFieldWidget> {
             onChanged: (text) {
               widget.userInput(text);
             },
+            obscureText: widget.obscureText,
             validator: widget.validator,
             style: TextStyle(fontSize: TEXT_FIELD_INPUT_FONT_SIZE),
           ),

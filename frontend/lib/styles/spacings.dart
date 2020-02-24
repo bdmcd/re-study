@@ -11,3 +11,5 @@ const double TEXT_FIELD_HEADER_FONT_SIZE =  16.0;
 const double TEXT_FIELD_INPUT_FONT_SIZE = 22.0;
 const double TEXT_BODY_FONT_SIZE = 20.0;
 const double BUT_FONT_SIZE = 18.0;
+
+const double ICON_LARGE_SIZE = 34.0;

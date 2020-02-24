@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/widgets/divider_line_painter.dart';
+import 'package:restudy/bloc/auth_bloc.dart';
+import 'package:restudy/widgets/text_input_field_widget.dart';
+import 'package:restudy/styles/spacings.dart';
+import 'package:restudy/styles/colors.dart';
 
-import 'bloc/auth_bloc.dart';
-import 'widgets/text_input_field_widget.dart';
-import 'styles/spacings.dart';
-import 'styles/colors.dart';
+const Pattern EMAIL_VALIDATION = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 
-// Create a Form widget.
 class LoginView extends StatefulWidget {
   @override
   LoginViewState createState() {
@@ -23,15 +22,10 @@ class LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(title: Text("Re:Study"),),
-      body: BlocListener<AuthBloc, AuthState>(
-        listener: (context, state) {
-          
-        },
-        // Form uses _formKey
-        child: Form(
+      body: Form(
+          // Form uses _formKey
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,6 +41,9 @@ class LoginViewState extends State<LoginView> {
                     if (userEmail.isEmpty) {
                       return 'Enter a valid email address';
                     }
+                    if (!(RegExp(EMAIL_VALIDATION).hasMatch(userEmail))) {
+                        return "Invalid Email";
+                    }
                     return null;
                   },
                 ),
@@ -58,6 +55,7 @@ class LoginViewState extends State<LoginView> {
                   userInput: (password) {
                     this.password = password;
                   },
+                  obscureText: true,
                   validator: (String userPassword) {
                     if (userPassword.isEmpty) {
                       return 'Enter a password';
@@ -83,7 +81,7 @@ class LoginViewState extends State<LoginView> {
                     },
                     child:
                         Text("Register", style: TextStyle(fontSize: BUT_FONT_SIZE)),
-                    color: Colors.blue,
+                    color: APP_PRIMARY_COLOR,
                     textColor: Colors.white,
                   ),
                 ),
@@ -101,7 +99,7 @@ class LoginViewState extends State<LoginView> {
                     },
                     child: Text("Login", style: TextStyle(fontSize: BUT_FONT_SIZE)),
                     color: Colors.white,
-                    textColor: Colors.blue,
+                    textColor: APP_PRIMARY_COLOR,
                   ),
                 ),
               ),
@@ -120,8 +118,7 @@ class LoginViewState extends State<LoginView> {
                         child: CustomPaint(
                             painter: DividerLinePainter(
                                 width: (MediaQuery.of(context).size.width -
-                                    (STD_HORIZONTAL_MARGIN * 2)),
-                                horizontalOffset: 0)),
+                                    (STD_HORIZONTAL_MARGIN * 2)),)),
                         top: STD_VERTICAL_MARGIN,
                       ),
                       Positioned(
@@ -172,7 +169,6 @@ class LoginViewState extends State<LoginView> {
             ],
           ),
         ),
-      ),
     );
   }
 
