@@ -176,7 +176,7 @@ class LoginViewState extends State<LoginView> {
                                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                               Padding(
                                 padding: const EdgeInsets.only(right: 10),
-                                child: Image(image: AssetImage("images/google.png")),
+                                child: Image(image: AssetImage("lib/images/google.png")),
                               ),
                               Text("Sign in with Google",
                                   style: TextStyle(fontSize: BUT_FONT_SIZE)),
