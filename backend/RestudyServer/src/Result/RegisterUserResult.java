@@ -9,10 +9,14 @@ public class RegisterUserResult {
     private User body;
 
     public RegisterUserResult() {}
-    public RegisterUserResult(int statusCode, String error, User body) {
+    public RegisterUserResult(int statusCode, User body) {
+        this.statusCode = statusCode;
+        this.body = body;
+    }
+
+    public RegisterUserResult(int statusCode, String error) {
         this.statusCode = statusCode;
         this.error = error;
-        this.body = body;
     }
 
 

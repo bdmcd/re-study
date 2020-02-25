@@ -18,7 +18,7 @@ public class GetCardsHandler {
             authFactory.createAuthService().authenticate(request.getToken());
         } catch(AuthException e) {
             e.printStackTrace();
-            return new GetCardsResult(Codes.UNAUTHORIZED, "User not authorized", null);
+            return new GetCardsResult(Codes.UNAUTHORIZED, "User not authorized");
         }
 
         return GetCardsService.processRequest(request);

@@ -18,7 +18,7 @@ public class UpdateCardHandler {
             authFactory.createAuthService().authenticate(request.getToken());
         } catch(AuthException e) {
             e.printStackTrace();
-            return new UpdateCardResult(Codes.UNAUTHORIZED, "User not authorized", null);
+            return new UpdateCardResult(Codes.UNAUTHORIZED, "User not authorized");
         }
 
         return UpdateCardService.processRequest(request);

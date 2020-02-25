@@ -12,7 +12,7 @@ import Result.UpdateCardResult;
 
 public class CardDaoDummy implements CardDaoInterface {
     @Override
-    public CreateCardResult CreateCard(CreateCardRequest request) {
+    public Card CreateCard(CreateCardRequest request) {
         Card card = new Card();
 
         card.setCreatorGuid(request.getCreatorGuid());
@@ -21,18 +21,17 @@ public class CardDaoDummy implements CardDaoInterface {
         card.setDeleted(false);
         card.setSetGuid(request.getSetGuid());
 
-        return new CreateCardResult(Codes.OK, null, card);
+        return card;
     }
 
     @Override
-    public UpdateCardResult UpdateCard(UpdateCardRequest request) {
-        UpdateCardResult result = new UpdateCardResult();
-        return result;
+    public Card UpdateCard(UpdateCardRequest request) {
+        return new Card();
     }
 
     @Override
-    public GetCardsResult GetCards(GetCardsRequest request) {
-        GetCardsResult result = new GetCardsResult();
-        return result;
+    public Card[] GetCards(GetCardsRequest request) {
+        Card[] cards = {};
+        return cards;
     }
 }

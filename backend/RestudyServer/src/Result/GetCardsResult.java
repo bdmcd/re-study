@@ -9,10 +9,13 @@ public class GetCardsResult {
     private Card[] body;
 
     public GetCardsResult() {}
-    public GetCardsResult(int statusCode, String error, Card[] body) {
+    public GetCardsResult(int statusCode, Card[] body) {
+        this.statusCode = statusCode;
+        this.body = body;
+    }
+    public GetCardsResult(int statusCode, String error) {
         this.statusCode = statusCode;
         this.error = error;
-        this.body = body;
     }
 
     public int getStatusCode() {

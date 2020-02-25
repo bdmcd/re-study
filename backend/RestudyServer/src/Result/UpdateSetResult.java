@@ -9,10 +9,13 @@ public class UpdateSetResult {
     private Set body;
 
     public UpdateSetResult() {}
-    public UpdateSetResult(int statusCode, String error, Set body) {
+    public UpdateSetResult(int statusCode, Set body) {
+        this.statusCode = statusCode;
+        this.body = body;
+    }
+    public UpdateSetResult(int statusCode, String error) {
         this.statusCode = statusCode;
         this.error = error;
-        this.body = body;
     }
 
 
