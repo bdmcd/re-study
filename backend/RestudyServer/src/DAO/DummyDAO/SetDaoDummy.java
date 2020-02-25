@@ -30,7 +30,15 @@ public class SetDaoDummy implements SetDaoInterface {
 
     @Override
     public GetSetsResult GetSets(GetSetsRequest request) {
-        GetSetsResult result = new GetSetsResult();
-        return result;
+        Set[] sets = {
+                new Set("set1", request.getUserGuid(), "Set 1"),
+                new Set("set2", request.getUserGuid(), "Set 2"),
+                new Set("set3", request.getUserGuid(), "Set 3"),
+                new Set("set4", request.getUserGuid(), "Set 4"),
+                new Set("set5", request.getUserGuid(), "Set 5"),
+
+        };
+
+        return new GetSetsResult(Codes.OK, null, sets);
     }
 }
