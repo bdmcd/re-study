@@ -14,5 +14,5 @@ public class GetCardsRequest {
         this.setGuid = setGuid;
     }
 
-    public void setToken() { this.token = token; }
+    public void setToken(String token) { this.token = token; }
 }
