@@ -14,5 +14,5 @@ public class GetSetsRequest {
         this.userGuid = userGuid;
     }
 
-    public void setToken() { this.token = token; }
+    public void setToken(String token) { this.token = token; }
 }
