@@ -4,7 +4,12 @@ abstract class CardsState extends Equatable {
   const CardsState();
 }
 
-class SetInitialState extends CardsState {
+class CardsInitialState extends CardsState {
+  @override
+  List<Object> get props => [];
+}
+
+class CardsDisplayState extends CardsState {
   @override
   List<Object> get props => [];
 }
@@ -19,7 +24,26 @@ class CardsSavedState extends CardsState {
   List<Object> get props => [];
 }
 
-class CardsAddCardState extends CardsState {
+class CardsAddingCardState extends CardsState {
   @override
   List<Object> get props => [];
+}
+
+class CardsLoadingState extends CardsState {
+  @override
+  List<Object> get props => [];
+}
+
+class CardsStudyState extends CardsState {
+  @override
+  List<Object> get props => [];
+}
+
+class CardsErrorState extends CardsState {
+  final String error;
+
+  const CardsErrorState([this.error]);
+
+  @override
+  List<Object> get props => [error];
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:restudy/view/views/cards_view.dart';
+import 'package:restudy/view/views/cardsView/cards_view.dart';
 import 'package:restudy/widgets/divider_line_painter.dart';
 import 'package:restudy/bloc/auth_bloc.dart';
 import 'package:restudy/widgets/loading_widget.dart';
@@ -189,7 +189,6 @@ class LoginViewState extends State<LoginView> {
                     ],
                   ),
                 ),
-
                 state is AuthLoadingState ? Overlay() : Container(),
               ],
             );
@@ -200,18 +199,14 @@ class LoginViewState extends State<LoginView> {
   }
 
   login(BuildContext context) {
-    print("login with $email and $password");
-    // final authBloc = AuthBloc.of(context);
     AuthBloc.of(context).add(AuthSignInEvent(
       email: this.email,
       password: this.password,
     ));
-    // authBloc.close();
   }
 
   register(BuildContext context) {
     print("register with $email and $password");
-    // final authBloc = AuthBloc.of(context);
     AuthBloc.of(context).add(AuthRegisterEvent(
       email: this.email,
       password: this.password,
@@ -220,8 +215,6 @@ class LoginViewState extends State<LoginView> {
   }
 
   googleSignIn(BuildContext context) {
-    // final authBloc = AuthBloc.of(context);
     AuthBloc.of(context).add(AuthSignInWithGoogleEvent());
-    // authBloc.close();
   }
 }
