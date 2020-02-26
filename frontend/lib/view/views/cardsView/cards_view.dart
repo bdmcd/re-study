@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/bloc/cards_bloc.dart';
+import 'package:restudy/widgets/card_widget.dart';
 import 'package:restudy/widgets/divider_line_painter.dart';
 import 'package:restudy/styles/spacings.dart';
 import 'package:restudy/styles/colors.dart';
@@ -110,41 +111,57 @@ class CardsViewState extends State<CardsView> {
                               left: STD_HORIZONTAL_MARGIN,
                               right: STD_HORIZONTAL_MARGIN,
                               bottom: 0.0),
-                          child: Center(
-                            child: Card(
-                              child: InkWell(
-                                splashColor: APP_PRIMARY_COLOR.withAlpha(30),
-                                onTap: () {
-                                  addCard();
-                                },
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 120,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                      top: 30,
-                                    ),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.add,
-                                          size: ICON_LARGE_SIZE,
-                                          color: APP_PRIMARY_COLOR,
+                          child: Column(
+                            children: <Widget>[
+                              Center(
+                                child: Card(
+                                  child: InkWell(
+                                    splashColor:
+                                        APP_PRIMARY_COLOR.withAlpha(30),
+                                    onTap: () {
+                                      addCard();
+                                    },
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 120,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          top: 30,
                                         ),
-                                        Text(
-                                          "Add Card",
-                                          style: TextStyle(
-                                            fontSize:
-                                                TEXT_FIELD_INPUT_FONT_SIZE,
-                                            color: APP_PRIMARY_COLOR,
-                                          ),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.add,
+                                              size: ICON_LARGE_SIZE,
+                                              color: APP_PRIMARY_COLOR,
+                                            ),
+                                            Text(
+                                              "Add Card",
+                                              style: TextStyle(
+                                                fontSize:
+                                                    TEXT_FIELD_INPUT_FONT_SIZE,
+                                                color: APP_PRIMARY_COLOR,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
+                              CardWidget(
+                                answerText: "Answer",
+                                questionText: "Question",
+                                includeIcon: true,
+                                actionIconButton: IconButton(
+                                  icon: Icon(Icons.edit),
+                                  onPressed: () {
+                                    editCard();
+                                  },
+                                ),
+                              )
+                            ],
                           ),
                         ),
                       ],
@@ -186,4 +203,6 @@ class CardsViewState extends State<CardsView> {
   studySet() {
     CardsBloc.of(context).add(CardsStudyEvent());
   }
+
+  editCard() {}
 }

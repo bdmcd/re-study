@@ -4,6 +4,7 @@ const double STD_HORIZONTAL_MARGIN = 20.0;
 const double STD_BUTTON_HEIGHT = 40.0;
 const double STD_VERTICAL_MARGIN = 20.0;
 const double STD_FORM_FIELD_TO_HEADER = 15.0;
+const double CARD_HEIGHT = 120.0;
 
 
 // Font sizes

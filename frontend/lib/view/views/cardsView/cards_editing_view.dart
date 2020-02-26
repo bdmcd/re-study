@@ -15,6 +15,7 @@ class CardsEditingView extends StatefulWidget {
 
 class CardsEditingViewState extends State<CardsEditingView> {
   final _formKey = GlobalKey<FormState>();
+  final List<Card> cards = List(0);
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +52,7 @@ class CardsEditingViewState extends State<CardsEditingView> {
                         right: 0,
                         bottom: 0.0),
                     child: TestFieldInputFieldWidget(
+                      initialValue: "Set Name",
                       header: "Set Name",
                       userInput: (String value) {},
                       validator: (String setName) {
@@ -68,38 +70,21 @@ class CardsEditingViewState extends State<CardsEditingView> {
                         right: STD_HORIZONTAL_MARGIN,
                         bottom: 0.0),
                     child: Center(
-                      child: Card(
-                        child: InkWell(
-                          splashColor: APP_PRIMARY_COLOR.withAlpha(30),
-                          onTap: () {
-                            addCard();
-                          },
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 120,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                top: 30,
-                              ),
-                              child: Column(
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.add,
-                                    size: ICON_LARGE_SIZE,
-                                    color: APP_PRIMARY_COLOR,
-                                  ),
-                                  Text(
-                                    "Add Card",
-                                    style: TextStyle(
-                                      fontSize: TEXT_FIELD_INPUT_FONT_SIZE,
-                                      color: APP_PRIMARY_COLOR,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                      child: Column(
+                        children: <Widget>[
+                          Icon(
+                            Icons.add,
+                            size: ICON_LARGE_SIZE,
+                            color: APP_PRIMARY_COLOR,
+                          ),
+                          Text(
+                            "Add Card",
+                            style: TextStyle(
+                              fontSize: TEXT_FIELD_INPUT_FONT_SIZE,
+                              color: APP_PRIMARY_COLOR,
                             ),
                           ),
-                        ),
+                        ],
                       ),
                     ),
                   ),
