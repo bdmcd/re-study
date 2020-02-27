@@ -5,6 +5,7 @@ public class Set {
     private String name;
     private String creatorGuid;
 
+
     public Set(){}
     public Set(String guid, String name, String creatorGuid) {
         setGuid(guid);
@@ -35,4 +36,5 @@ public class Set {
     public void setCreatorGuid(String creatorGuid) {
         this.creatorGuid = creatorGuid;
     }
+
 }

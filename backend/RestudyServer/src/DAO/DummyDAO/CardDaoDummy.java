@@ -15,7 +15,7 @@ public class CardDaoDummy implements CardDaoInterface {
     public Card CreateCard(CreateCardRequest request) {
         Card card = new Card();
 
-        card.setCreatorGuid(request.getCreatorGuid());
+//        card.setCreatorGuid(request.getCreatorGuid());
         card.setQuestion(request.getQuestion());
         card.setAnswer(request.getAnswer());
         card.setDeleted(false);

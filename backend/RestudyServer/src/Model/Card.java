@@ -5,7 +5,7 @@ public class Card {
     private String answer;
     private String setGuid;
     private String setName;
-    private String creatorGuid;
+//    private String creatorGuid; not actually needed
     private boolean correct;
     private boolean deleted;
 
@@ -25,9 +25,9 @@ public class Card {
         return setName;
     }
 
-    public String getCreatorGuid() {
-        return creatorGuid;
-    }
+//    public String getCreatorGuid() {
+//        return creatorGuid;
+//    }
 
     public boolean isCorrect() {
         return correct;
@@ -53,9 +53,9 @@ public class Card {
         this.setName = setName;
     }
 
-    public void setCreatorGuid(String creatorGuid) {
-        this.creatorGuid = creatorGuid;
-    }
+//    public void setCreatorGuid(String creatorGuid) {
+//        this.creatorGuid = creatorGuid;
+//    }
 
     public void setCorrect(boolean correct) {
         this.correct = correct;
