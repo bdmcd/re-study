@@ -1,11 +1,19 @@
 package Result;
 
 import Model.Card;
+import Model.Set;
 
 public class GetCardsResult {
     private int statusCode;
     private String error;
     private Card[] body;
+
+    public GetCardsResult() {}
+    public GetCardsResult(int statusCode, String error, Card[] body) {
+        this.statusCode = statusCode;
+        this.error = error;
+        this.body = body;
+    }
 
     public int getStatusCode() {
         return statusCode;
