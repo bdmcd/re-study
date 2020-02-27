@@ -19,7 +19,6 @@ public class CreateCardTests {
         request.setToken(token);
         request.setQuestion("Question");
         request.setAnswer("Answer");
-        request.setCreatorGuid("CreatorGuid");
         request.setSetGuid("SetGuid");
 
         CreateCardResult result = new CreateCardHandler().HandleRequest(request);
@@ -33,7 +32,6 @@ public class CreateCardTests {
 
         assertEquals(card.getAnswer(), request.getAnswer());
         assertEquals(card.getQuestion(), request.getQuestion());
-        assertEquals(card.getCreatorGuid(), request.getCreatorGuid());
         assertEquals(card.getSetGuid(), request.getSetGuid());
     }
 
@@ -45,7 +43,6 @@ public class CreateCardTests {
         request.setToken(token);
         request.setQuestion("Question");
         request.setAnswer("Answer");
-        request.setCreatorGuid("CreatorGuid");
         request.setSetGuid("SetGuid");;
 
         CreateCardResult result = new CreateCardHandler().HandleRequest(request);
@@ -62,7 +59,6 @@ public class CreateCardTests {
         request.setToken(null);
         request.setQuestion("Question");
         request.setAnswer("Answer");
-        request.setCreatorGuid("CreatorGuid");
         request.setSetGuid("SetGuid");
 
         CreateCardResult result = new CreateCardHandler().HandleRequest(request);
@@ -81,7 +77,6 @@ public class CreateCardTests {
         request.setToken(token);
         request.setQuestion(null);
         request.setAnswer("Answer");
-        request.setCreatorGuid("CreatorGuid");
         request.setSetGuid("SetGuid");
 
         CreateCardResult result = new CreateCardHandler().HandleRequest(request);
@@ -100,7 +95,6 @@ public class CreateCardTests {
         request.setToken(token);
         request.setQuestion("Question");
         request.setAnswer("");
-        request.setCreatorGuid("CreatorGuid");
         request.setSetGuid("SetGuid");
 
         CreateCardResult result = new CreateCardHandler().HandleRequest(request);
@@ -111,24 +105,6 @@ public class CreateCardTests {
         assertEquals(result.getBody(), null);
     }
 
-    @Test
-    public void nullOrEmptyCreatorGuidShouldReturnBadRequestCode() {
-        String token = new FirebaseTokenGenerator().generateToken();
-        CreateCardRequest request = new CreateCardRequest();
-
-        request.setToken(token);
-        request.setQuestion("Question");
-        request.setAnswer("Answer");
-        request.setCreatorGuid(null);
-        request.setSetGuid("SetGuid");
-
-        CreateCardResult result = new CreateCardHandler().HandleRequest(request);
-
-        assertNotEquals(result, null);
-        assertEquals(result.getStatusCode(), Codes.BAD_REQUEST);
-        assertNotEquals(result.getError(), null);
-        assertEquals(result.getBody(), null);
-    }
 
     @Test
     public void nullOrEmptySetGuidShouldReturnBadRequestCode() {
@@ -138,7 +114,6 @@ public class CreateCardTests {
         request.setToken(token);
         request.setQuestion("Question");
         request.setAnswer("Answer");
-        request.setCreatorGuid("CreatorGuid");
         request.setSetGuid("");
 
         CreateCardResult result = new CreateCardHandler().HandleRequest(request);
