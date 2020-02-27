@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/bloc/cards_bloc.dart';
-import 'package:restudy/view/views/cardsView/edit_card.dart';
+import 'package:restudy/view/views/cardsView/add_card_view.dart';
+import 'package:restudy/view/views/cardsView/edit_card_view.dart';
 import 'package:restudy/widgets/card_widget.dart';
 import 'package:restudy/widgets/divider_line_painter.dart';
 import 'package:restudy/styles/spacings.dart';
 import 'package:restudy/styles/colors.dart';
 
-import 'cards_editing_view.dart';
+import 'edit_set_view.dart';
+
 
 class CardsView extends StatefulWidget {
   @override
@@ -28,7 +30,7 @@ class CardsViewState extends State<CardsView> {
               return AnimatedSwitcher(
                 duration: Duration(milliseconds: 100),
                 switchOutCurve: Threshold(0),
-                child: CardsEditingView(),
+                child: EditSetView(),
               );
             } else if (state is CardsEditingCardState) {
               return AnimatedSwitcher(
@@ -45,6 +47,21 @@ class CardsViewState extends State<CardsView> {
                     );
                   },
                   child: EditCardView());
+            } else if (state is CardsAddingCardState) {
+              return AnimatedSwitcher(
+                duration: Duration(milliseconds: 150),
+                switchOutCurve: Threshold(0),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  return SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(0, 1),
+                      end: const Offset(0, 0),
+                    ).animate(animation),
+                    child: child,
+                  );
+                },
+                child: AddCardView(),
+              );
             }
             return AnimatedSwitcher(
               duration: Duration(milliseconds: 100),
@@ -56,7 +73,9 @@ class CardsViewState extends State<CardsView> {
                   leading: IconButton(
                     color: APP_PRIMARY_COLOR,
                     icon: Icon(Icons.arrow_back),
-                    onPressed: () {},
+                    onPressed: () {
+                      
+                    },
                   ),
                   actions: <Widget>[
                     IconButton(
@@ -143,12 +162,12 @@ class CardsViewState extends State<CardsView> {
                                       splashColor:
                                           APP_PRIMARY_COLOR.withAlpha(30),
                                       onTap: () {
-                                        addCard();
+                                        addCard(context);
                                       },
                                       child: Container(
                                         width:
                                             MediaQuery.of(context).size.width,
-                                        height: 120,
+                                        height: CARD_HEIGHT,
                                         child: Padding(
                                           padding: EdgeInsets.only(
                                             top: 30,
@@ -225,7 +244,9 @@ class CardsViewState extends State<CardsView> {
 
   backToSets() {}
 
-  addCard() {}
+  addCard(BuildContext context) {
+    CardsBloc.of(context).add(CardsAddCardEvent());
+  }
 
   studySet(BuildContext context) {
     CardsBloc.of(context).add(CardsStudyEvent());

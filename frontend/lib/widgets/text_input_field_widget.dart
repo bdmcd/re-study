@@ -9,6 +9,7 @@ class TestFieldInputFieldWidget extends StatefulWidget {
   final String Function(String) validator;
   final bool obscureText;
   final String initialValue;
+  final bool autofocus;
 
   TestFieldInputFieldWidget({
     @required this.header,
@@ -16,6 +17,7 @@ class TestFieldInputFieldWidget extends StatefulWidget {
     @required this.validator,
     this.obscureText = false,
     this.initialValue = "",
+    this.autofocus = false,
   });
 
   @override
@@ -43,6 +45,7 @@ class TestFieldInputFieldWidgetState extends State<TestFieldInputFieldWidget> {
           padding:
               const EdgeInsets.symmetric(horizontal: STD_HORIZONTAL_MARGIN),
           child: TextFormField(
+            autofocus: widget.autofocus,
             initialValue: widget.initialValue,
             onChanged: (text) {
               widget.userInput(text);

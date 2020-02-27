@@ -33,10 +33,11 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
       // yield* _initialize(event);
     } if (event is CardsEditSetEvent) {
       yield* _editSet(event);
+      // add cardsSavedSetEvent && cardsSavedSetEvent
     } else if (event is CardsSaveEvent) {
       yield* _saveSet(event);
     } else if (event is CardsAddCardEvent){
-      // yield* _signInWithGoogle(event);
+      yield* _addCard(event);
     } else if (event is CardsStudyEvent) {
       // yield* _signOut(event);
     } else if (event is CardsEditCardEvent) {
@@ -68,7 +69,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     try {
       yield CardsEditingSetState();
     } catch(e) {
-      print('Unknown exception caught in CardsBloc._edit() $e');
+      print('Unknown exception caught in CardsBloc._editSet() $e');
       yield* _flashError(CardsErrorState("Could not edit set"), savedState);
     }
   }
@@ -79,6 +80,18 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
     try {
       yield CardsEditingCardState();
+    } catch(e) {
+      print('Unknown exception caught in CardsBloc._editCard() $e');
+      yield* _flashError(CardsErrorState("Could not edit card"), savedState);
+    }
+  }
+
+  Stream<CardsState> _addCard(CardsEvent event) async* {
+    final savedState = state;
+    yield CardsLoadingState();
+
+    try {
+      yield CardsAddingCardState();
     } catch(e) {
       print('Unknown exception caught in CardsBloc._edit() $e');
       yield* _flashError(CardsErrorState("Could not edit set"), savedState);

@@ -40,6 +40,7 @@ class EditCardViewState extends State<EditCardView> {
                 style: TextStyle(
                     color: APP_PRIMARY_COLOR, fontSize: BUT_FONT_SIZE),
               ),
+              shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
             )
           ],
         ),

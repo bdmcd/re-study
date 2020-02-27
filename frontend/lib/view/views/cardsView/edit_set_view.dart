@@ -6,16 +6,16 @@ import 'package:restudy/styles/spacings.dart';
 import 'package:restudy/styles/colors.dart';
 import 'package:restudy/widgets/text_input_field_widget.dart';
 
-class CardsEditingView extends StatefulWidget {
-  CardsEditingView() : super(key: ValueKey<int>(1));
+class EditSetView extends StatefulWidget {
+  EditSetView() : super(key: ValueKey<int>(1));
 
   @override
-  CardsEditingViewState createState() {
-    return CardsEditingViewState();
+  EditSetViewState createState() {
+    return EditSetViewState();
   }
 }
 
-class CardsEditingViewState extends State<CardsEditingView> {
+class EditSetViewState extends State<EditSetView> {
   final _formKey = GlobalKey<FormState>();
   final List<Card> cards = List(0);
   final Key key = null;
@@ -37,6 +37,7 @@ class CardsEditingViewState extends State<CardsEditingView> {
               style:
                   TextStyle(color: APP_PRIMARY_COLOR, fontSize: BUT_FONT_SIZE),
             ),
+            shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
           )
         ],
       ),
@@ -67,30 +68,23 @@ class CardsEditingViewState extends State<CardsEditingView> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                        top: STD_VERTICAL_MARGIN,
-                        left: STD_HORIZONTAL_MARGIN,
-                        right: STD_HORIZONTAL_MARGIN,
-                        bottom: 0.0),
-                    child: Center(
-                      child: Column(
-                        children: <Widget>[
-                          Icon(
-                            Icons.add,
-                            size: ICON_LARGE_SIZE,
-                            color: APP_PRIMARY_COLOR,
-                          ),
-                          Text(
-                            "Add Card",
-                            style: TextStyle(
-                              fontSize: TEXT_FIELD_INPUT_FONT_SIZE,
-                              color: APP_PRIMARY_COLOR,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                      padding: const EdgeInsets.only(top: STD_VERTICAL_MARGIN * 2, right: STD_HORIZONTAL_MARGIN, left: STD_HORIZONTAL_MARGIN),
+                      child: ButtonTheme(
+                        minWidth: MediaQuery.of(context).size.width,
+                        height: STD_BUTTON_HEIGHT,
+                        child: FlatButton(
+                          onPressed: () {
+                            if (_formKey.currentState.validate()) {
+                              // addCard(context);
+                            }
+                          },
+                          child: Text("Delete set", style: TextStyle(
+                            color: Colors.white,
+                            fontSize: BUT_FONT_SIZE,
+                          ),),
+                          color: APP_DESTRUCTIVE_RED,
+                        ),
+                      )),
                 ],
               ),
             ],
