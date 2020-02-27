@@ -1,14 +1,13 @@
 package DAO;
 
+import DAO.Exception.DaoException;
+import Model.Set;
 import Request.CreateSetRequest;
 import Request.GetSetsRequest;
 import Request.UpdateSetRequest;
-import Result.CreateSetResult;
-import Result.GetSetsResult;
-import Result.UpdateSetResult;
 
 public interface SetDaoInterface {
-    CreateSetResult CreateSet(CreateSetRequest request);
-    UpdateSetResult UpdateSet(UpdateSetRequest request);
-    GetSetsResult GetSets(GetSetsRequest request);
+    Set CreateSet(CreateSetRequest request) throws DaoException;
+    Set UpdateSet(UpdateSetRequest request) throws DaoException;
+    Set[] GetSets(GetSetsRequest request) throws DaoException;
 }

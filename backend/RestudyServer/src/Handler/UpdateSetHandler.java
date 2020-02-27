@@ -18,7 +18,7 @@ public class UpdateSetHandler {
             authFactory.createAuthService().authenticate(request.getToken());
         } catch(AuthException e) {
             e.printStackTrace();
-            return new UpdateSetResult(Codes.UNAUTHORIZED, "User not authorized", null);
+            return new UpdateSetResult(Codes.UNAUTHORIZED, "User not authorized");
         }
 
         return UpdateSetService.processRequest(request);

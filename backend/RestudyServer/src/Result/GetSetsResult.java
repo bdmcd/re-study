@@ -9,10 +9,13 @@ public class GetSetsResult {
     private Set[] body;
 
     public GetSetsResult() {}
-    public GetSetsResult(int statusCode, String error, Set[] body) {
+    public GetSetsResult(int statusCode, Set[] body) {
+        this.statusCode = statusCode;
+        this.body = body;
+    }
+    public GetSetsResult(int statusCode, String error) {
         this.statusCode = statusCode;
         this.error = error;
-        this.body = body;
     }
 
 

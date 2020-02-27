@@ -8,10 +8,13 @@ public class CreateSetResult {
     private Set body;
 
     public CreateSetResult() {}
-    public CreateSetResult(int statusCode, String error, Set body) {
+    public CreateSetResult(int statusCode, Set body) {
+        this.statusCode = statusCode;
+        this.body = body;
+    }
+    public CreateSetResult(int statusCode, String error) {
         this.statusCode = statusCode;
         this.error = error;
-        this.body = body;
     }
 
     public int getStatusCode() {

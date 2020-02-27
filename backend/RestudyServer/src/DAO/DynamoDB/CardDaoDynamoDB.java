@@ -1,6 +1,7 @@
 package DAO.DynamoDB;
 
 import DAO.CardDaoInterface;
+import Model.Card;
 import Request.CreateCardRequest;
 import Request.GetCardsRequest;
 import Request.UpdateCardRequest;
@@ -10,17 +11,17 @@ import Result.UpdateCardResult;
 
 public class CardDaoDynamoDB implements CardDaoInterface {
     @Override
-    public CreateCardResult CreateCard(CreateCardRequest request) {
+    public Card CreateCard(CreateCardRequest request) {
         return null;
     }
 
     @Override
-    public UpdateCardResult UpdateCard(UpdateCardRequest request) {
+    public Card UpdateCard(UpdateCardRequest request) {
         return null;
     }
 
     @Override
-    public GetCardsResult GetCards(GetCardsRequest request) {
+    public Card[] GetCards(GetCardsRequest request) {
         return null;
     }
 }

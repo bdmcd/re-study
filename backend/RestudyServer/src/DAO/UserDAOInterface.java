@@ -1,8 +1,9 @@
 package DAO;
 
+import DAO.Exception.DaoException;
+import Model.User;
 import Request.RegisterUserRequest;
-import Result.RegisterUserResult;
 
 public interface UserDAOInterface {
-    RegisterUserResult RegisterUser(RegisterUserRequest Request);
+    User RegisterUser(RegisterUserRequest Request) throws DaoException;
 }

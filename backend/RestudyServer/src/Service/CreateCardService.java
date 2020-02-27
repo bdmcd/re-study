@@ -3,8 +3,10 @@ package Service;
 import DAO.CardDaoInterface;
 import DAO.DaoFactoryInterface;
 import DAO.DummyDAO.DaoFactoryDummy;
-import DAO.DynamoDB.DaoFactoryDynamoDB;
+import DAO.Exception.DaoException;
+import Model.Card;
 import Request.CreateCardRequest;
+import Result.Codes;
 import Result.CreateCardResult;
 
 public class CreateCardService {
@@ -12,6 +14,13 @@ public class CreateCardService {
 //        DaoFactoryInterface daoFactory = new DaoFactoryDynamoDB();
         DaoFactoryInterface daoFactory = new DaoFactoryDummy();
         CardDaoInterface cDoa = daoFactory.createCardDao();
-        return cDoa.CreateCard(request);
+
+        try {
+            Card card = cDoa.CreateCard(request);
+            return new CreateCardResult(Codes.OK, card);
+        } catch (DaoException ex) {
+            ex.printStackTrace();
+            return new CreateCardResult(Codes.INTERNAL, "Internal Server Error");
+        }
     }
 }
