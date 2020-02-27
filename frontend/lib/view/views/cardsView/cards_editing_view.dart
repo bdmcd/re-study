@@ -7,6 +7,8 @@ import 'package:restudy/styles/colors.dart';
 import 'package:restudy/widgets/text_input_field_widget.dart';
 
 class CardsEditingView extends StatefulWidget {
+  CardsEditingView() : super(key: ValueKey<int>(1));
+
   @override
   CardsEditingViewState createState() {
     return CardsEditingViewState();
@@ -16,6 +18,7 @@ class CardsEditingView extends StatefulWidget {
 class CardsEditingViewState extends State<CardsEditingView> {
   final _formKey = GlobalKey<FormState>();
   final List<Card> cards = List(0);
+  final Key key = null;
 
   @override
   Widget build(BuildContext context) {

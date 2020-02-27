@@ -5,3 +5,4 @@ const Color TEXT_BLACK = Color.fromARGB(255, 40, 40, 40);
 const Color COLOR_APP_BG = Color.fromARGB(255, 249, 249, 249);
 const Color APP_PRIMARY_COLOR = Colors.blue;
 const Color SECONDARY_BUTTON_COLOR = Color.fromARGB(255, 140, 140, 140);
+const Color APP_DESTRUCTIVE_RED = Color.fromARGB(255, 190, 40, 40);

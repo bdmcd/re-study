@@ -55,7 +55,7 @@ class TestFieldInputFieldWidgetState extends State<TestFieldInputFieldWidget> {
               borderSide: BorderSide(color: APP_PRIMARY_COLOR),
             )),
           ),
-        )
+        ),
       ],
     );
   }

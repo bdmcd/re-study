@@ -33,3 +33,13 @@ class CardsEditCardEvent extends CardsEvent {
   @override
   List<Object> get props => [];
 }
+
+class CardsDeleteCardEvent extends CardsEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class CardsMoveCardEvent extends CardsEvent {
+  @override
+  List<Object> get props => [];
+}

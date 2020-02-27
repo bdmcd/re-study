@@ -8,6 +8,8 @@ import 'package:restudy/styles/spacings.dart';
 import 'package:restudy/styles/colors.dart';
 
 class EditCardView extends StatefulWidget {
+  EditCardView() : super(key: ValueKey<int>(3));
+
   @override
   EditCardViewState createState() {
     return EditCardViewState();
@@ -18,7 +20,7 @@ class EditCardViewState extends State<EditCardView> {
   // Form key allows field validation
   final _formKey = GlobalKey<FormState>();
   String answer = "";
-  String question = ""; 
+  String question = "";
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class EditCardViewState extends State<EditCardView> {
             )
           ],
         ),
-        body: Column (
+        body: Column(
           children: <Widget>[
             Form(
               // Form uses _formKey
@@ -82,6 +84,55 @@ class EditCardViewState extends State<EditCardView> {
                       },
                     ),
                   ),
+                  Padding(
+                      padding: const EdgeInsets.only(
+                          top: STD_VERTICAL_MARGIN * 2,
+                          right: STD_HORIZONTAL_MARGIN,
+                          left: STD_HORIZONTAL_MARGIN,
+                          ),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: ButtonTheme(
+                              height: STD_BUTTON_HEIGHT,
+                              minWidth: 170.0,
+                              child: FlatButton(
+                                onPressed: () {
+                                  deleteCard(context);
+                                },
+                                child: Text(
+                                  "Delete card",
+                                  style: TextStyle(
+                                    fontSize: BUT_FONT_SIZE,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                color: APP_DESTRUCTIVE_RED,
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: STD_HORIZONTAL_MARGIN / 2),
+                          Expanded(
+                            child: ButtonTheme(
+                              height: STD_BUTTON_HEIGHT,
+                              minWidth: 170.0,
+                              child: FlatButton(
+                                onPressed: () {
+                                  moveCard(context);
+                                },
+                                child: Text(
+                                  "Move card",
+                                  style: TextStyle(
+                                    fontSize: BUT_FONT_SIZE,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                color: APP_PRIMARY_COLOR,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ))
                 ],
               ),
             ),
@@ -93,5 +144,13 @@ class EditCardViewState extends State<EditCardView> {
 
   saveCard(BuildContext context) {
     CardsBloc.of(context).add(CardsSaveEvent());
+  }
+
+  deleteCard(BuildContext context) {
+    CardsBloc.of(context).add(CardsDeleteCardEvent());
+  }
+
+  moveCard(BuildContext context) {
+    CardsBloc.of(context).add(CardsMoveCardEvent());
   }
 }
