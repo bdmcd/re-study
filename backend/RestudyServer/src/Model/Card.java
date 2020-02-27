@@ -1,6 +1,7 @@
 package Model;
 
 public class Card {
+    private String guid;
     private String question;
     private String answer;
     private String setGuid;
@@ -8,6 +9,8 @@ public class Card {
     private String creatorGuid;
     private boolean correct;
     private boolean deleted;
+
+    public String getGuid() { return guid; }
 
     public String getQuestion() {
         return question;
@@ -36,6 +39,8 @@ public class Card {
     public boolean isDeleted() {
         return deleted;
     }
+
+    public void setGuid(String guid) { this.guid = guid; }
 
     public void setQuestion(String question) {
         this.question = question;

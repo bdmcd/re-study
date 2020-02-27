@@ -2,8 +2,6 @@ package Handler;
 
 import Auth.AuthException;
 import Auth.AuthServiceFactoryInterface;
-import Auth.AuthServiceInterface;
-import Auth.DummyAuth.DummyAuthServiceFactory;
 import Auth.FirebaseAuth.FirebaseAuthServiceFactory;
 import Request.GetCardsRequest;
 import Result.Codes;
@@ -12,6 +10,12 @@ import Service.GetCardsService;
 
 public class GetCardsHandler {
     public GetCardsResult HandleRequest(GetCardsRequest request) {
+        if (request == null) {
+            return new GetCardsResult(Codes.BAD_REQUEST, "Received null request");
+        } else if (request.getSetGuid() == null || request.getSetGuid().isEmpty()) {
+            return new GetCardsResult(Codes.BAD_REQUEST, "Request SetGuid cannot be null or empty");
+        }
+
         try {
             AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
 //            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();

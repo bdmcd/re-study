@@ -6,7 +6,7 @@ public class Set {
     private String creatorGuid;
 
     public Set(){}
-    public Set(String guid, String name, String creatorGuid) {
+    public Set(String guid, String creatorGuid, String name) {
         setGuid(guid);
         setName(name);
         setCreatorGuid(creatorGuid);
