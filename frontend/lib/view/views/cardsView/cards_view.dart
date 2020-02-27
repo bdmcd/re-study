@@ -32,13 +32,13 @@ class CardsViewState extends State<CardsView> {
               );
             } else if (state is CardsEditingCardState) {
               return AnimatedSwitcher(
-                  duration: Duration(milliseconds: 100),
+                  duration: Duration(milliseconds: 150),
                   switchOutCurve: Threshold(0),
                   transitionBuilder:
                       (Widget child, Animation<double> animation) {
                     return SlideTransition(
                       position: Tween<Offset>(
-                        begin: const Offset(0, .005),
+                        begin: const Offset(0, 1),
                         end: const Offset(0, 0),
                       ).animate(animation),
                       child: child,
