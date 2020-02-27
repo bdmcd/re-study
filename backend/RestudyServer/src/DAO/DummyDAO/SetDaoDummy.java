@@ -20,7 +20,13 @@ public class SetDaoDummy implements SetDaoInterface {
 
     @Override
     public Set UpdateSet(UpdateSetRequest request) {
-        return new Set();
+        Set set  = new Set();
+
+        set.setGuid(request.getGuid());
+        set.setName(request.getName());
+        set.setCreatorGuid("test_uid");
+
+        return set;
     }
 
     @Override

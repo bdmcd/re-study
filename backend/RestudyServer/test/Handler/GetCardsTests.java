@@ -31,18 +31,14 @@ public class GetCardsTests {
 
         for (Card card : cards) {
             assertNotEquals(card.getGuid(), null);
-            assertNotEquals(card.getSetName(), null);
             assertNotEquals(card.getSetGuid(), null);
             assertNotEquals(card.getAnswer(), null);
-            assertNotEquals(card.getSetName(), null);
             assertNotEquals(card.getQuestion(), null);
             assertNotEquals(card.getAnswer(), null);
 
             assertEquals(card.getGuid().isEmpty(), false);
-            assertEquals(card.getSetName().isEmpty(), false);
             assertEquals(card.getSetGuid().isEmpty(), false);
             assertEquals(card.getAnswer().isEmpty(), false);
-            assertEquals(card.getSetName().isEmpty(), false);
             assertEquals(card.getQuestion().isEmpty(), false);
             assertEquals(card.getAnswer().isEmpty(), false);
 

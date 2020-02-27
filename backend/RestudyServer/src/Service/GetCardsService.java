@@ -19,7 +19,7 @@ public class GetCardsService {
             Card[] cards = cDao.GetCards(request);
             return new GetCardsResult(Codes.OK, cards);
         } catch (DaoException e) {
-            e.printStackTrace();
+            //TODO: Log the exception here
             return new GetCardsResult(Codes.INTERNAL, "Internal Server Error");
         }
     }

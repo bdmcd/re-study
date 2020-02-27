@@ -19,7 +19,7 @@ public class CreateSetService {
             Set set  = sDao.CreateSet(request);
             return new CreateSetResult(Codes.OK, set);
         } catch (DaoException e) {
-            e.printStackTrace();
+            //TODO: Log the exception here
             return new CreateSetResult(Codes.INTERNAL, "Internal Server Error");
         }
     }

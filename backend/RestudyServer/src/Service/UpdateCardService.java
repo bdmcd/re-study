@@ -19,7 +19,7 @@ public class UpdateCardService {
             Card card = cDao.UpdateCard(request);
             return new UpdateCardResult(Codes.OK, card);
         } catch (DaoException e) {
-            e.printStackTrace();
+            //TODO: Log the exception here
             return new UpdateCardResult(Codes.INTERNAL, "Internal Server Error");
         }
     }

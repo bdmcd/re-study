@@ -19,7 +19,7 @@ public class CreateCardService {
             Card card = cDoa.CreateCard(request);
             return new CreateCardResult(Codes.OK, card);
         } catch (DaoException ex) {
-            ex.printStackTrace();
+            //TODO: Log the exception here
             return new CreateCardResult(Codes.INTERNAL, "Internal Server Error");
         }
     }
