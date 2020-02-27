@@ -11,7 +11,6 @@ public class CardDaoDummy implements CardDaoInterface {
     public Card CreateCard(CreateCardRequest request) {
         Card card = new Card();
 
-
         card.setGuid("card_guid");
         card.setQuestion(request.getQuestion());
         card.setAnswer(request.getAnswer());
@@ -23,7 +22,15 @@ public class CardDaoDummy implements CardDaoInterface {
 
     @Override
     public Card UpdateCard(UpdateCardRequest request) {
-        return new Card();
+        Card card = new Card();
+
+        card.setGuid(request.getGuid());
+        card.setQuestion(request.getQuestion());
+        card.setAnswer(request.getAnswer());
+        card.setDeleted(request.isDeleted());
+        card.setSetGuid(request.getSetGuid());
+
+        return card;
     }
 
     @Override
@@ -36,8 +43,6 @@ public class CardDaoDummy implements CardDaoInterface {
 
             card.setSetGuid(request.getSetGuid());
             card.setGuid("card_guid" + i);
-            card.setSetName("My Set");
-            card.setCreatorGuid("creator_guid");
             card.setDeleted(false);
             card.setQuestion("Question " + i);
             card.setAnswer("Answer " + i);
