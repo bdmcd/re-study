@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/bloc/cards_bloc.dart';
+import 'package:restudy/view/views/cardsView/edit_card.dart';
 import 'package:restudy/widgets/card_widget.dart';
 import 'package:restudy/widgets/divider_line_painter.dart';
 import 'package:restudy/styles/spacings.dart';
@@ -23,8 +24,10 @@ class CardsViewState extends State<CardsView> {
       child: Scaffold(
         body: BlocBuilder<CardsBloc, CardsState>(
           builder: (context, state) {
-            if (state is CardsEditingState) {
+            if (state is CardsEditingSetState) {
               return CardsEditingView();
+            } else if (state is CardsEditingCardState) {
+              return EditCardView();
             }
             return Scaffold(
               appBar: AppBar(
@@ -41,7 +44,7 @@ class CardsViewState extends State<CardsView> {
                         color: APP_PRIMARY_COLOR,
                       ),
                       onPressed: () {
-                        CardsBloc.of(context).add(CardsEditEvent());
+                        editSet(context);
                       })
                 ],
               ),
@@ -156,8 +159,9 @@ class CardsViewState extends State<CardsView> {
                                 includeIcon: true,
                                 actionIconButton: IconButton(
                                   icon: Icon(Icons.edit),
+                                  color: SECONDARY_BUTTON_COLOR,
                                   onPressed: () {
-                                    editCard();
+                                    editCard(context);
                                   },
                                 ),
                               )
@@ -173,7 +177,7 @@ class CardsViewState extends State<CardsView> {
                 padding: const EdgeInsets.only(bottom: 20.0),
                 child: FloatingActionButton.extended(
                   onPressed: () {
-                    studySet();
+                    studySet(context);
                   },
                   label: Text(
                     'Study',
@@ -193,16 +197,18 @@ class CardsViewState extends State<CardsView> {
   }
 
   editSet(BuildContext context) {
-    CardsBloc.of(context).add(CardsEditEvent());
+    CardsBloc.of(context).add(CardsEditSetEvent());
   }
 
   backToSets() {}
 
   addCard() {}
 
-  studySet() {
+  studySet(BuildContext context) {
     CardsBloc.of(context).add(CardsStudyEvent());
   }
 
-  editCard() {}
+  editCard(BuildContext context) {
+    CardsBloc.of(context).add(CardsEditCardEvent());
+  }
 }

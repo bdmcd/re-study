@@ -9,7 +9,7 @@ class CardsInitEvent extends CardsEvent {
   List<Object> get props => [];
 }
 
-class CardsEditEvent extends CardsEvent {
+class CardsEditSetEvent extends CardsEvent {
   @override
   List<Object> get props => [];
 }
@@ -25,6 +25,11 @@ class CardsAddCardEvent extends CardsEvent {
 }
 
 class CardsStudyEvent extends CardsEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class CardsEditCardEvent extends CardsEvent {
   @override
   List<Object> get props => [];
 }
