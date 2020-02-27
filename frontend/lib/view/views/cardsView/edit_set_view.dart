@@ -41,7 +41,7 @@ class EditSetViewState extends State<EditSetView> {
           )
         ],
       ),
-      body: Form (
+      body: Form(
         key: _formKey,
         child: SingleChildScrollView(
           child: Column(
@@ -68,7 +68,24 @@ class EditSetViewState extends State<EditSetView> {
                     ),
                   ),
                   Padding(
-                      padding: const EdgeInsets.only(top: STD_VERTICAL_MARGIN * 2, right: STD_HORIZONTAL_MARGIN, left: STD_HORIZONTAL_MARGIN),
+                      padding: const EdgeInsets.only(
+                          top: STD_VERTICAL_MARGIN * 2,
+                          right: STD_HORIZONTAL_MARGIN,
+                          left: STD_HORIZONTAL_MARGIN),
+                      child: Center(
+                        child: Text(
+                          "No cards",
+                          style: TextStyle(
+                            color: TEXT_HEADER_GREY,
+                            fontSize: TEXT_BODY_FONT_SIZE,
+                          ),
+                        ),
+                      )),
+                  Padding(
+                      padding: const EdgeInsets.only(
+                          top: STD_VERTICAL_MARGIN * 2,
+                          right: STD_HORIZONTAL_MARGIN,
+                          left: STD_HORIZONTAL_MARGIN),
                       child: ButtonTheme(
                         minWidth: MediaQuery.of(context).size.width,
                         height: STD_BUTTON_HEIGHT,
@@ -78,10 +95,13 @@ class EditSetViewState extends State<EditSetView> {
                               // addCard(context);
                             }
                           },
-                          child: Text("Delete set", style: TextStyle(
-                            color: Colors.white,
-                            fontSize: BUT_FONT_SIZE,
-                          ),),
+                          child: Text(
+                            "Delete set",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: BUT_FONT_SIZE,
+                            ),
+                          ),
                           color: APP_DESTRUCTIVE_RED,
                         ),
                       )),

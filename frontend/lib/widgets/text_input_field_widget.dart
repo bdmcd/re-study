@@ -18,7 +18,9 @@ class TestFieldInputFieldWidget extends StatefulWidget {
     this.obscureText = false,
     this.initialValue = "",
     this.autofocus = false,
-  });
+  }) {
+    userInput(initialValue);
+  }
 
   @override
   TestFieldInputFieldWidgetState createState() {
@@ -44,19 +46,32 @@ class TestFieldInputFieldWidgetState extends State<TestFieldInputFieldWidget> {
         Padding(
           padding:
               const EdgeInsets.symmetric(horizontal: STD_HORIZONTAL_MARGIN),
-          child: TextFormField(
-            autofocus: widget.autofocus,
-            initialValue: widget.initialValue,
-            onChanged: (text) {
-              widget.userInput(text);
-            },
-            obscureText: widget.obscureText,
-            validator: widget.validator,
-            style: TextStyle(fontSize: TEXT_FIELD_INPUT_FONT_SIZE),
-            decoration: InputDecoration(
+          child: Theme(
+            child: TextFormField(
+              autofocus: widget.autofocus,
+              initialValue: widget.initialValue,
+              onChanged: (text) {
+                widget.userInput(text);
+              },
+              obscureText: widget.obscureText,
+              validator: widget.validator,
+              style: TextStyle(fontSize: TEXT_FIELD_INPUT_FONT_SIZE),
+              decoration: InputDecoration(
                 focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: APP_PRIMARY_COLOR),
-            )),
+                  borderSide: BorderSide(color: APP_PRIMARY_COLOR),
+                ),
+                suffixIcon: IconButton(
+                    icon: Icon(
+                      Icons.clear,
+                    ),
+                    onPressed: () {
+                      widget.userInput("");
+                    }),
+              ),
+            ),
+            data: Theme.of(context).copyWith(
+              primaryColor: APP_PRIMARY_COLOR,
+            ),
           ),
         ),
       ],
