@@ -1,14 +1,13 @@
 package DAO;
 
+import DAO.Exception.DaoException;
+import Model.Card;
 import Request.CreateCardRequest;
 import Request.GetCardsRequest;
 import Request.UpdateCardRequest;
-import Result.CreateCardResult;
-import Result.GetCardsResult;
-import Result.UpdateCardResult;
 
 public interface CardDaoInterface {
-    CreateCardResult CreateCard(CreateCardRequest request);
-    UpdateCardResult UpdateCard(UpdateCardRequest request);
-    GetCardsResult GetCards(GetCardsRequest request);
+    Card CreateCard(CreateCardRequest request) throws DaoException;
+    Card UpdateCard(UpdateCardRequest request) throws DaoException;
+    Card[] GetCards(GetCardsRequest request) throws DaoException;
 }

@@ -5,6 +5,13 @@ public class Set {
     private String name;
     private String creatorGuid;
 
+    public Set(){}
+    public Set(String guid, String name, String creatorGuid) {
+        setGuid(guid);
+        setName(name);
+        setCreatorGuid(creatorGuid);
+    }
+
     public String getGuid() {
         return guid;
     }

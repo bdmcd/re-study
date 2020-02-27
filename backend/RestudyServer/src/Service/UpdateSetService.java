@@ -2,9 +2,11 @@ package Service;
 
 import DAO.DaoFactoryInterface;
 import DAO.DummyDAO.DaoFactoryDummy;
-import DAO.DynamoDB.DaoFactoryDynamoDB;
+import DAO.Exception.DaoException;
 import DAO.SetDaoInterface;
+import Model.Set;
 import Request.UpdateSetRequest;
+import Result.Codes;
 import Result.UpdateSetResult;
 
 public class UpdateSetService {
@@ -12,6 +14,13 @@ public class UpdateSetService {
 //        DaoFactoryInterface daoFactory = new DaoFactoryDynamoDB();
         DaoFactoryInterface daoFactory = new DaoFactoryDummy();
         SetDaoInterface sDao = daoFactory.createSetDao();
-        return sDao.UpdateSet(request);
+
+        try {
+            Set set = sDao.UpdateSet(request);
+            return new UpdateSetResult(Codes.OK, set);
+        } catch (DaoException e) {
+            e.printStackTrace();
+            return new UpdateSetResult(Codes.INTERNAL, "Internal Server Error");
+        }
     }
 }

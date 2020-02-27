@@ -8,10 +8,14 @@ public class CreateCardResult {
     private Card body;
 
     public CreateCardResult(){}
-    public CreateCardResult(int statusCode, String error, Card body) {
+    public CreateCardResult(int statusCode, Card body) {
         setStatusCode(statusCode);
         setError(error);
         setBody(body);
+    }
+    public CreateCardResult(int statusCode, String error) {
+        setStatusCode(statusCode);
+        setError(error);
     }
 
     public int getStatusCode() {

@@ -2,9 +2,11 @@ package Service;
 
 import DAO.DaoFactoryInterface;
 import DAO.DummyDAO.DaoFactoryDummy;
-import DAO.DynamoDB.DaoFactoryDynamoDB;
+import DAO.Exception.DaoException;
 import DAO.UserDAOInterface;
+import Model.User;
 import Request.RegisterUserRequest;
+import Result.Codes;
 import Result.RegisterUserResult;
 
 public class RegisterUserService {
@@ -12,6 +14,13 @@ public class RegisterUserService {
 //        DaoFactoryInterface daoFactory = new DaoFactoryDynamoDB();
         DaoFactoryInterface daoFactory = new DaoFactoryDummy();
         UserDAOInterface uDao = daoFactory.createUserDao();
-        return uDao.RegisterUser(request);
+
+        try {
+            User user = uDao.RegisterUser(request);
+            return new RegisterUserResult(Codes.OK, user);
+        } catch (DaoException e) {
+            e.printStackTrace();
+            return new RegisterUserResult(Codes.INTERNAL, "Internal Server Error");
+        }
     }
 }

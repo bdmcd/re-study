@@ -13,11 +13,11 @@ import Service.RegisterUserService;
 public class RegisterUserHandler {
     public RegisterUserResult HandleRequest(RegisterUserRequest request) {
         if (request == null) {
-            return new RegisterUserResult(Codes.BAD_REQUEST, "Received null request", null);
+            return new RegisterUserResult(Codes.BAD_REQUEST, "Received null request");
         } else if (request.getGuid() == null || request.getGuid().isEmpty()) {
-            return new RegisterUserResult(Codes.BAD_REQUEST, "Request Guid cannot be null or empty", null);
+            return new RegisterUserResult(Codes.BAD_REQUEST, "Request Guid cannot be null or empty");
         } else if (request.getName() == null || request.getName().isEmpty()) {
-            return new RegisterUserResult(Codes.BAD_REQUEST, "Request Name cannot be null or empty", null);
+            return new RegisterUserResult(Codes.BAD_REQUEST, "Request Name cannot be null or empty");
         }
 
         try {
@@ -26,7 +26,7 @@ public class RegisterUserHandler {
             authFactory.createAuthService().authenticate(request.getToken());
         } catch(AuthException e) {
             e.printStackTrace();
-            return new RegisterUserResult(Codes.UNAUTHORIZED, "User not authorized", null);
+            return new RegisterUserResult(Codes.UNAUTHORIZED, "User not authorized");
         }
 
         return RegisterUserService.processRequest(request);

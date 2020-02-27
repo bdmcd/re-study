@@ -8,7 +8,12 @@ public class UpdateCardResult {
     private Card body;
 
     public UpdateCardResult() {}
-    public UpdateCardResult(int statusCode, String error, Card body) {
+    public UpdateCardResult(int statusCode, Card body) {
+        this.statusCode = statusCode;
+        this.error = error;
+        this.body = body;
+    }
+    public UpdateCardResult(int statusCode, String error) {
         this.statusCode = statusCode;
         this.error = error;
         this.body = body;
