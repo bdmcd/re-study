@@ -28,7 +28,7 @@ public class UpdateSetRequest {
         this.name = name;
     }
 
-    public void setToken() { 
+    public void setToken(String token) {
       this.token = token; 
     }
 

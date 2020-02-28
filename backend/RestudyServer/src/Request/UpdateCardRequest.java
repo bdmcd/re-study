@@ -6,7 +6,6 @@ public class UpdateCardRequest {
     private String newSetGuid;
     private String question;
     private String answer;
-    private String setGuid;
     private boolean deleted;
     private String token;
 
