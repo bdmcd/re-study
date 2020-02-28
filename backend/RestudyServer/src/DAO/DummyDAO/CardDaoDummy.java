@@ -36,8 +36,7 @@ public class CardDaoDummy implements CardDaoInterface {
 
             card.setSetGuid(request.getSetGuid());
             card.setGuid("card_guid" + i);
-            card.setSetName("My Set");
-            card.setCreatorGuid("creator_guid");
+//            card.setSetName("My Set");
             card.setDeleted(false);
             card.setQuestion("Question " + i);
             card.setAnswer("Answer " + i);

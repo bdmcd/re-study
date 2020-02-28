@@ -2,6 +2,8 @@ package Request;
 
 public class UpdateCardRequest {
     private String guid;
+    private String setGuid;
+    private String newSetGuid;
     private String question;
     private String answer;
     private String setReference;
@@ -27,6 +29,13 @@ public class UpdateCardRequest {
 
     public String getToken() { return token; }
 
+    public String getNewSetGuid() {
+        return newSetGuid;
+    }
+
+    public String getSetGuid() {
+        return setGuid;
+    }
 
     public int getRetentionScore() {
         return retentionScore;
@@ -61,4 +70,13 @@ public class UpdateCardRequest {
     }
 
     public  void setToken(String token) { this.token = token; }
+
+
+    public void setSetGuid(String setGuid) {
+        this.setGuid = setGuid;
+    }
+
+    public void setNewSetGuid(String newSetGuid) {
+        this.newSetGuid = newSetGuid;
+    }
 }

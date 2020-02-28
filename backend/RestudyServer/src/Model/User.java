@@ -2,7 +2,7 @@ package Model;
 
 public class User {
     private String name;
-    private String guid;
+    private String guid; // must not be null, comes from fire-base
 
     public String getName() {
         return name;
