@@ -19,7 +19,7 @@ public class UpdateSetService {
             Set set = sDao.UpdateSet(request);
             return new UpdateSetResult(Codes.OK, set);
         } catch (DaoException e) {
-            e.printStackTrace();
+            //TODO: Log the exception here
             return new UpdateSetResult(Codes.INTERNAL, "Internal Server Error");
         }
     }

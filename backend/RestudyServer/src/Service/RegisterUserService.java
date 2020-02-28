@@ -19,7 +19,7 @@ public class RegisterUserService {
             User user = uDao.RegisterUser(request);
             return new RegisterUserResult(Codes.OK, user);
         } catch (DaoException e) {
-            e.printStackTrace();
+            //TODO: Log the exception here
             return new RegisterUserResult(Codes.INTERNAL, "Internal Server Error");
         }
     }
