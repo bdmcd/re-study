@@ -56,7 +56,6 @@ class TestFieldInputFieldWidgetState extends State<TestFieldInputFieldWidget> {
 
   clearField() {
     setState(() {
-      // FocusScope.of(context).requestFocus(myFocusNode);
       _textFieldController.clear();
       widget.userInput(_textFieldController.text);
     });
