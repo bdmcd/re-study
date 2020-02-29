@@ -7,6 +7,7 @@ public class UpdateCardRequest {
     private String setReference;
     private int retentionScore;
     private boolean deleted;
+    private String token;
 
     public String getGuid() {
         return guid;
@@ -23,6 +24,8 @@ public class UpdateCardRequest {
     public String getSetReference() {
         return setReference;
     }
+
+    public String getToken() { return token; }
 
 
     public int getRetentionScore() {
@@ -56,4 +59,6 @@ public class UpdateCardRequest {
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
+
+    public  void setToken(String token) { this.token = token; }
 }
