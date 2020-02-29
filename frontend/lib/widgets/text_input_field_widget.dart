@@ -9,7 +9,7 @@ class TestFieldInputFieldWidget extends StatefulWidget {
   final bool obscureText;
   final String initialValue;
   final bool autofocus;
-  
+
   TestFieldInputFieldWidget({
     @required this.header,
     @required this.userInput,
@@ -28,14 +28,23 @@ class TestFieldInputFieldWidget extends StatefulWidget {
 }
 
 class TestFieldInputFieldWidgetState extends State<TestFieldInputFieldWidget> {
-  TextEditingController _textFieldController; 
+  TextEditingController _textFieldController;
   FocusNode myFocusNode;
-  
+  bool hasFocus;
+
   @override
   void initState() {
     super.initState();
     _textFieldController = TextEditingController(text: widget.initialValue);
     myFocusNode = FocusNode();
+    myFocusNode.addListener(_onFocusChange);
+    hasFocus = widget.autofocus;
+  }
+
+  void _onFocusChange(){
+    setState(() {
+      hasFocus = myFocusNode.hasFocus;
+    });
   }
 
   @override
@@ -47,15 +56,16 @@ class TestFieldInputFieldWidgetState extends State<TestFieldInputFieldWidget> {
 
   clearField() {
     setState(() {
-      FocusScope.of(context).requestFocus(myFocusNode);
+      // FocusScope.of(context).requestFocus(myFocusNode);
       _textFieldController.clear();
       widget.userInput(_textFieldController.text);
     });
   }
 
-  onTextChange (text) {
-    widget.userInput(text);
-    setState(() {});
+  onTextChange(text) {
+    setState(() {
+      widget.userInput(text);
+    });
   }
 
   @override
@@ -79,11 +89,9 @@ class TestFieldInputFieldWidgetState extends State<TestFieldInputFieldWidget> {
             child: TextFormField(
               focusNode: myFocusNode,
               autofocus: widget.autofocus,
-              // initialValue: widget.initialValue,
               controller: _textFieldController,
               onChanged: (text) {
                 onTextChange(text);
-                // fieldIsEmpty = text.isEmpty;
               },
               obscureText: widget.obscureText,
               validator: widget.validator,
@@ -93,7 +101,8 @@ class TestFieldInputFieldWidgetState extends State<TestFieldInputFieldWidget> {
                   borderSide: BorderSide(color: APP_PRIMARY_COLOR),
                 ),
                 suffixIcon: Visibility(
-                  visible: _textFieldController.text.isNotEmpty,
+                  visible: _textFieldController.text.isNotEmpty &&
+                      hasFocus,
                   child: IconButton(
                       icon: Icon(
                         Icons.clear,
