@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/styles/colors.dart';
 import 'package:restudy/view/views/cards_view.dart';
 import 'package:restudy/view/views/login_view.dart';
+import 'package:restudy/view/views/sets_view.dart';
 import 'package:restudy/widgets/loading_widget.dart';
 
 import 'bloc/auth_bloc.dart';
@@ -42,8 +43,12 @@ class AuthenticationRoot extends StatelessWidget {
           return LoginView();
         } else if (state is AuthLoadingState) {
           return LoadingWidget();
+        } else if (state is AuthErrorState) {
+          print("AUTH ERROR");
+          print(state.error);
+          return LoginView();
         }
-        return Container(child: CardsView());
+        return Container(child: SetsView());
       },
     );
   }

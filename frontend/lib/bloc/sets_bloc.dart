@@ -9,7 +9,8 @@ part 'sets_event.dart';
 part 'sets_state.dart';
 
 class SetsBloc extends Bloc<SetsEvent, SetsState> {
-  static SetsBloc of(BuildContext context) => BlocProvider.of<SetsBloc>(context);
+  static SetsBloc of(BuildContext context) =>
+      BlocProvider.of<SetsBloc>(context);
 
   Authenticater _auth = AuthFactory.instance.authenticater;
 
@@ -30,24 +31,30 @@ class SetsBloc extends Bloc<SetsEvent, SetsState> {
   ) async* {
     if (event is SetsInitEvent) {
       yield* _initialize(event);
-    } if (event is AddSetEvent) {
+    }
+    if (event is AddSetEvent) {
       yield* _addSet(event);
+    }
+    if (event is SaveSetEvent) {
+      yield* _saveSet(event);
     }
   }
 
   Stream<SetsState> _initialize(SetsInitEvent event) async* {
     final authUser = await _auth.currentUser;
     print("In init sets");
-    if (authUser == null) {
-      yield AuthErrorState();
-    } else {
-      // yield _stateFromAuthUser(authUser);
-    }
+    yield SetsInitialState();
   }
-  
+
+  Stream<SetsState> _saveSet(SaveSetEvent event) async* {
+    print("In save set:" + event.setTitle);
+    yield SetsInitialState();
+  }
+
   Stream<SetsState> _addSet(AddSetEvent event) async* {
     final savedState = state;
     print("In add set");
+    yield AddSetState();
     // yield AuthLoadingState();
 
     // try {
@@ -122,7 +129,7 @@ class SetsBloc extends Bloc<SetsEvent, SetsState> {
   //   if (authUser == null) {
   //     return AuthUnauthenticatedState();
   //   }
-    
+
   //   return AuthAuthenticatedState(
   //     getToken: authUser.token,
   //     user: User(
