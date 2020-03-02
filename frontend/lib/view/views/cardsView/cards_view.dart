@@ -158,6 +158,10 @@ class CardsViewState extends State<CardsView> {
                               children: <Widget>[
                                 Center(
                                   child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      side: BorderSide(color: BORDER_GREY),
+                                      borderRadius: BorderRadius.circular(4.0),
+                                    ),
                                     child: InkWell(
                                       splashColor:
                                           APP_PRIMARY_COLOR.withAlpha(30),

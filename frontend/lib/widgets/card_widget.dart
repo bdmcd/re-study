@@ -10,7 +10,12 @@ class CardWidget extends StatefulWidget {
   final IconButton actionIconButton;
   final bool includeIcon;
 
-  CardWidget({Key key, @required this.questionText, @required this.answerText, this.actionIconButton, this.includeIcon = false})
+  CardWidget(
+      {Key key,
+      @required this.questionText,
+      @required this.answerText,
+      this.actionIconButton,
+      this.includeIcon = false})
       : super(key: key);
 
   @override
@@ -32,6 +37,10 @@ class _CardWidgetState extends State<CardWidget> {
     text = this.front ? this.widget.questionText : this.widget.answerText;
     return Center(
       child: Card(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: BORDER_GREY),
+          borderRadius: BorderRadius.circular(4.0),
+        ),
         child: InkWell(
           splashColor: APP_PRIMARY_COLOR.withAlpha(30),
           onTap: () {
@@ -60,7 +69,9 @@ class _CardWidgetState extends State<CardWidget> {
                     ),
                   ),
                   Positioned(
-                    child: widget.includeIcon ? widget.actionIconButton : Container(),
+                    child: widget.includeIcon
+                        ? widget.actionIconButton
+                        : Container(),
                     bottom: 0,
                     right: 0,
                   )
