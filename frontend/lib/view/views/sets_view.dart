@@ -28,7 +28,8 @@ class SetsView extends StatelessWidget {
         listener: (context, state) {
           if (state is AuthErrorState) {
             Scaffold.of(context).hideCurrentSnackBar();
-            Scaffold.of(context).showSnackBar(SnackBar(content: Text(state.error)));
+            Scaffold.of(context)
+                .showSnackBar(SnackBar(content: Text(state.error)));
           }
         },
       ),
@@ -228,9 +229,27 @@ class SetsView extends StatelessWidget {
       i += 2;
     }
 
+    final header = Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Text("       "),
+        Text("Re:Study"),
+        InkWell(
+          child: Icon(
+            Icons.settings,
+            color: Colors.blue,
+          ),
+          splashColor: Colors.blue[50],
+          onTap: () {
+            _openSettings(context);
+          },
+        ),
+      ],
+    );
     return Scaffold(
       appBar: AppBar(
-        title: Text("Re:Study"),
+        title: header,
+        centerTitle: true,
       ),
       body: ListView(
         children: <Widget>[
@@ -263,5 +282,10 @@ class SetsView extends StatelessWidget {
   _openSet(BuildContext context, String setGuid) {
     print("Open Set " + setGuid);
     // change to cards view for setGuid's set
+  }
+
+  _openSettings(BuildContext context) {
+    print("Open Settings");
+    // open settings
   }
 }
