@@ -13,11 +13,13 @@ class CardsView extends StatefulWidget {
 class CardsViewState extends State<CardsView> {
   String email = "";
   String password = "";
+  // TODO: Substitute for bloc
   bool editMode = false;
 
   @override
   Widget build(BuildContext context) {
     if (editMode) {
+      // TODO: IMPL bloc to switch views based on editing or not.
       return Text("Edit Mode");
     }
     return Scaffold(

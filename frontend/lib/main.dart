@@ -37,19 +37,20 @@ class Root extends StatelessWidget {
 class AuthenticationRoot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(
-      builder: (context, state) {
-        if (state is AuthUnauthenticatedState) {
-          return LoginView();
-        } else if (state is AuthLoadingState) {
-          return LoadingWidget();
-        } else if (state is AuthErrorState) {
-          print("AUTH ERROR");
-          print(state.error);
-          return LoginView();
-        }
-        return Container(child: SetsView());
-      },
+    return Scaffold(
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthErrorState) {
+            Scaffold.of(context).showSnackBar(SnackBar(content: Text(state.error),));
+          }
+        },
+        builder: (context, state) {
+          if (state is AuthUnauthenticatedState || state is AuthLoadingState) {
+            return LoginView();
+          } 
+          return Container(child: SetsView());
+        },
+      ),
     );
   }
 }
