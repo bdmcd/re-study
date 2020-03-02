@@ -8,13 +8,11 @@ abstract class SetsEvent extends Equatable {
 
 class SetsInitEvent extends SetsEvent {
   @override
-  // TODO: implement props
   List<Object> get props => [];
 }
 
 class AddSetEvent extends SetsEvent {
   @override
-  // TODO: implement props
   List<Object> get props => [];
 }
 
@@ -26,6 +24,5 @@ class SaveSetEvent extends SetsEvent {
   });
 
   @override
-  // TODO: implement props
   List<Object> get props => [setTitle];
 }

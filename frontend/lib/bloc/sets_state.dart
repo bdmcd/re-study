@@ -19,14 +19,6 @@ class AddSetState extends SetsState {
   List<Object> get props => [];
 }
 
-class SetCreatedState extends SetsState {
-  final String name;
-
-  SetCreatedState(this.name);
-  @override
-  List<Object> get props => [];
-}
-
 class AuthErrorState extends SetsState {
   final String error;
 

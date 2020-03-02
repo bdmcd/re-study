@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/bloc/sets_bloc.dart';
 import 'package:restudy/styles/colors.dart';
 import 'package:restudy/widgets/text_input_field_widget.dart';
+import 'package:restudy/model/set_info.dart';
 
 class SetsView extends StatelessWidget {
   double boxSize;
@@ -25,10 +26,10 @@ class SetsView extends StatelessWidget {
           return setsView(context);
         },
         listener: (context, state) {
-          // if (state is AuthErrorState) {
-          //   Scaffold.of(context).hideCurrentSnackBar();
-          //   Scaffold.of(context).showSnackBar(SnackBar(content: Text(state.error)));
-          // }
+          if (state is AuthErrorState) {
+            Scaffold.of(context).hideCurrentSnackBar();
+            Scaffold.of(context).showSnackBar(SnackBar(content: Text(state.error)));
+          }
         },
       ),
     );
@@ -101,7 +102,7 @@ class SetsView extends StatelessWidget {
     );
   }
 
-  Widget addBlock(BuildContext context, IconData icon, String setName) {
+  Widget addBlock(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(13),
       child: Container(
@@ -116,12 +117,12 @@ class SetsView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Icon(
-                icon,
+                Icons.add,
                 size: this.boxSize / 3,
                 color: APP_PRIMARY_COLOR,
               ),
               Text(
-                setName,
+                "Add Set",
                 style: TextStyle(
                   color: APP_PRIMARY_COLOR,
                 ),
@@ -136,10 +137,7 @@ class SetsView extends StatelessWidget {
     );
   }
 
-  Widget setBlock(BuildContext context, IconData icon, String setName) {
-    int numCards = 5;
-    double accuracy = 4.5;
-
+  Widget setBlock(BuildContext context, IconData icon, SetInfo setInfo) {
     return Padding(
       padding: const EdgeInsets.all(13),
       child: Container(
@@ -164,42 +162,70 @@ class SetsView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 15.0),
                 child: Text(
-                  setName,
+                  setInfo.setTitle,
                   style: TextStyle(fontSize: 17),
                 ),
               ),
               Text(
-                numCards.toString() + " cards",
+                setInfo.numCards.toString() + " cards",
                 style: TextStyle(color: Colors.grey),
               ),
               Text(
-                accuracy.toString() + "% accuracy",
+                setInfo.accuracy.toString() + "% accuracy",
                 style: TextStyle(color: Colors.grey),
               ),
             ],
           ),
-          onPressed: () {},
+          onPressed: () {
+            // get cards from set via setInfo.guid
+            _openSet(context, setInfo.guid);
+          },
         ),
       ),
     );
   }
 
+  final mockSets = [
+    SetInfo(setTitle: "Biology", accuracy: 10.3, numCards: 17, guid: "1"),
+    SetInfo(setTitle: "Chemistry", accuracy: 5.7, numCards: 20, guid: "2"),
+    SetInfo(setTitle: "CS 428", accuracy: 80.9, numCards: 13, guid: "3"),
+    SetInfo(setTitle: "English", accuracy: 12.4, numCards: 8, guid: "4"),
+    SetInfo(setTitle: "Spanish", accuracy: 33.0, numCards: 42, guid: "5"),
+    SetInfo(
+        setTitle: "Book of Mormon", accuracy: 46.2, numCards: 14, guid: "6"),
+  ];
+
+  final mockTodaySet = SetInfo(
+    setTitle: "Today's Set",
+    accuracy: 8.2,
+    numCards: 24,
+    guid: "TODAY",
+  );
+
   Widget setsView(BuildContext context) {
-    final addSetBox = addBlock(context, Icons.add, "Add Set");
-    final todaysSet = setBlock(context, Icons.calendar_today, "Today's Set");
+    final addSetBox = addBlock(context);
+    final todaysSet = setBlock(
+      context,
+      Icons.calendar_today,
+      mockTodaySet,
+    );
 
     var sets = <Widget>[];
     var i = 0;
-    while (i < 10) {
+    while (i < mockSets.length) {
+      var temp = <Widget>[
+        setBlock(context, Icons.alarm_on, mockSets[i]),
+      ];
+      if (i < mockSets.length - 1) {
+        temp.add(setBlock(context, Icons.alarm_on, mockSets[i + 1]));
+      }
+
       sets.add(
         Row(
-          children: <Widget>[
-            setBlock(context, Icons.alarm_on, "Test Set"),
-            setBlock(context, Icons.alarm_on, "Test Set"),
-          ],
+          children: temp,
         ),
       );
-      i += 1;
+      i += 2;
     }
 
     return Scaffold(
@@ -207,8 +233,6 @@ class SetsView extends StatelessWidget {
         title: Text("Re:Study"),
       ),
       body: ListView(
-        // mainAxisAlignment: MainAxisAlignment.start,
-        // crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             children: <Widget>[
@@ -224,31 +248,6 @@ class SetsView extends StatelessWidget {
     );
   }
 
-  // Widget consumer() {
-  //   return BlocConsumer<SetsBloc, SetsState>(
-  //     builder: (context, state) {
-  //       print(state);
-  //       // return Center(
-  //       return Column(
-  //         mainAxisAlignment: MainAxisAlignment.center,
-  //         children: <Widget>[
-  //           Text("TEST"),
-  //         ],
-  //       );
-  //       // if (state is AuthLoadingState) {
-  //       //   return Center(
-  //       //     child: CircularProgressIndicator()
-  //       //   );
-  //       // }
-  //     },
-  //     listener: (context, state) {
-  //       // if (state is AuthErrorState) {
-  //       //   Scaffold.of(context).hideCurrentSnackBar();
-  //       //   Scaffold.of(context).showSnackBar(SnackBar(content: Text(state.error)));
-  //       // }
-  //     },
-  //   );
-  // }
   _addSet(BuildContext context) {
     SetsBloc.of(context).add(AddSetEvent());
   }
@@ -259,5 +258,10 @@ class SetsView extends StatelessWidget {
 
   _viewSets(BuildContext context) {
     SetsBloc.of(context).add(SetsInitEvent());
+  }
+
+  _openSet(BuildContext context, String setGuid) {
+    print("Open Set " + setGuid);
+    // change to cards view for setGuid's set
   }
 }
