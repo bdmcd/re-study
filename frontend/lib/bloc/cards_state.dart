@@ -44,6 +44,11 @@ class CardsEditingCardState extends CardsState {
   List<Object> get props => [];
 }
 
+class CardsMovingCardState extends CardsState {
+  @override
+  List<Object> get props => [];
+}
+
 class CardsErrorState extends CardsState {
   final String error;
 

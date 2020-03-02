@@ -9,6 +9,7 @@ import 'package:restudy/styles/spacings.dart';
 import 'package:restudy/styles/colors.dart';
 
 import 'edit_set_view.dart';
+import 'move_card_view.dart';
 
 
 class CardsView extends StatefulWidget {
@@ -61,6 +62,21 @@ class CardsViewState extends State<CardsView> {
                   );
                 },
                 child: AddCardView(),
+              );
+            } else if (state is CardsMovingCardState) {
+              return AnimatedSwitcher(
+                duration: Duration(milliseconds: 150),
+                switchOutCurve: Threshold(0),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  return SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(0, 1),
+                      end: const Offset(0, 0),
+                    ).animate(animation),
+                    child: child,
+                  );
+                },
+                child: MoveCardView(),
               );
             }
             return AnimatedSwitcher(

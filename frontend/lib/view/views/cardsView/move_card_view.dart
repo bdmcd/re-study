@@ -7,16 +7,16 @@ import 'package:restudy/widgets/text_input_field_widget.dart';
 import 'package:restudy/styles/spacings.dart';
 import 'package:restudy/styles/colors.dart';
 
-class AddCardView extends StatefulWidget {
-  AddCardView() : super(key: ValueKey<int>(4));
+class MoveCardView extends StatefulWidget {
+  MoveCardView() : super(key: ValueKey<int>(4));
 
   @override
-  AddCardViewState createState() {
-    return AddCardViewState();
+  MoveCardViewState createState() {
+    return MoveCardViewState();
   }
 }
 
-class AddCardViewState extends State<AddCardView> {
+class MoveCardViewState extends State<MoveCardView> {
   // Form key allows field validation
   final _formKey = GlobalKey<FormState>();
   String answer = "";
@@ -27,7 +27,7 @@ class AddCardViewState extends State<AddCardView> {
     return Container(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Add Card"),
+          title: Text("Move to Set"),
           actions: <Widget>[
             FlatButton(
               onPressed: () {

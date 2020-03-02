@@ -40,8 +40,12 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
       yield* _addCard(event);
     } else if (event is CardsStudyEvent) {
       // yield* _signOut(event);
+    } else if (event is CardsMoveCardEvent) {
+      yield* _moveCard(event);
     } else if (event is CardsEditCardEvent) {
       yield* _editCard(event);
+    } else if (event is CardsMoveCardToSetEvent) {
+      yield* _moveCardToSet(event);
     }
   }
 
@@ -56,6 +60,32 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
     try {
       yield CardsSavedState();
+    } catch(e) {
+      print('Unknown exception caught in CardsBloc._initialize() $e');
+      yield* _flashError(CardsErrorState("Could not load cards from set"), savedState);
+    }
+  }
+
+  Stream<CardsState> _moveCard(CardsEvent event) async* {
+    final savedState = state;
+    yield CardsLoadingState();
+
+    try {
+      yield CardsMovingCardState();
+    } catch(e) {
+      print('Unknown exception caught in CardsBloc._initialize() $e');
+      yield* _flashError(CardsErrorState("Could not load cards from set"), savedState);
+    }
+  }
+
+  Stream<CardsState> _moveCardToSet(CardsEvent event) async* {
+    final savedState = state;
+    yield CardsLoadingState();
+
+    // add moving to set
+
+    try {
+      yield CardsInitialState();
     } catch(e) {
       print('Unknown exception caught in CardsBloc._initialize() $e');
       yield* _flashError(CardsErrorState("Could not load cards from set"), savedState);
