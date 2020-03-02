@@ -5,6 +5,8 @@ import 'package:restudy/styles/colors.dart';
 import 'package:restudy/widgets/text_input_field_widget.dart';
 import 'package:restudy/model/set_info.dart';
 
+import 'cardsView/cards_view.dart';
+
 class SetsView extends StatelessWidget {
   double boxSize;
 
@@ -282,6 +284,9 @@ class SetsView extends StatelessWidget {
   _openSet(BuildContext context, String setGuid) {
     print("Open Set " + setGuid);
     // change to cards view for setGuid's set
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => CardsView(setGuid: setGuid,)),
+    );
   }
 
   _openSettings(BuildContext context) {

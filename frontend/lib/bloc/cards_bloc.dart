@@ -14,7 +14,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
   
   MockSetProxy _set = MockSetProxy();
 
-  CardsBloc() {
+  CardsBloc(setGuid) {
     init();
   }
   

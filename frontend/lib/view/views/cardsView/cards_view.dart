@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/bloc/cards_bloc.dart';
@@ -13,6 +14,10 @@ import 'move_card_view.dart';
 
 
 class CardsView extends StatefulWidget {
+  final setGuid;
+
+  CardsView({@required this.setGuid});
+
   @override
   CardsViewState createState() {
     return CardsViewState();
@@ -23,7 +28,7 @@ class CardsViewState extends State<CardsView> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => CardsBloc(),
+      create: (_) => CardsBloc(widget.setGuid),
       child: Scaffold(
         body: BlocBuilder<CardsBloc, CardsState>(
           builder: (context, state) {
@@ -90,7 +95,7 @@ class CardsViewState extends State<CardsView> {
                     color: APP_PRIMARY_COLOR,
                     icon: Icon(Icons.arrow_back),
                     onPressed: () {
-                      
+                        _backToSets(context);
                     },
                   ),
                   actions: <Widget>[
@@ -100,7 +105,7 @@ class CardsViewState extends State<CardsView> {
                           color: APP_PRIMARY_COLOR,
                         ),
                         onPressed: () {
-                          editSet(context);
+                          _editSet(context);
                         })
                   ],
                 ),
@@ -182,7 +187,7 @@ class CardsViewState extends State<CardsView> {
                                       splashColor:
                                           APP_PRIMARY_COLOR.withAlpha(30),
                                       onTap: () {
-                                        addCard(context);
+                                        _addCard(context);
                                       },
                                       child: Container(
                                         width:
@@ -222,7 +227,7 @@ class CardsViewState extends State<CardsView> {
                                     icon: Icon(Icons.edit),
                                     color: SECONDARY_BUTTON_COLOR,
                                     onPressed: () {
-                                      editCard(context);
+                                      _editCard(context);
                                     },
                                   ),
                                 )
@@ -238,7 +243,7 @@ class CardsViewState extends State<CardsView> {
                   padding: const EdgeInsets.only(bottom: 20.0),
                   child: FloatingActionButton.extended(
                     onPressed: () {
-                      studySet(context);
+                      _studySet(context);
                     },
                     label: Text(
                       'Study',
@@ -258,21 +263,23 @@ class CardsViewState extends State<CardsView> {
     );
   }
 
-  editSet(BuildContext context) {
+  _editSet(BuildContext context) {
     CardsBloc.of(context).add(CardsEditSetEvent());
   }
 
-  backToSets() {}
+  _backToSets(context) {
+    Navigator.of(context).pop();
+  }
 
-  addCard(BuildContext context) {
+  _addCard(BuildContext context) {
     CardsBloc.of(context).add(CardsAddCardEvent());
   }
 
-  studySet(BuildContext context) {
+  _studySet(BuildContext context) {
     CardsBloc.of(context).add(CardsStudyEvent());
   }
 
-  editCard(BuildContext context) {
+  _editCard(BuildContext context) {
     CardsBloc.of(context).add(CardsEditCardEvent());
   }
 }
