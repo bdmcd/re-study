@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:restudy/widgets/divider_line_painter.dart';
+import 'package:restudy/bloc/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/view/views/cardsView/cards_view.dart';
 import 'package:restudy/widgets/divider_line_painter.dart';
