@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restudy/bloc/auth_bloc.dart';
 import 'package:restudy/bloc/sets_bloc.dart';
 import 'package:restudy/styles/colors.dart';
+import 'package:restudy/view/views/settings_view.dart';
 import 'package:restudy/widgets/text_input_field_widget.dart';
 import 'package:restudy/model/set_info.dart';
 
@@ -26,7 +28,7 @@ class SetsView extends StatelessWidget {
           return setsView(context);
         },
         listener: (context, state) {
-          if (state is AuthErrorState) {
+          if (state is AddSetsErrorState) {
             Scaffold.of(context).hideCurrentSnackBar();
             Scaffold.of(context)
                 .showSnackBar(SnackBar(content: Text(state.error)));
@@ -284,8 +286,14 @@ class SetsView extends StatelessWidget {
     // change to cards view for setGuid's set
   }
 
-  _openSettings(BuildContext context) {
-    print("Open Settings");
-    // open settings
+  _openSettings(BuildContext prevContext) {
+    Navigator.of(prevContext).push(
+      new MaterialPageRoute(
+        builder: (context) => BlocProvider.value(
+          value: AuthBloc.of(prevContext),
+          child: SettingsView(),
+        )
+      )
+    );
   }
 }

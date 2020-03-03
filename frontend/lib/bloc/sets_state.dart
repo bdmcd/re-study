@@ -19,10 +19,10 @@ class AddSetState extends SetsState {
   List<Object> get props => [];
 }
 
-class AuthErrorState extends SetsState {
+class AddSetsErrorState extends SetsState {
   final String error;
 
-  const AuthErrorState([this.error]);
+  const AddSetsErrorState([this.error]);
 
   @override
   List<Object> get props => [error];
