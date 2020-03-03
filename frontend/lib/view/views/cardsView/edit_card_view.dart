@@ -9,7 +9,7 @@ import 'package:restudy/styles/spacings.dart';
 import 'package:restudy/styles/colors.dart';
 
 class EditCardView extends StatefulWidget {
-  EditCardView() : super(key: ValueKey<int>(3));
+  // EditCardView() : super(key: ValueKey<int>(3));
 
   @override
   EditCardViewState createState() {
@@ -34,7 +34,7 @@ class EditCardViewState extends State<EditCardView> {
             FlatButton(
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  saveCard(context);
+                  _saveCard(context);
                 }
               },
               child: Text(
@@ -54,8 +54,7 @@ class EditCardViewState extends State<EditCardView> {
           //     SnackBar(content: Text("Error signing the user out"))
           //   );
           // }
-        }, 
-        builder: (context, state) {
+        }, builder: (context, state) {
           return Column(
             children: <Widget>[
               Form(
@@ -111,7 +110,7 @@ class EditCardViewState extends State<EditCardView> {
                                 minWidth: 170.0,
                                 child: FlatButton(
                                   onPressed: () {
-                                    deleteCard(context);
+                                    _deleteCard(context);
                                   },
                                   child: Text(
                                     "Delete card",
@@ -131,7 +130,7 @@ class EditCardViewState extends State<EditCardView> {
                                 minWidth: 170.0,
                                 child: FlatButton(
                                   onPressed: () {
-                                    moveCard(context);
+                                    _moveCard(context);
                                   },
                                   child: Text(
                                     "Move card",
@@ -156,15 +155,15 @@ class EditCardViewState extends State<EditCardView> {
     );
   }
 
-  saveCard(BuildContext context) {
+  _saveCard(BuildContext context) {
     CardsBloc.of(context).add(CardsSaveCardEvent());
   }
 
-  deleteCard(BuildContext context) {
+  _deleteCard(BuildContext context) {
     CardsBloc.of(context).add(CardsDeleteCardEvent());
   }
 
-  moveCard(BuildContext context) {
+  _moveCard(BuildContext context) {
     CardsBloc.of(context).add(CardsMoveCardEvent());
   }
 }

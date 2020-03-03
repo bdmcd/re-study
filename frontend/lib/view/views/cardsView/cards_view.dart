@@ -12,7 +12,6 @@ import 'package:restudy/styles/colors.dart';
 import 'edit_set_view.dart';
 import 'move_card_view.dart';
 
-
 class CardsView extends StatefulWidget {
   final setGuid;
 
@@ -30,69 +29,19 @@ class CardsViewState extends State<CardsView> {
     return BlocProvider(
       create: (_) => CardsBloc(widget.setGuid),
       child: Scaffold(
-        body: BlocBuilder<CardsBloc, CardsState>(
-          builder: (context, state) {
+        body: BlocConsumer<CardsBloc, CardsState>(
+          listener: (context, state) {
             if (state is CardsEditingSetState) {
-              return AnimatedSwitcher(
-                duration: Duration(milliseconds: 100),
-                switchOutCurve: Threshold(0),
-                child: EditSetView(),
-              );
+              _navigateToEditSetView(context);
             } else if (state is CardsEditingCardState) {
-              // return AnimatedSwitcher(
-              //     duration: Duration(milliseconds: 150),
-              //     switchOutCurve: Threshold(0),
-              //     transitionBuilder:
-              //         (Widget child, Animation<double> animation) {
-              //       return SlideTransition(
-              //         position: Tween<Offset>(
-              //           begin: const Offset(0, 1),
-              //           end: const Offset(0, 0),
-              //         ).animate(animation),
-              //         child: child,
-              //       );
-              //     },
-              //     child: EditCardView());
-              Navigator.of(context).push(
-                new MaterialPageRoute(
-                  builder: (context) => BlocProvider.value(
-                    value: CardsBloc.of(context),
-                    child: EditCardView(),
-                  )
-
-                )
-              );
+              _navigateToEditCardView(context);
             } else if (state is CardsAddingCardState) {
-              return AnimatedSwitcher(
-                duration: Duration(milliseconds: 150),
-                switchOutCurve: Threshold(0),
-                transitionBuilder: (Widget child, Animation<double> animation) {
-                  return SlideTransition(
-                    position: Tween<Offset>(
-                      begin: const Offset(0, 1),
-                      end: const Offset(0, 0),
-                    ).animate(animation),
-                    child: child,
-                  );
-                },
-                child: AddCardView(),
-              );
+              _navigateToAddCardView(context);
             } else if (state is CardsMovingCardState) {
-              return AnimatedSwitcher(
-                duration: Duration(milliseconds: 150),
-                switchOutCurve: Threshold(0),
-                transitionBuilder: (Widget child, Animation<double> animation) {
-                  return SlideTransition(
-                    position: Tween<Offset>(
-                      begin: const Offset(0, 1),
-                      end: const Offset(0, 0),
-                    ).animate(animation),
-                    child: child,
-                  );
-                },
-                child: MoveCardView(),
-              );
+              _navigateToMoveCardView(context);
             }
+          },
+          builder: (context, state) {
             return AnimatedSwitcher(
               duration: Duration(milliseconds: 100),
               switchOutCurve: Threshold(0),
@@ -104,7 +53,7 @@ class CardsViewState extends State<CardsView> {
                     color: APP_PRIMARY_COLOR,
                     icon: Icon(Icons.arrow_back),
                     onPressed: () {
-                        _backToSets(context);
+                      _backToSets(context);
                     },
                   ),
                   actions: <Widget>[
@@ -138,20 +87,6 @@ class CardsViewState extends State<CardsView> {
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
-                          // Padding(
-                          //   padding: const EdgeInsets.only(
-                          //       top: 0.0,
-                          //       left: STD_HORIZONTAL_MARGIN,
-                          //       right: STD_HORIZONTAL_MARGIN,
-                          //       bottom: 0.0),
-                          //   child: Text(
-                          //     "0 Cards",
-                          //     style: TextStyle(
-                          //       color: TEXT_HEADER_GREY,
-                          //       fontSize: TEXT_BODY_FONT_SIZE,
-                          //     ),
-                          //   ),
-                          // ),
                           Padding(
                             padding: const EdgeInsets.only(
                                 top: 0.0,
@@ -290,5 +225,37 @@ class CardsViewState extends State<CardsView> {
 
   _editCard(BuildContext context) {
     CardsBloc.of(context).add(CardsEditCardEvent());
+  }
+
+  _navigateToEditCardView(BuildContext prevContext) {
+    Navigator.of(prevContext).push(new MaterialPageRoute(
+        builder: (context) => BlocProvider.value(
+              value: CardsBloc.of(prevContext),
+              child: EditCardView(),
+            )));
+  }
+
+  _navigateToEditSetView(BuildContext prevContext) {
+    Navigator.of(prevContext).push(new MaterialPageRoute(
+        builder: (context) => BlocProvider.value(
+              value: CardsBloc.of(prevContext),
+              child: EditSetView(),
+            )));
+  }
+
+  _navigateToAddCardView(BuildContext prevContext) {
+    Navigator.of(prevContext).push(new MaterialPageRoute(
+        builder: (context) => BlocProvider.value(
+              value: CardsBloc.of(prevContext),
+              child: AddCardView(),
+            )));
+  }
+
+  _navigateToMoveCardView(BuildContext prevContext) {
+    Navigator.of(prevContext).push(new MaterialPageRoute(
+        builder: (context) => BlocProvider.value(
+              value: CardsBloc.of(prevContext),
+              child: MoveCardView(),
+            )));
   }
 }
