@@ -40,8 +40,12 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
       // yield* _signOut(event);
     } else if (event is CardsMoveCardEvent) {
       yield* _moveCard(event);
+    } else if (event is CardsCancelMoveCardEvent) {
+      yield* _cancelMoveCard(event);
     } else if (event is CardsEditCardEvent) {
       yield* _editCard(event);
+    } else if (event is CardsSaveCardEvent) {
+      yield* _saveCard(event);
     } else if (event is CardsMoveCardToSetEvent) {
       yield* _moveCardToSet(event);
     } else if (event is CardsSaveSetEvent) {
@@ -92,6 +96,18 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     }
   }
 
+  Stream<CardsState> _cancelMoveCard(CardsEvent event) async* {
+    final savedState = state;
+    yield CardsLoadingState();
+
+    try {
+      yield CardsEditingCardState();
+    } catch(e) {
+      print('Unknown exception caught in CardsBloc._initialize() $e');
+      yield* _flashError(CardsErrorState("Could not load cards from set"), savedState);
+    }
+  }
+
   Stream<CardsState> _moveCardToSet(CardsEvent event) async* {
     final savedState = state;
     yield CardsLoadingState();
@@ -127,6 +143,18 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     } catch(e) {
       print('Unknown exception caught in CardsBloc._editCard() $e');
       yield* _flashError(CardsErrorState("Could not edit card"), savedState);
+    }
+  }
+
+  Stream<CardsState> _saveCard(CardsEvent event) async* {
+    final savedState = state;
+    yield CardsLoadingState();
+
+    try {
+      yield CardsInitialState();
+    } catch(e) {
+      print('Unknown exception caught in CardsBloc._editCard() $e');
+      yield* _flashError(CardsErrorState("Could not save card"), savedState);
     }
   }
 

@@ -8,8 +8,9 @@ import 'package:restudy/widgets/text_input_field_widget.dart';
 import 'package:restudy/styles/spacings.dart';
 import 'package:restudy/styles/colors.dart';
 
+import 'move_card_view.dart';
+
 class EditCardView extends StatefulWidget {
-  // EditCardView() : super(key: ValueKey<int>(3));
 
   @override
   EditCardViewState createState() {
@@ -47,13 +48,14 @@ class EditCardViewState extends State<EditCardView> {
           ],
         ),
         body: BlocConsumer<CardsBloc, CardsState>(listener: (context, state) {
-          // if (state is AuthUnauthenticatedState) {
-          //   Navigator.of(context).pop();
-          // } else if (state is AuthErrorState) {
-          //   Scaffold.of(context).showSnackBar(
-          //     SnackBar(content: Text("Error signing the user out"))
-          //   );
-          // }
+          if (state is CardsInitialState) {
+            Navigator.of(context).pop();
+          } else if (state is CardsMovingCardState) {
+            _navigateToMoveCardView(context);
+          } else if (state is CardsErrorState) {
+            Scaffold.of(context)
+                .showSnackBar(SnackBar(content: Text("Could not save set")));
+          }
         }, builder: (context, state) {
           return Column(
             children: <Widget>[
@@ -165,5 +167,13 @@ class EditCardViewState extends State<EditCardView> {
 
   _moveCard(BuildContext context) {
     CardsBloc.of(context).add(CardsMoveCardEvent());
+  }
+
+  _navigateToMoveCardView(BuildContext prevContext) {
+    Navigator.of(prevContext).push(new MaterialPageRoute(
+        builder: (context) => BlocProvider.value(
+              value: CardsBloc.of(prevContext),
+              child: MoveCardView(),
+            )));
   }
 }

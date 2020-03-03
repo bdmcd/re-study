@@ -8,7 +8,6 @@ import 'package:restudy/styles/spacings.dart';
 import 'package:restudy/styles/colors.dart';
 
 class AddCardView extends StatefulWidget {
-  AddCardView() : super(key: ValueKey<int>(4));
 
   @override
   AddCardViewState createState() {

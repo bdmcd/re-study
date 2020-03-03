@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/bloc/cards_bloc.dart';
 import 'package:restudy/view/views/cardsView/cards_view.dart';
 import 'package:restudy/widgets/divider_line_painter.dart';
@@ -8,7 +9,6 @@ import 'package:restudy/styles/spacings.dart';
 import 'package:restudy/styles/colors.dart';
 
 class MoveCardView extends StatefulWidget {
-  MoveCardView() : super(key: ValueKey<int>(4));
 
   @override
   MoveCardViewState createState() {
@@ -17,10 +17,6 @@ class MoveCardView extends StatefulWidget {
 }
 
 class MoveCardViewState extends State<MoveCardView> {
-  // Form key allows field validation
-  final _formKey = GlobalKey<FormState>();
-  String answer = "";
-  String question = "";
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +28,7 @@ class MoveCardViewState extends State<MoveCardView> {
           actions: <Widget>[
             FlatButton(
               onPressed: () {
-                // cancelAddCard(context);
+                _cancelMoveCard(context);
               },
               child: Text(
                 "Cancel",
@@ -43,52 +39,35 @@ class MoveCardViewState extends State<MoveCardView> {
             )
           ],
         ),
-        body: Column(
-          children: <Widget>[
-            Form(
-              // Form uses _formKey
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(top: STD_VERTICAL_MARGIN * 2),
-                    child: TestFieldInputFieldWidget(
-                      header: "Front (Question):",
-                      autofocus: true,
-                      userInput: (email) {
-                        // this.email = email;
-                      },
-                      validator: (String userEmail) {
-                        if (userEmail.isEmpty) {
-                          return 'Please enter a question';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: STD_VERTICAL_MARGIN),
-                    child: TestFieldInputFieldWidget(
-                      header: "Back (Answer):",
-                      userInput: (password) {
-                        // this.password = password;
-                      },
-                      validator: (String userPassword) {
-                        if (userPassword.isEmpty) {
-                          return 'Please enter an answer';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+        body: BlocConsumer<CardsBloc, CardsState>(
+          listener: (context, state) {
+            if (state is CardsEditingCardState) {
+              print("Back to editing state");
+              // Navigator.of(context).pop();
+            } else if (state is CardsErrorState) {
+              Scaffold.of(context)
+                  .showSnackBar(SnackBar(content: Text("Could not save set")));
+            }
+          },
+          builder: (context, state) {
+            return Column(
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text("Text"),
+                  ],
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
+  }
+
+  _cancelMoveCard(BuildContext context) {
+    Navigator.of(context).pop();
+    CardsBloc.of(context).add(CardsCancelMoveCardEvent());
   }
 }

@@ -37,8 +37,6 @@ class CardsViewState extends State<CardsView> {
               _navigateToEditCardView(context);
             } else if (state is CardsAddingCardState) {
               _navigateToAddCardView(context);
-            } else if (state is CardsMovingCardState) {
-              _navigateToMoveCardView(context);
             }
           },
           builder: (context, state) {
@@ -67,121 +65,119 @@ class CardsViewState extends State<CardsView> {
                         })
                   ],
                 ),
-                body: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: STD_VERTICAL_MARGIN * 2,
-                                left: STD_HORIZONTAL_MARGIN,
-                                right: STD_HORIZONTAL_MARGIN,
-                                bottom: 0.0),
-                            child: Text(
-                              "Set Name",
-                              style: TextStyle(
-                                  color: TEXT_BLACK,
-                                  fontSize: 32.0,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 0.0,
-                                left: STD_HORIZONTAL_MARGIN,
-                                right: STD_HORIZONTAL_MARGIN,
-                                bottom: 0.0),
-                            child: Text(
-                              "0% Accuracy",
-                              style: TextStyle(
+                body: ListView(
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: STD_VERTICAL_MARGIN * 2,
+                              left: STD_HORIZONTAL_MARGIN,
+                              right: STD_HORIZONTAL_MARGIN,
+                              bottom: 0.0),
+                          child: Text(
+                            "Set Name",
+                            style: TextStyle(
                                 color: TEXT_BLACK,
-                                fontSize: TEXT_BODY_FONT_SIZE,
-                              ),
+                                fontSize: 32.0,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 0.0,
+                              left: STD_HORIZONTAL_MARGIN,
+                              right: STD_HORIZONTAL_MARGIN,
+                              bottom: 0.0),
+                          child: Text(
+                            "0% Accuracy",
+                            style: TextStyle(
+                              color: TEXT_BLACK,
+                              fontSize: TEXT_BODY_FONT_SIZE,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: STD_VERTICAL_MARGIN,
-                                left: STD_HORIZONTAL_MARGIN,
-                                right: STD_HORIZONTAL_MARGIN,
-                                bottom: 0.0),
-                            child: CustomPaint(
-                                painter: DividerLinePainter(
-                              width: MediaQuery.of(context).size.width -
-                                  (STD_HORIZONTAL_MARGIN * 2),
-                            )),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: STD_VERTICAL_MARGIN,
-                                left: STD_HORIZONTAL_MARGIN,
-                                right: STD_HORIZONTAL_MARGIN,
-                                bottom: 0.0),
-                            child: Column(
-                              children: <Widget>[
-                                Center(
-                                  child: Card(
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide(color: BORDER_GREY),
-                                      borderRadius: BorderRadius.circular(4.0),
-                                    ),
-                                    child: InkWell(
-                                      splashColor:
-                                          APP_PRIMARY_COLOR.withAlpha(30),
-                                      onTap: () {
-                                        _addCard(context);
-                                      },
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height: CARD_HEIGHT,
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                            top: 30,
-                                          ),
-                                          child: Column(
-                                            children: <Widget>[
-                                              Icon(
-                                                Icons.add,
-                                                size: ICON_LARGE_SIZE,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: STD_VERTICAL_MARGIN,
+                              left: STD_HORIZONTAL_MARGIN,
+                              right: STD_HORIZONTAL_MARGIN,
+                              bottom: 0.0),
+                          child: CustomPaint(
+                              painter: DividerLinePainter(
+                            width: MediaQuery.of(context).size.width -
+                                (STD_HORIZONTAL_MARGIN * 2),
+                          )),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: STD_VERTICAL_MARGIN,
+                              left: STD_HORIZONTAL_MARGIN,
+                              right: STD_HORIZONTAL_MARGIN,
+                              bottom: 0.0),
+                          child: Column(
+                            children: <Widget>[
+                              Center(
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(color: BORDER_GREY),
+                                    borderRadius: BorderRadius.circular(4.0),
+                                  ),
+                                  child: InkWell(
+                                    splashColor:
+                                        APP_PRIMARY_COLOR.withAlpha(30),
+                                    onTap: () {
+                                      _addCard(context);
+                                    },
+                                    child: Container(
+                                      width:
+                                          MediaQuery.of(context).size.width,
+                                      height: CARD_HEIGHT,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          top: 30,
+                                        ),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.add,
+                                              size: ICON_LARGE_SIZE,
+                                              color: APP_PRIMARY_COLOR,
+                                            ),
+                                            Text(
+                                              "Add Card",
+                                              style: TextStyle(
+                                                fontSize:
+                                                    TEXT_FIELD_INPUT_FONT_SIZE,
                                                 color: APP_PRIMARY_COLOR,
                                               ),
-                                              Text(
-                                                "Add Card",
-                                                style: TextStyle(
-                                                  fontSize:
-                                                      TEXT_FIELD_INPUT_FONT_SIZE,
-                                                  color: APP_PRIMARY_COLOR,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                                CardWidget(
-                                  answerText: "Answer",
-                                  questionText: "Question",
-                                  includeIcon: true,
-                                  actionIconButton: IconButton(
-                                    icon: Icon(Icons.edit),
-                                    color: SECONDARY_BUTTON_COLOR,
-                                    onPressed: () {
-                                      _editCard(context);
-                                    },
-                                  ),
-                                )
-                              ],
-                            ),
+                              ),
+                              CardWidget(
+                                answerText: "Answer",
+                                questionText: "Question",
+                                includeIcon: true,
+                                actionIconButton: IconButton(
+                                  icon: Icon(Icons.edit),
+                                  color: SECONDARY_BUTTON_COLOR,
+                                  onPressed: () {
+                                    _editCard(context);
+                                  },
+                                ),
+                              )
+                            ],
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 floatingActionButton: Padding(
                   padding: const EdgeInsets.only(bottom: 20.0),
@@ -251,11 +247,5 @@ class CardsViewState extends State<CardsView> {
             )));
   }
 
-  _navigateToMoveCardView(BuildContext prevContext) {
-    Navigator.of(prevContext).push(new MaterialPageRoute(
-        builder: (context) => BlocProvider.value(
-              value: CardsBloc.of(prevContext),
-              child: MoveCardView(),
-            )));
-  }
+  
 }
