@@ -27,6 +27,7 @@ class MoveCardViewState extends State<MoveCardView> {
     return Container(
       child: Scaffold(
         appBar: AppBar(
+          leading: Container(),
           title: Text("Move to Set"),
           actions: <Widget>[
             FlatButton(
@@ -90,5 +91,4 @@ class MoveCardViewState extends State<MoveCardView> {
       ),
     );
   }
-
 }

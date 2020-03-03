@@ -17,7 +17,6 @@ class AddCardView extends StatefulWidget {
 }
 
 class AddCardViewState extends State<AddCardView> {
-  // Form key allows field validation
   final _formKey = GlobalKey<FormState>();
   String answer = "";
   String question = "";
@@ -27,6 +26,7 @@ class AddCardViewState extends State<AddCardView> {
     return Container(
       child: Scaffold(
         appBar: AppBar(
+          leading: Container(),
           title: Text("Add Card"),
           actions: <Widget>[
             FlatButton(
@@ -45,7 +45,6 @@ class AddCardViewState extends State<AddCardView> {
         body: Column(
           children: <Widget>[
             Form(
-              // Form uses _formKey
               key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,8 +55,8 @@ class AddCardViewState extends State<AddCardView> {
                     child: TestFieldInputFieldWidget(
                       header: "Front (Question):",
                       autofocus: true,
-                      userInput: (email) {
-                        // this.email = email;
+                      userInput: (question) {
+                        this.question = question;
                       },
                       validator: (String userEmail) {
                         if (userEmail.isEmpty) {
@@ -71,8 +70,8 @@ class AddCardViewState extends State<AddCardView> {
                     padding: const EdgeInsets.only(top: STD_VERTICAL_MARGIN),
                     child: TestFieldInputFieldWidget(
                       header: "Back (Answer):",
-                      userInput: (password) {
-                        // this.password = password;
+                      userInput: (answer) {
+                        this.answer = answer;
                       },
                       validator: (String userPassword) {
                         if (userPassword.isEmpty) {
@@ -116,18 +115,10 @@ class AddCardViewState extends State<AddCardView> {
   }
 
   cancelAddCard(BuildContext context) {
-    CardsBloc.of(context).add(CardsSaveEvent());
+    CardsBloc.of(context).add(CardsCancelAddCardEvent());
   }
 
   addCard(BuildContext context) {
-    CardsBloc.of(context).add(CardsSaveEvent());
-  }
-
-  deleteCard(BuildContext context) {
-    CardsBloc.of(context).add(CardsDeleteCardEvent());
-  }
-
-  moveCard(BuildContext context) {
-    CardsBloc.of(context).add(CardsMoveCardEvent());
+    CardsBloc.of(context).add(CardsSaveAddCardEvent());
   }
 }

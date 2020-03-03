@@ -129,20 +129,20 @@ class CardsViewState extends State<CardsView> {
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 0.0,
-                                left: STD_HORIZONTAL_MARGIN,
-                                right: STD_HORIZONTAL_MARGIN,
-                                bottom: 0.0),
-                            child: Text(
-                              "0 Cards",
-                              style: TextStyle(
-                                color: TEXT_HEADER_GREY,
-                                fontSize: TEXT_BODY_FONT_SIZE,
-                              ),
-                            ),
-                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.only(
+                          //       top: 0.0,
+                          //       left: STD_HORIZONTAL_MARGIN,
+                          //       right: STD_HORIZONTAL_MARGIN,
+                          //       bottom: 0.0),
+                          //   child: Text(
+                          //     "0 Cards",
+                          //     style: TextStyle(
+                          //       color: TEXT_HEADER_GREY,
+                          //       fontSize: TEXT_BODY_FONT_SIZE,
+                          //     ),
+                          //   ),
+                          // ),
                           Padding(
                             padding: const EdgeInsets.only(
                                 top: 0.0,

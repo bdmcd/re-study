@@ -14,12 +14,27 @@ class CardsEditSetEvent extends CardsEvent {
   List<Object> get props => [];
 }
 
-class CardsSaveEvent extends CardsEvent {
+class CardsSaveSetEvent extends CardsEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class CardsCancelSaveSetEvent extends CardsEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class CardsDeleteSetEvent extends CardsEvent {
   @override
   List<Object> get props => [];
 }
 
 class CardsAddCardEvent extends CardsEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class CardsSaveCardEvent extends CardsEvent {
   @override
   List<Object> get props => [];
 }
@@ -45,6 +60,16 @@ class CardsMoveCardEvent extends CardsEvent {
 }
 
 class CardsMoveCardToSetEvent extends CardsEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class CardsCancelAddCardEvent extends CardsEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class CardsSaveAddCardEvent extends CardsEvent {
   @override
   List<Object> get props => [];
 }

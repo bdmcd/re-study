@@ -27,6 +27,7 @@ class EditCardViewState extends State<EditCardView> {
     return Container(
       child: Scaffold(
         appBar: AppBar(
+          leading: Container(),
           title: Text("Edit Card"),
           actions: <Widget>[
             FlatButton(
@@ -144,7 +145,7 @@ class EditCardViewState extends State<EditCardView> {
   }
 
   saveCard(BuildContext context) {
-    CardsBloc.of(context).add(CardsSaveEvent());
+    CardsBloc.of(context).add(CardsSaveCardEvent());
   }
 
   deleteCard(BuildContext context) {

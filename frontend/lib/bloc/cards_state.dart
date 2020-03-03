@@ -9,17 +9,7 @@ class CardsInitialState extends CardsState {
   List<Object> get props => [];
 }
 
-class CardsDisplayState extends CardsState {
-  @override
-  List<Object> get props => [];
-}
-
 class CardsEditingSetState extends CardsState {
-  @override
-  List<Object> get props => [];
-}
-
-class CardsSavedState extends CardsState {
   @override
   List<Object> get props => [];
 }
@@ -45,6 +35,11 @@ class CardsEditingCardState extends CardsState {
 }
 
 class CardsMovingCardState extends CardsState {
+  @override
+  List<Object> get props => [];
+}
+
+class CardsDeletedState extends CardsState {
   @override
   List<Object> get props => [];
 }
