@@ -39,20 +39,29 @@ class CardsViewState extends State<CardsView> {
                 child: EditSetView(),
               );
             } else if (state is CardsEditingCardState) {
-              return AnimatedSwitcher(
-                  duration: Duration(milliseconds: 150),
-                  switchOutCurve: Threshold(0),
-                  transitionBuilder:
-                      (Widget child, Animation<double> animation) {
-                    return SlideTransition(
-                      position: Tween<Offset>(
-                        begin: const Offset(0, 1),
-                        end: const Offset(0, 0),
-                      ).animate(animation),
-                      child: child,
-                    );
-                  },
-                  child: EditCardView());
+              // return AnimatedSwitcher(
+              //     duration: Duration(milliseconds: 150),
+              //     switchOutCurve: Threshold(0),
+              //     transitionBuilder:
+              //         (Widget child, Animation<double> animation) {
+              //       return SlideTransition(
+              //         position: Tween<Offset>(
+              //           begin: const Offset(0, 1),
+              //           end: const Offset(0, 0),
+              //         ).animate(animation),
+              //         child: child,
+              //       );
+              //     },
+              //     child: EditCardView());
+              Navigator.of(context).push(
+                new MaterialPageRoute(
+                  builder: (context) => BlocProvider.value(
+                    value: CardsBloc.of(context),
+                    child: EditCardView(),
+                  )
+
+                )
+              );
             } else if (state is CardsAddingCardState) {
               return AnimatedSwitcher(
                 duration: Duration(milliseconds: 150),

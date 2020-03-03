@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/bloc/cards_bloc.dart';
 import 'package:restudy/view/views/cardsView/cards_view.dart';
 import 'package:restudy/widgets/divider_line_painter.dart';
@@ -45,101 +46,112 @@ class EditCardViewState extends State<EditCardView> {
             )
           ],
         ),
-        body: Column(
-          children: <Widget>[
-            Form(
-              // Form uses _formKey
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(top: STD_VERTICAL_MARGIN * 2),
-                    child: TestFieldInputFieldWidget(
-                      initialValue: "Question",
-                      header: "Front (Question):",
-                      userInput: (email) {
-                        // this.email = email;
-                      },
-                      validator: (String userEmail) {
-                        if (userEmail.isEmpty) {
-                          return 'Please enter a question';
-                        }
-                        return null;
-                      },
+        body: BlocConsumer<CardsBloc, CardsState>(listener: (context, state) {
+          // if (state is AuthUnauthenticatedState) {
+          //   Navigator.of(context).pop();
+          // } else if (state is AuthErrorState) {
+          //   Scaffold.of(context).showSnackBar(
+          //     SnackBar(content: Text("Error signing the user out"))
+          //   );
+          // }
+        }, 
+        builder: (context, state) {
+          return Column(
+            children: <Widget>[
+              Form(
+                // Form uses _formKey
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: STD_VERTICAL_MARGIN * 2),
+                      child: TestFieldInputFieldWidget(
+                        initialValue: "Question",
+                        header: "Front (Question):",
+                        userInput: (question) {
+                          this.question = question;
+                        },
+                        validator: (String userEmail) {
+                          if (userEmail.isEmpty) {
+                            return 'Please enter a question';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: STD_VERTICAL_MARGIN),
-                    child: TestFieldInputFieldWidget(
-                      initialValue: "Answer",
-                      header: "Back (Answer):",
-                      userInput: (password) {
-                        // this.password = password;
-                      },
-                      validator: (String userPassword) {
-                        if (userPassword.isEmpty) {
-                          return 'Please enter an answer';
-                        }
-                        return null;
-                      },
+                    Padding(
+                      padding: const EdgeInsets.only(top: STD_VERTICAL_MARGIN),
+                      child: TestFieldInputFieldWidget(
+                        initialValue: "Answer",
+                        header: "Back (Answer):",
+                        userInput: (answer) {
+                          this.answer = answer;
+                        },
+                        validator: (String userPassword) {
+                          if (userPassword.isEmpty) {
+                            return 'Please enter an answer';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.only(
+                    Padding(
+                        padding: const EdgeInsets.only(
                           top: STD_VERTICAL_MARGIN * 2,
                           right: STD_HORIZONTAL_MARGIN,
                           left: STD_HORIZONTAL_MARGIN,
-                          ),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: ButtonTheme(
-                              height: STD_BUTTON_HEIGHT,
-                              minWidth: 170.0,
-                              child: FlatButton(
-                                onPressed: () {
-                                  deleteCard(context);
-                                },
-                                child: Text(
-                                  "Delete card",
-                                  style: TextStyle(
-                                    fontSize: BUT_FONT_SIZE,
-                                    color: Colors.white,
+                        ),
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: ButtonTheme(
+                                height: STD_BUTTON_HEIGHT,
+                                minWidth: 170.0,
+                                child: FlatButton(
+                                  onPressed: () {
+                                    deleteCard(context);
+                                  },
+                                  child: Text(
+                                    "Delete card",
+                                    style: TextStyle(
+                                      fontSize: BUT_FONT_SIZE,
+                                      color: Colors.white,
+                                    ),
                                   ),
+                                  color: APP_DESTRUCTIVE_RED,
                                 ),
-                                color: APP_DESTRUCTIVE_RED,
                               ),
                             ),
-                          ),
-                          SizedBox(width: STD_HORIZONTAL_MARGIN / 2),
-                          Expanded(
-                            child: ButtonTheme(
-                              height: STD_BUTTON_HEIGHT,
-                              minWidth: 170.0,
-                              child: FlatButton(
-                                onPressed: () {
-                                  moveCard(context);
-                                },
-                                child: Text(
-                                  "Move card",
-                                  style: TextStyle(
-                                    fontSize: BUT_FONT_SIZE,
-                                    color: Colors.white,
+                            SizedBox(width: STD_HORIZONTAL_MARGIN / 2),
+                            Expanded(
+                              child: ButtonTheme(
+                                height: STD_BUTTON_HEIGHT,
+                                minWidth: 170.0,
+                                child: FlatButton(
+                                  onPressed: () {
+                                    moveCard(context);
+                                  },
+                                  child: Text(
+                                    "Move card",
+                                    style: TextStyle(
+                                      fontSize: BUT_FONT_SIZE,
+                                      color: Colors.white,
+                                    ),
                                   ),
+                                  color: APP_PRIMARY_COLOR,
                                 ),
-                                color: APP_PRIMARY_COLOR,
                               ),
                             ),
-                          ),
-                        ],
-                      ))
-                ],
+                          ],
+                        ))
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          );
+        }),
       ),
     );
   }
