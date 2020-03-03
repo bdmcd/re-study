@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:restudy/auth/auth.dart';
-import 'package:restudy/auth/mock_impl/mock_authenticater.dart';
 import 'package:restudy/model/user.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/services.dart';
@@ -14,7 +13,7 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   static AuthBloc of(BuildContext context) => BlocProvider.of<AuthBloc>(context);
 
-  MockAuthenticater _auth = MockAuthenticater();
+  final _auth = AuthFactory.instance.authenticater;
 
   AuthBloc() {
     init();
