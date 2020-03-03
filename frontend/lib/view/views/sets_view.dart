@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restudy/auth/auth.dart';
 import 'package:restudy/bloc/sets_bloc.dart';
 import 'package:restudy/styles/colors.dart';
 import 'package:restudy/widgets/text_input_field_widget.dart';
@@ -7,6 +8,7 @@ import 'package:restudy/model/set_info.dart';
 
 class SetsView extends StatelessWidget {
   double boxSize;
+  Authenticater _auth = AuthFactory.instance.authenticater;
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +21,11 @@ class SetsView extends StatelessWidget {
           print(state);
           if (state is SetsInitialState) {
             print("");
-            return setsView(context);
+            return setsView(context, state);
           } else if (state is AddSetState) {
             return addSetView(context);
           }
-          return setsView(context);
+          return setsView(context, state);
         },
         listener: (context, state) {
           if (state is AuthErrorState) {
@@ -203,13 +205,15 @@ class SetsView extends StatelessWidget {
     guid: "TODAY",
   );
 
-  Widget setsView(BuildContext context) {
+  Widget setsView(BuildContext context, SetsInitialState state) {
     final addSetBox = addBlock(context);
     final todaysSet = setBlock(
       context,
       Icons.calendar_today,
       mockTodaySet,
     );
+
+    print(state.flashcards.length.toString() + " Flashcards");
 
     var sets = <Widget>[];
     var i = 0;
@@ -271,8 +275,10 @@ class SetsView extends StatelessWidget {
     SetsBloc.of(context).add(AddSetEvent());
   }
 
-  _saveSet(BuildContext context, String title) {
-    SetsBloc.of(context).add(SaveSetEvent(setTitle: title));
+  _saveSet(BuildContext context, String title) async {
+    final authUser = await _auth.currentUser;
+    SetsBloc.of(context)
+        .add(SaveSetEvent(setTitle: title, creatorId: authUser.uid));
   }
 
   _viewSets(BuildContext context) {

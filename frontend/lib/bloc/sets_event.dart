@@ -18,9 +18,11 @@ class AddSetEvent extends SetsEvent {
 
 class SaveSetEvent extends SetsEvent {
   final String setTitle;
+  final String creatorId;
 
   SaveSetEvent({
     @required this.setTitle,
+    @required this.creatorId,
   });
 
   @override

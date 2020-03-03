@@ -4,6 +4,10 @@ import 'package:restudy/auth/auth.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restudy/model/flash_card_set.dart';
+import 'package:restudy/proxy/factory.dart';
+import 'package:restudy/model/create_set_request.dart';
+import 'package:restudy/model/get_sets_request.dart';
 
 part 'sets_event.dart';
 part 'sets_state.dart';
@@ -36,20 +40,36 @@ class SetsBloc extends Bloc<SetsEvent, SetsState> {
       yield* _addSet(event);
     }
     if (event is SaveSetEvent) {
-      yield* _saveSet(event);
+      yield* _createSet(event);
     }
   }
 
   Stream<SetsState> _initialize(SetsInitEvent event) async* {
     final authUser = await _auth.currentUser;
+
+    // get sets
+    final proxy = ProxyFactory.instance.userProxy;
+    final request = GetSetsRequest(userGuid: authUser.uid);
+    List<FlashcardSet> flashcards = await proxy.getSets(request);
     print("In init sets");
-    yield SetsInitialState();
+    yield SetsInitialState(flashcards);
   }
 
-  Stream<SetsState> _saveSet(SaveSetEvent event) async* {
+  Stream<SetsState> _createSet(SaveSetEvent event) async* {
     print("In save set:" + event.setTitle);
     // save set into database
-    yield SetsInitialState();
+    final proxy = ProxyFactory.instance.setProxy;
+    final request =
+        CreateSetRequest(creatorGuid: event.creatorId, name: event.setTitle);
+    FlashcardSet flashcardSet = await proxy.createSet(request);
+    final authUser = await _auth.currentUser;
+
+    // get sets
+    final userProxy = ProxyFactory.instance.userProxy;
+    final getSetsRequest = GetSetsRequest(userGuid: authUser.uid);
+    List<FlashcardSet> flashcards = await userProxy.getSets(getSetsRequest);
+    print("In init sets");
+    yield SetsInitialState(flashcards);
   }
 
   Stream<SetsState> _addSet(AddSetEvent event) async* {

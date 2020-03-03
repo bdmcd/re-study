@@ -5,8 +5,12 @@ abstract class SetsState extends Equatable {
 }
 
 class SetsInitialState extends SetsState {
+  final List<FlashcardSet> flashcards;
+
+  SetsInitialState(this.flashcards);
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [flashcards];
 }
 
 class SetsLoadingState extends SetsState {
