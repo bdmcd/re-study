@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/bloc/cards_bloc.dart';
 import 'package:restudy/view/views/cardsView/cards_view.dart';
 import 'package:restudy/widgets/divider_line_painter.dart';
@@ -8,7 +9,6 @@ import 'package:restudy/styles/spacings.dart';
 import 'package:restudy/styles/colors.dart';
 
 class AddCardView extends StatefulWidget {
-
   @override
   AddCardViewState createState() {
     return AddCardViewState();
@@ -22,26 +22,35 @@ class AddCardViewState extends State<AddCardView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: Container(),
-          title: Text("Add Card"),
-          actions: <Widget>[
-            FlatButton(
-              onPressed: () {
-                cancelAddCard(context);
-              },
-              child: Text(
-                "Cancel",
-                style: TextStyle(
-                    color: APP_DESTRUCTIVE_RED, fontSize: BUT_FONT_SIZE),
-              ),
-              shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
-            )
-          ],
-        ),
-        body: Column(
+    return Scaffold(
+      appBar: AppBar(
+        leading: Container(),
+        title: Text("Add Card"),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () {
+              _cancelAddCard(context);
+            },
+            child: Text(
+              "Cancel",
+              style: TextStyle(
+                  color: APP_DESTRUCTIVE_RED, fontSize: BUT_FONT_SIZE),
+            ),
+            shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+          )
+        ],
+      ),
+      body: BlocConsumer<CardsBloc, CardsState>(listener: (context, state) {
+        if (state is CardsInitialState) {
+          Navigator.of(context).pop();
+        } else if (state is CardsInitialState) {
+          _backToSet(context);
+        } else if (state is CardsErrorState) {
+          Scaffold.of(context)
+              .showSnackBar(SnackBar(content: Text("Could not save set")));
+        }
+      }, builder: (context, state) {
+        return Column(
           children: <Widget>[
             Form(
               key: _formKey,
@@ -91,7 +100,7 @@ class AddCardViewState extends State<AddCardView> {
                         child: FlatButton(
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
-                              addCard(context);
+                              _addCard(context);
                             }
                           },
                           child: Text(
@@ -108,16 +117,20 @@ class AddCardViewState extends State<AddCardView> {
               ),
             ),
           ],
-        ),
-      ),
+        );
+      }),
     );
   }
 
-  cancelAddCard(BuildContext context) {
+  _cancelAddCard(BuildContext context) {
     CardsBloc.of(context).add(CardsCancelAddCardEvent());
   }
 
-  addCard(BuildContext context) {
+  _addCard(BuildContext context) {
     CardsBloc.of(context).add(CardsSaveAddCardEvent());
+  }
+
+  _backToSet(BuildContext context) {
+    Navigator.of(context).pop();
   }
 }

@@ -10,7 +10,7 @@ import 'package:restudy/styles/spacings.dart';
 import 'package:restudy/styles/colors.dart';
 
 import 'edit_set_view.dart';
-import 'move_card_view.dart';
+
 
 class CardsView extends StatefulWidget {
   final setGuid;
@@ -131,8 +131,7 @@ class CardsViewState extends State<CardsView> {
                                       _addCard(context);
                                     },
                                     child: Container(
-                                      width:
-                                          MediaQuery.of(context).size.width,
+                                      width: MediaQuery.of(context).size.width,
                                       height: CARD_HEIGHT,
                                       child: Padding(
                                         padding: EdgeInsets.only(
@@ -228,7 +227,8 @@ class CardsViewState extends State<CardsView> {
         builder: (context) => BlocProvider.value(
               value: CardsBloc.of(prevContext),
               child: EditCardView(),
-            )));
+            ),
+        fullscreenDialog: true));
   }
 
   _navigateToEditSetView(BuildContext prevContext) {
@@ -236,16 +236,18 @@ class CardsViewState extends State<CardsView> {
         builder: (context) => BlocProvider.value(
               value: CardsBloc.of(prevContext),
               child: EditSetView(),
-            )));
+            ),
+        fullscreenDialog: true));
   }
 
   _navigateToAddCardView(BuildContext prevContext) {
-    Navigator.of(prevContext).push(new MaterialPageRoute(
-        builder: (context) => BlocProvider.value(
-              value: CardsBloc.of(prevContext),
-              child: AddCardView(),
-            )));
+    Navigator.of(prevContext).push(
+      new MaterialPageRoute(
+          builder: (context) => BlocProvider.value(
+                value: CardsBloc.of(prevContext),
+                child: AddCardView(),
+              ),
+          fullscreenDialog: true),
+    );
   }
-
-  
 }

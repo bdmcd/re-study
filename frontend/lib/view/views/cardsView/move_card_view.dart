@@ -41,9 +41,9 @@ class MoveCardViewState extends State<MoveCardView> {
         ),
         body: BlocConsumer<CardsBloc, CardsState>(
           listener: (context, state) {
-            if (state is CardsEditingCardState) {
+            if (state is CardsCancelledMoveCardState) {
               print("Back to editing state");
-              // Navigator.of(context).pop();
+              Navigator.of(context).pop();
             } else if (state is CardsErrorState) {
               Scaffold.of(context)
                   .showSnackBar(SnackBar(content: Text("Could not save set")));
@@ -67,7 +67,6 @@ class MoveCardViewState extends State<MoveCardView> {
   }
 
   _cancelMoveCard(BuildContext context) {
-    Navigator.of(context).pop();
     CardsBloc.of(context).add(CardsCancelMoveCardEvent());
   }
 }

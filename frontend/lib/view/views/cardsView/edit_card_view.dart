@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/bloc/cards_bloc.dart';
 import 'package:restudy/view/views/cardsView/cards_view.dart';
 import 'package:restudy/widgets/divider_line_painter.dart';
 import 'package:restudy/widgets/loading_widget.dart';
+import 'package:restudy/widgets/slide_up_transition_route.dart';
 import 'package:restudy/widgets/text_input_field_widget.dart';
 import 'package:restudy/styles/spacings.dart';
 import 'package:restudy/styles/colors.dart';
@@ -11,7 +13,6 @@ import 'package:restudy/styles/colors.dart';
 import 'move_card_view.dart';
 
 class EditCardView extends StatefulWidget {
-
   @override
   EditCardViewState createState() {
     return EditCardViewState();
@@ -166,6 +167,7 @@ class EditCardViewState extends State<EditCardView> {
   }
 
   _moveCard(BuildContext context) {
+    //validate form first and save card then go to movecardview
     CardsBloc.of(context).add(CardsMoveCardEvent());
   }
 
@@ -174,6 +176,7 @@ class EditCardViewState extends State<EditCardView> {
         builder: (context) => BlocProvider.value(
               value: CardsBloc.of(prevContext),
               child: MoveCardView(),
-            )));
+            ),
+            fullscreenDialog: true));
   }
 }

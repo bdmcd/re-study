@@ -35,11 +35,12 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     } if (event is CardsEditSetEvent) {
       yield* _editSet(event);
     } else if (event is CardsAddCardEvent){
-      yield* _addCard(event);
+      yield* _goToAddCard(event);
     } else if (event is CardsStudyEvent) {
+      // TODO: make this work
       // yield* _signOut(event);
     } else if (event is CardsMoveCardEvent) {
-      yield* _moveCard(event);
+      yield* _goToMoveCard(event);
     } else if (event is CardsCancelMoveCardEvent) {
       yield* _cancelMoveCard(event);
     } else if (event is CardsEditCardEvent) {
@@ -52,6 +53,8 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
       yield* _saveSet(event);
     } else if (event is CardsCancelAddCardEvent) {
       yield* _cancelAddCard(event);
+    } else if (event is CardsSaveAddCardEvent) {
+      yield* _saveAddCard(event);
     } else if (event is CardsDeleteSetEvent) {
       yield* _deleteSet(event);
     } else if (event is CardsDeleteCardEvent) {
@@ -79,20 +82,20 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     try {
       yield CardsInitialState();
     } catch(e) {
-      print('Unknown exception caught in CardsBloc._initialize() $e');
-      yield* _flashError(CardsErrorState("Could not load cards from set"), savedState);
+      print('Unknown exception caught in CardsBloc._saveSet() $e');
+      yield* _flashError(CardsErrorState("Could not save set"), savedState);
     }
   }
 
-  Stream<CardsState> _moveCard(CardsEvent event) async* {
+  Stream<CardsState> _goToMoveCard(CardsEvent event) async* {
     final savedState = state;
     yield CardsLoadingState();
 
     try {
       yield CardsMovingCardState();
     } catch(e) {
-      print('Unknown exception caught in CardsBloc._initialize() $e');
-      yield* _flashError(CardsErrorState("Could not load cards from set"), savedState);
+      print('Unknown exception caught in CardsBloc._goToMoveCard() $e');
+      yield* _flashError(CardsErrorState("Could not go to move card view"), savedState);
     }
   }
 
@@ -101,10 +104,10 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     yield CardsLoadingState();
 
     try {
-      yield CardsEditingCardState();
+      yield CardsCancelledMoveCardState();
     } catch(e) {
-      print('Unknown exception caught in CardsBloc._initialize() $e');
-      yield* _flashError(CardsErrorState("Could not load cards from set"), savedState);
+      print('Unknown exception caught in CardsBloc._cancelMoveCard() $e');
+      yield* _flashError(CardsErrorState("Could not cancel move card"), savedState);
     }
   }
 
@@ -117,8 +120,8 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     try {
       yield CardsInitialState();
     } catch(e) {
-      print('Unknown exception caught in CardsBloc._initialize() $e');
-      yield* _flashError(CardsErrorState("Could not load cards from set"), savedState);
+      print('Unknown exception caught in CardsBloc._moveCardToSet() $e');
+      yield* _flashError(CardsErrorState("Could not move card to set"), savedState);
     }
   }
 
@@ -153,12 +156,12 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     try {
       yield CardsInitialState();
     } catch(e) {
-      print('Unknown exception caught in CardsBloc._editCard() $e');
+      print('Unknown exception caught in CardsBloc._saveCard() $e');
       yield* _flashError(CardsErrorState("Could not save card"), savedState);
     }
   }
 
-  Stream<CardsState> _addCard(CardsEvent event) async* {
+  Stream<CardsState> _goToAddCard(CardsEvent event) async* {
     final savedState = state;
     yield CardsLoadingState();
 
@@ -166,7 +169,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
       yield CardsAddingCardState();
     } catch(e) {
       print('Unknown exception caught in CardsBloc._addCard() $e');
-      yield* _flashError(CardsErrorState("Could not add card to set"), savedState);
+      yield* _flashError(CardsErrorState("Could not go to add card view"), savedState);
     }
   }
 
@@ -177,8 +180,22 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     try {
       yield CardsInitialState();
     } catch(e) {
+      print('Unknown exception caught in CardsBloc._cancelAddCard() $e'); 
+      yield* _flashError(CardsErrorState("Could not cancel add card"), savedState);
+    }
+  }
+
+  Stream<CardsState> _saveAddCard(CardsEvent event) async* {
+    final savedState = state;
+    yield CardsLoadingState();
+
+    // TODO: save card to DB
+
+    try {
+      yield CardsInitialState();
+    } catch(e) {
       print('Unknown exception caught in CardsBloc._cancelAddCard() $e');
-      yield* _flashError(CardsErrorState("Could not cancel edit set"), savedState);
+      yield* _flashError(CardsErrorState("Could not save add card"), savedState);
     }
   }
 
@@ -190,8 +207,8 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
       // TODO: Add delete cards logic
       yield CardsInitialState();
     } catch(e) {
-      print('Unknown exception caught in CardsBloc._deleteSet() $e');
-      yield* _flashError(CardsErrorState("Could not delete set"), savedState);
+      print('Unknown exception caught in CardsBloc._deleteCard() $e');
+      yield* _flashError(CardsErrorState("Could not delete card"), savedState);
     }
   }
 

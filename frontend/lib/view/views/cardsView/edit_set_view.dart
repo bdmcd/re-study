@@ -25,6 +25,11 @@ class EditSetViewState extends State<EditSetView> {
     return BlocConsumer<CardsBloc, CardsState>(listener: (context, state) {
       if (state is CardsDeletedState) {
         _backToSets(context);
+      } else if (state is CardsInitialState) {
+        _backToSet(context);
+      } else if (state is CardsErrorState) {
+        Scaffold.of(context)
+            .showSnackBar(SnackBar(content: Text("Could not save set")));
       }
     }, builder: (context, state) {
       return Scaffold(
@@ -49,76 +54,78 @@ class EditSetViewState extends State<EditSetView> {
             )
           ],
         ),
-        body: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          top: STD_VERTICAL_MARGIN * 2,
-                          left: 0,
-                          right: 0,
-                          bottom: 0.0),
-                      child: TestFieldInputFieldWidget(
-                        initialValue: "Set Name",
-                        header: "Set Name",
-                        userInput: (String value) {},
-                        validator: (String setName) {
-                          if (setName.isEmpty) {
-                            return 'Please enter a set name';
-                          }
-                          return null;
-                        },
+        body: BlocBuilder<CardsBloc, CardsState>(builder: (context, state) {
+          return Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: STD_VERTICAL_MARGIN * 2,
+                            left: 0,
+                            right: 0,
+                            bottom: 0.0),
+                        child: TestFieldInputFieldWidget(
+                          initialValue: "Set Name",
+                          header: "Set Name",
+                          userInput: (String value) {},
+                          validator: (String setName) {
+                            if (setName.isEmpty) {
+                              return 'Please enter a set name';
+                            }
+                            return null;
+                          },
+                        ),
                       ),
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.only(
-                            top: STD_VERTICAL_MARGIN * 2,
-                            right: STD_HORIZONTAL_MARGIN,
-                            left: STD_HORIZONTAL_MARGIN),
-                        child: Center(
-                          child: Text(
-                            "No cards",
-                            style: TextStyle(
-                              color: TEXT_HEADER_GREY,
-                              fontSize: TEXT_BODY_FONT_SIZE,
-                            ),
-                          ),
-                        )),
-                    Padding(
-                        padding: const EdgeInsets.only(
-                            top: STD_VERTICAL_MARGIN * 2,
-                            right: STD_HORIZONTAL_MARGIN,
-                            left: STD_HORIZONTAL_MARGIN),
-                        child: ButtonTheme(
-                          minWidth: MediaQuery.of(context).size.width,
-                          height: STD_BUTTON_HEIGHT,
-                          child: FlatButton(
-                            onPressed: () {
-                              if (_formKey.currentState.validate()) {
-                                _deleteSet(context);
-                              }
-                            },
+                      Padding(
+                          padding: const EdgeInsets.only(
+                              top: STD_VERTICAL_MARGIN * 2,
+                              right: STD_HORIZONTAL_MARGIN,
+                              left: STD_HORIZONTAL_MARGIN),
+                          child: Center(
                             child: Text(
-                              "Delete set",
+                              "No cards",
                               style: TextStyle(
-                                color: Colors.white,
-                                fontSize: BUT_FONT_SIZE,
+                                color: TEXT_HEADER_GREY,
+                                fontSize: TEXT_BODY_FONT_SIZE,
                               ),
                             ),
-                            color: APP_DESTRUCTIVE_RED,
-                          ),
-                        )),
-                  ],
-                ),
-              ],
+                          )),
+                      Padding(
+                          padding: const EdgeInsets.only(
+                              top: STD_VERTICAL_MARGIN * 2,
+                              right: STD_HORIZONTAL_MARGIN,
+                              left: STD_HORIZONTAL_MARGIN),
+                          child: ButtonTheme(
+                            minWidth: MediaQuery.of(context).size.width,
+                            height: STD_BUTTON_HEIGHT,
+                            child: FlatButton(
+                              onPressed: () {
+                                if (_formKey.currentState.validate()) {
+                                  _deleteSet(context);
+                                }
+                              },
+                              child: Text(
+                                "Delete set",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: BUT_FONT_SIZE,
+                                ),
+                              ),
+                              color: APP_DESTRUCTIVE_RED,
+                            ),
+                          )),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ),
+          );
+        }),
       );
     });
   }
@@ -131,7 +138,13 @@ class EditSetViewState extends State<EditSetView> {
     CardsBloc.of(context).add(CardsDeleteSetEvent());
   }
 
-  _backToSets(context) {
+  _backToSet(context) {
     Navigator.of(context).pop();
+  }
+
+  _backToSets(BuildContext context) {
+    // TODO: If time permits, fix this to use route names instead... this is kind of hacky
+    int count = 0;
+    Navigator.of(context).popUntil((_) => count++ >= 2);
   }
 }

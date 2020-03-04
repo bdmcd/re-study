@@ -44,6 +44,11 @@ class CardsDeletedState extends CardsState {
   List<Object> get props => [];
 }
 
+class CardsCancelledMoveCardState extends CardsState {
+  @override
+  List<Object> get props => [];
+}
+
 class CardsErrorState extends CardsState {
   final String error;
 
