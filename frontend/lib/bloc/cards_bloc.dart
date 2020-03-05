@@ -77,6 +77,8 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     final savedState = state;
     yield CardsLoadingState();
 
+    await Future.delayed(Duration(milliseconds: 1000));
+
     // TODO: Save the set here
 
     try {
@@ -91,6 +93,8 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     final savedState = state;
     yield CardsLoadingState();
 
+    await Future.delayed(Duration(milliseconds: 1000));
+
     try {
       yield CardsMovingCardState();
     } catch(e) {
@@ -103,6 +107,8 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     final savedState = state;
     yield CardsLoadingState();
 
+    await Future.delayed(Duration(milliseconds: 1000));
+
     try {
       yield CardsCancelledMoveCardState();
     } catch(e) {
@@ -114,6 +120,8 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
   Stream<CardsState> _moveCardToSet(CardsEvent event) async* {
     final savedState = state;
     yield CardsLoadingState();
+
+    await Future.delayed(Duration(milliseconds: 1000));
 
     // add moving to set
 
@@ -129,6 +137,8 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     final savedState = state;
     yield CardsLoadingState();
 
+    await Future.delayed(Duration(milliseconds: 1000));
+
     try {
       yield CardsEditingSetState();
     } catch(e) {
@@ -140,6 +150,8 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
   Stream<CardsState> _editCard(CardsEvent event) async* {
     final savedState = state;
     yield CardsLoadingState();
+
+    await Future.delayed(Duration(milliseconds: 1000));
 
     try {
       yield CardsEditingCardState();
@@ -153,6 +165,8 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     final savedState = state;
     yield CardsLoadingState();
 
+    await Future.delayed(Duration(milliseconds: 1000));
+
     try {
       yield CardsInitialState();
     } catch(e) {
@@ -164,6 +178,8 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
   Stream<CardsState> _goToAddCard(CardsEvent event) async* {
     final savedState = state;
     yield CardsLoadingState();
+
+    await Future.delayed(Duration(milliseconds: 1000));
 
     try {
       yield CardsAddingCardState();
@@ -177,6 +193,8 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     final savedState = state;
     yield CardsLoadingState();
 
+    await Future.delayed(Duration(milliseconds: 1000));
+
     try {
       yield CardsInitialState();
     } catch(e) {
@@ -188,6 +206,8 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
   Stream<CardsState> _saveAddCard(CardsEvent event) async* {
     final savedState = state;
     yield CardsLoadingState();
+
+    await Future.delayed(Duration(milliseconds: 1000));
 
     // TODO: save card to DB
 
@@ -203,6 +223,8 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     final savedState = state;
     yield CardsLoadingState();
 
+    await Future.delayed(Duration(milliseconds: 1000));
+
     try {
       // TODO: Add delete cards logic
       yield CardsInitialState();
@@ -216,6 +238,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     final savedState = state;
     print("delete set");
     yield CardsLoadingState();
+
     await Future.delayed(Duration(milliseconds: 1000));
 
     try {
