@@ -29,7 +29,14 @@ class LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Re:Study"),),
-      body: BlocBuilder<AuthBloc, AuthState>(
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthLoadingState) {
+            Navigator.of(context).push(LoadingWidget());
+          } else if (state is AuthDoneLoadingState) {
+            Navigator.of(context).pop();
+          }
+        },
         builder: (context, state) {
           return Stack(
             children: <Widget>[
@@ -178,7 +185,7 @@ class LoginViewState extends State<LoginView> {
                   ],
                 ),
               ),
-              state is AuthLoadingState ? LoadingWidget() : Container(),
+              // state is AuthLoadingState ? LoadingWidget() : Container(),
             ],
           );
         }

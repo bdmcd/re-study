@@ -36,11 +36,16 @@ class CardsViewState extends State<CardsView> {
               _navigateToEditCardView(context);
             } else if (state is CardsAddingCardState) {
               _navigateToAddCardView(context);
+            } else if (state is CardsDoneLoadingState) {
+              Navigator.of(context).pop();
+            } else if (state is CardsLoadingState) {
+              Navigator.of(context).push(LoadingWidget());
             }
           },
           builder: (context, state) {
             // if (state is CardsLoadingState) {
-            //   return LoadingWidget();
+
+              // return LoadingWidget();
             // }
             return Scaffold(
               appBar: AppBar(
@@ -178,7 +183,7 @@ class CardsViewState extends State<CardsView> {
                       ),
                     ],
                   ),
-                  state is CardsLoadingState ? LoadingWidget() : Container(),
+                  // state is CardsLoadingState ? LoadingWidget() : Container(),
                 ],
               ),
               floatingActionButton: Padding(

@@ -14,6 +14,11 @@ class AuthLoadingState extends AuthState {
   List<Object> get props => [];
 }
 
+class AuthDoneLoadingState extends AuthState {
+  @override
+  List<Object> get props => [];
+}
+
 class AuthAuthenticatedState extends AuthState {
   final Future<String> Function() getToken;
   final User user;

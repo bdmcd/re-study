@@ -82,6 +82,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     // TODO: Save the set here
 
     try {
+      yield CardsDoneLoadingState();
       yield CardsInitialState();
     } catch(e) {
       print('Unknown exception caught in CardsBloc._saveSet() $e');
@@ -96,6 +97,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     await Future.delayed(Duration(milliseconds: 1000));
 
     try {
+      yield CardsDoneLoadingState();
       yield CardsMovingCardState();
     } catch(e) {
       print('Unknown exception caught in CardsBloc._goToMoveCard() $e');
@@ -110,6 +112,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     await Future.delayed(Duration(milliseconds: 1000));
 
     try {
+      yield CardsDoneLoadingState();
       yield CardsCancelledMoveCardState();
     } catch(e) {
       print('Unknown exception caught in CardsBloc._cancelMoveCard() $e');
@@ -126,6 +129,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     // add moving to set
 
     try {
+      yield CardsDoneLoadingState();
       yield CardsInitialState();
     } catch(e) {
       print('Unknown exception caught in CardsBloc._moveCardToSet() $e');
@@ -140,6 +144,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     await Future.delayed(Duration(milliseconds: 1000));
 
     try {
+      yield CardsDoneLoadingState();
       yield CardsEditingSetState();
     } catch(e) {
       print('Unknown exception caught in CardsBloc._editSet() $e');
@@ -154,6 +159,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     await Future.delayed(Duration(milliseconds: 1000));
 
     try {
+      yield CardsDoneLoadingState();
       yield CardsEditingCardState();
     } catch(e) {
       print('Unknown exception caught in CardsBloc._editCard() $e');
@@ -168,6 +174,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     await Future.delayed(Duration(milliseconds: 1000));
 
     try {
+      yield CardsDoneLoadingState();
       yield CardsInitialState();
     } catch(e) {
       print('Unknown exception caught in CardsBloc._saveCard() $e');
@@ -182,6 +189,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     await Future.delayed(Duration(milliseconds: 1000));
 
     try {
+      yield CardsDoneLoadingState();
       yield CardsAddingCardState();
     } catch(e) {
       print('Unknown exception caught in CardsBloc._addCard() $e');
@@ -196,6 +204,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     await Future.delayed(Duration(milliseconds: 1000));
 
     try {
+      yield CardsDoneLoadingState();
       yield CardsInitialState();
     } catch(e) {
       print('Unknown exception caught in CardsBloc._cancelAddCard() $e'); 
@@ -212,6 +221,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     // TODO: save card to DB
 
     try {
+      yield CardsDoneLoadingState();
       yield CardsInitialState();
     } catch(e) {
       print('Unknown exception caught in CardsBloc._cancelAddCard() $e');
@@ -227,6 +237,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
     try {
       // TODO: Add delete cards logic
+      yield CardsDoneLoadingState();
       yield CardsInitialState();
     } catch(e) {
       print('Unknown exception caught in CardsBloc._deleteCard() $e');
@@ -244,6 +255,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     try {
       // TODO: Add delete cards logic
       print("delete set");
+      yield CardsDoneLoadingState();
       yield CardsDeletedState();
     } catch(e) {
       print('Unknown exception caught in CardsBloc._deleteSet() $e');

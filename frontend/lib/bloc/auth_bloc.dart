@@ -62,9 +62,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         email: event.email,
         password: event.password,
       );
+      yield AuthDoneLoadingState();
       yield _stateFromAuthUser(firebaseUser);
 
     } on UserAlreadyExistsException {
+      yield AuthDoneLoadingState();
       yield* _flashError(AuthErrorState("This email is already in use"), savedState);
     } catch(e) {
       print('Unknown exception caught in AuthBloc._register() $e');
@@ -81,9 +83,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         email: event.email,
         password: event.password,
       );
+      yield AuthDoneLoadingState();
       yield _stateFromAuthUser(firebaseUser);
 
     } on InvalidEmailOrPasswordException {
+      yield AuthDoneLoadingState();
       yield* _flashError(AuthErrorState("Incorrect Email or Password"), savedState);
     } catch(e) {
       print('Unknown exception caught in AuthBloc._signIn() $e');
@@ -97,9 +101,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try {
       final firebaseUser = await _auth.signInWithGoogle();
+      yield AuthDoneLoadingState();
       yield _stateFromAuthUser(firebaseUser);
 
     } on UserCancelledException {
+      yield AuthDoneLoadingState();
       yield savedState;
     } catch(e) {
       print('Unknown exception caught in AuthBloc._signInWithGoogle() $e');
@@ -113,6 +119,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try {
       await _auth.signOut();
+      yield AuthDoneLoadingState();
       yield AuthUnauthenticatedState();
     } catch(e) {
       print('Unknown exception caught in AuthBloc._signOut() $e');
