@@ -1,26 +1,28 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'create_flashcard_request.dart';
+part of 'update_flashcard_request.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CreateFlashcardRequest _$CreateFlashcardRequestFromJson(
+UpdateFlashcardRequest _$UpdateFlashcardRequestFromJson(
     Map<String, dynamic> json) {
-  return CreateFlashcardRequest(
-    creatorId: json['creatorGuid'] as String,
+  return UpdateFlashcardRequest(
+    cardId: json['guid'] as String,
     setId: json['setGuid'] as String,
     question: json['question'] as String,
     answer: json['answer'] as String,
+    deleted: json['deleted'] as bool,
   );
 }
 
-Map<String, dynamic> _$CreateFlashcardRequestToJson(
-        CreateFlashcardRequest instance) =>
+Map<String, dynamic> _$UpdateFlashcardRequestToJson(
+        UpdateFlashcardRequest instance) =>
     <String, dynamic>{
-      'creatorGuid': instance.creatorId,
+      'guid': instance.cardId,
       'setGuid': instance.setId,
       'question': instance.question,
       'answer': instance.answer,
+      'deleted': instance.deleted,
     };
