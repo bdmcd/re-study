@@ -1,18 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restudy/styles/colors.dart';
 
-// class LoadingWidget extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       color: Colors.white.withOpacity(0.8),
-//       child: Center(
-//         child: CircularProgressIndicator(),
-//       ),
-//     );
-//   }
-// }
-
 class LoadingWidget extends ModalRoute<void> {
   @override
   Duration get transitionDuration => Duration(milliseconds: 500);

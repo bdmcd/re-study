@@ -185,7 +185,6 @@ class LoginViewState extends State<LoginView> {
                   ],
                 ),
               ),
-              // state is AuthLoadingState ? LoadingWidget() : Container(),
             ],
           );
         }
@@ -206,7 +205,6 @@ class LoginViewState extends State<LoginView> {
       email: this.email,
       password: this.password,
     ));
-    // authBloc.close();
   }
 
   googleSignIn(BuildContext context) {

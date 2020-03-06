@@ -297,7 +297,8 @@ class SetsView extends StatelessWidget {
         builder: (context) => BlocProvider.value(
           value: AuthBloc.of(prevContext),
           child: SettingsView(),
-        )
+        ),
+        fullscreenDialog: true,
       )
     );
   }
