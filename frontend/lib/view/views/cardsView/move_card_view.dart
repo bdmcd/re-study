@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/bloc/cards_bloc.dart';
 import 'package:restudy/styles/spacings.dart';
 import 'package:restudy/styles/colors.dart';
+import 'package:restudy/widgets/loading_widget.dart';
 
 class MoveCardView extends StatefulWidget {
   @override
@@ -38,6 +39,8 @@ class MoveCardViewState extends State<MoveCardView> {
             if (state is CardsCancelledMoveCardState) {
               print("Back to editing state");
               _backToEditingState(context);
+            } else if (state is CardsCardMovedState) {
+              _backToSet(context);
             } else if (state is CardsErrorState) {
               Scaffold.of(context)
                   .showSnackBar(SnackBar(content: Text("Could not save set")));
@@ -87,6 +90,11 @@ class MoveCardViewState extends State<MoveCardView> {
 
   _backToEditingState(BuildContext context) {
     Navigator.of(context).pop();
+  }
+
+  _backToSet(BuildContext context) {
+    int count = 0;
+    Navigator.of(context).popUntil((_) => count++ >= 2);
   }
 
   _moveCardToSet(BuildContext context) {

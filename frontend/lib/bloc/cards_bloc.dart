@@ -130,7 +130,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
     try {
       yield CardsDoneLoadingState();
-      yield CardsInitialState();
+      yield CardsCardMovedState();
     } catch(e) {
       print('Unknown exception caught in CardsBloc._moveCardToSet() $e');
       yield* _flashError(CardsErrorState("Could not move card to set"), savedState);

@@ -50,7 +50,7 @@ class EditCardViewState extends State<EditCardView> {
         ),
         body: BlocConsumer<CardsBloc, CardsState>(listener: (context, state) {
           if (state is CardsInitialState) {
-            Navigator.of(context).pop();
+            _backToSet(context);
           } else if (state is CardsMovingCardState) {
             _navigateToMoveCardView(context);
           } else if (state is CardsErrorState) {
@@ -169,6 +169,10 @@ class EditCardViewState extends State<EditCardView> {
   _moveCard(BuildContext context) {
     //validate form first and save card then go to movecardview
     CardsBloc.of(context).add(CardsMoveCardEvent());
+  }
+
+  _backToSet(BuildContext context) {
+    Navigator.of(context).pop();
   }
 
   _navigateToMoveCardView(BuildContext prevContext) {
