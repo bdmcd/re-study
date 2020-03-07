@@ -4,7 +4,7 @@ public class CreateCardRequest {
     private String question;
     private String answer;
     private String setGuid;
-//    private String creatorGuid;
+    private String creatorGuid;
     private int retentionScore;
     private boolean deleted;
     private String token;
@@ -21,9 +21,9 @@ public class CreateCardRequest {
         return setGuid;
     }
 
-//    public String getCreatorGuid() {
-//        return creatorGuid;
-//    }
+    public String getCreatorGuid() {
+        return creatorGuid;
+    }
 
     public String getToken() { return token; }
 
@@ -39,9 +39,9 @@ public class CreateCardRequest {
         this.setGuid = setGuid;
     }
 
-//    public void setCreatorGuid(String creatorGuid) {
-//        this.creatorGuid = creatorGuid;
-//    }
+    public void setCreatorGuid(String creatorGuid) {
+        this.creatorGuid = creatorGuid;
+    }
 
     public void setToken(String token) { this.token = token; }
 }

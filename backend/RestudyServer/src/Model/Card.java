@@ -21,7 +21,6 @@ public class Card {
         return setGuid;
     }
 
-
     public boolean isDeleted() {
         return deleted;
     }

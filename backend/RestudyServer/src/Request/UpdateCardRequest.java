@@ -2,9 +2,10 @@ package Request;
 
 public class UpdateCardRequest {
     private String guid;
+    private String setGuid;
+    private String newSetGuid;
     private String question;
     private String answer;
-    private String setGuid;
     private boolean deleted;
     private String token;
 
@@ -26,6 +27,9 @@ public class UpdateCardRequest {
 
     public String getToken() { return token; }
 
+    public String getNewSetGuid() {
+        return newSetGuid;
+    }
     public boolean isDeleted() {
         return deleted;
     }
@@ -51,5 +55,9 @@ public class UpdateCardRequest {
         this.deleted = deleted;
     }
 
-    public void setToken(String token) { this.token = token; }
+    public  void setToken(String token) { this.token = token; }
+  
+    public void setNewSetGuid(String newSetGuid) {
+        this.newSetGuid = newSetGuid;
+    }
 }
