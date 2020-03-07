@@ -2,13 +2,8 @@ package Auth.FirebaseAuth;
 
 import Auth.AuthException;
 import Auth.AuthServiceInterface;
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-
-import java.io.FileInputStream;
 
 public class FirebaseAuthService implements AuthServiceInterface {
 
@@ -30,7 +25,7 @@ public class FirebaseAuthService implements AuthServiceInterface {
         try {
             FirebaseAuth.getInstance().verifyIdToken(token);
         } catch (FirebaseAuthException e) {
-            System.out.println(e);
+            //TODO: Log the exception here
             throw new AuthException("Error: Invalid Token");
         }
     }

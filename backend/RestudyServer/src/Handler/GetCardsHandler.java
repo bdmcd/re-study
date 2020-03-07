@@ -21,7 +21,7 @@ public class GetCardsHandler {
 //            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
             authFactory.createAuthService().authenticate(request.getToken());
         } catch(AuthException e) {
-            e.printStackTrace();
+            //TODO: Log the exception here
             return new GetCardsResult(Codes.UNAUTHORIZED, "User not authorized");
         }
 

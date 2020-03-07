@@ -19,7 +19,7 @@ public class GetSetsService {
             Set[] sets = sDao.GetSets(request);
             return new GetSetsResult(Codes.OK, sets);
         } catch (DaoException e) {
-            e.printStackTrace();
+            //TODO: Log the exception here
             return new GetSetsResult(Codes.INTERNAL, "Internal Server Error");
         }
     }

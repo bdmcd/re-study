@@ -2,8 +2,6 @@ package Handler;
 
 import Auth.AuthException;
 import Auth.AuthServiceFactoryInterface;
-import Auth.AuthServiceInterface;
-import Auth.DummyAuth.DummyAuthServiceFactory;
 import Auth.FirebaseAuth.FirebaseAuthServiceFactory;
 import Request.CreateSetRequest;
 import Result.Codes;
@@ -25,7 +23,7 @@ public class CreateSetHandler {
 //            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
             authFactory.createAuthService().authenticate(request.getToken());
         } catch(AuthException e) {
-            e.printStackTrace();
+            //TODO: Log the exception here
             return new CreateSetResult(Codes.UNAUTHORIZED, "User not authorized");
         }
 
