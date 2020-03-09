@@ -4,6 +4,7 @@ public class UpdateSetRequest {
     private String guid;
     private String creatorGuid;
     private String name;
+    private Boolean deleted;
     private String token;
 
     public String getGuid() {
@@ -20,6 +21,10 @@ public class UpdateSetRequest {
         return creatorGuid;
     }
 
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
     public void setGuid(String guid) {
         this.guid = guid;
     }
@@ -34,5 +39,9 @@ public class UpdateSetRequest {
 
     public void setCreatorGuid(String creatorGuid) {
         this.creatorGuid = creatorGuid;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

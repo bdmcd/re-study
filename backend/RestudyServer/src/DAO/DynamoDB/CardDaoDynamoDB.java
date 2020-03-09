@@ -13,6 +13,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.document.spec.DeleteItemSpec;
 import com.amazonaws.services.dynamodbv2.model.*;
 
 import java.util.*;
@@ -74,13 +75,27 @@ public class CardDaoDynamoDB implements CardDaoInterface {
 
         Map<String, AttributeValueUpdate> attributeValuesUpdate = new HashMap<>();
         // cannot update the setGuid because it is part of the key. (could delete the card and recreate it?)
-        // attributeValuesUpdate.put(setGuidAttr, new AttributeValueUpdate().withValue(new AttributeValue().withS(request.getNewSetGuid())));
+        if (!request.getSetGuid().equals(request.getNewSetGuid())) {
+            try {
+                Table table = dynamoDB.getTable(tableName);
+                DeleteItemSpec spec = new DeleteItemSpec().withPrimaryKey(guidAttr, request.getGuid(), setGuidAttr, request.getSetGuid());
+                table.deleteItem(spec);
+
+                attributeValues = new HashMap<>();
+                attributeValues.put(guidAttr,new AttributeValue().withS(request.getGuid()));
+                attributeValues.put(setGuidAttr,new AttributeValue().withS(request.getNewSetGuid()));
+            }
+            catch (Exception e) {
+                //todo log with lambdda logger.
+            }
+        }
+
         attributeValuesUpdate.put(answerAttr, new AttributeValueUpdate().withValue(new AttributeValue().withS(request.getAnswer())));
         attributeValuesUpdate.put(questionAttr, new AttributeValueUpdate().withValue(new AttributeValue().withS(request.getQuestion())));
-        attributeValuesUpdate.put(nextSessionAttr, new AttributeValueUpdate().withValue(new AttributeValue().withN("10")));
-        attributeValuesUpdate.put(nextIncrementAttr, new AttributeValueUpdate().withValue(new AttributeValue().withN("10")));
+        attributeValuesUpdate.put(nextSessionAttr, new AttributeValueUpdate().withValue(new AttributeValue().withN("10"))); //todo add the increments for smart schedueling
+        attributeValuesUpdate.put(nextIncrementAttr, new AttributeValueUpdate().withValue(new AttributeValue().withN("10"))); //todo add the increments for smart schedualing
         attributeValuesUpdate.put(deletedAttr, new AttributeValueUpdate().withValue(new AttributeValue().withBOOL(request.isDeleted())));
-        // note that the creator Guid will never updated.
+        // note that the creator card Guid or the creator guid will never be updated.
 
         UpdateItemRequest updateItemRequest = new UpdateItemRequest(tableName, attributeValues, attributeValuesUpdate);
         amazonDynamoDB.updateItem(updateItemRequest);
@@ -97,6 +112,12 @@ public class CardDaoDynamoDB implements CardDaoInterface {
 
     @Override
     public Card[] GetCards(GetCardsRequest request) {
+        //todo if setguid  = "todaysetuid" get the sets for today. the creator guid index table needed. or not:
+        // Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+        //        eav.put(":val1", new AttributeValue().withS(partitionKey));
+        //        eav.put(":val2", new AttributeValue().withS(twoWeeksAgoStr.toString()));
+        //        DynamoDBQueryExpression<Reply> queryExpression = new DynamoDBQueryExpression<Reply>()
+        //            .withKeyConditionExpression("Id = :val1 and ReplyDateTime > :val2").withExpressionAttributeValues(eav); example
         Map<String, String> attrNames = new TreeMap<>();
         attrNames.put("#set", setGuidAttr);
 
@@ -121,6 +142,7 @@ public class CardDaoDynamoDB implements CardDaoInterface {
                 card.setQuestion(item.get(questionAttr).getS());
                 card.setAnswer(item.get(answerAttr).getS());
                 card.setDeleted(item.get(deletedAttr).getBOOL());
+                //todo ? if !deleted ?
                 cardList.add(card);
             }
         }

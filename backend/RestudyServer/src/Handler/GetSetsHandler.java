@@ -2,6 +2,7 @@ package Handler;
 
 import Auth.AuthException;
 import Auth.AuthServiceFactoryInterface;
+import Auth.DummyAuth.DummyAuthServiceFactory;
 import Auth.FirebaseAuth.FirebaseAuthServiceFactory;
 import Request.GetSetsRequest;
 import Result.Codes;

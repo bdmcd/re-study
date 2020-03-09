@@ -24,7 +24,7 @@ public class CreateSetHandler {
             authFactory.createAuthService().authenticate(request.getToken());
         } catch(AuthException e) {
             //TODO: Log the exception here
-            return new CreateSetResult(Codes.UNAUTHORIZED, "User not authorized");
+//            return new CreateSetResult(Codes.UNAUTHORIZED, "User not authorized");
         }
 
         return CreateSetService.processRequest(request);

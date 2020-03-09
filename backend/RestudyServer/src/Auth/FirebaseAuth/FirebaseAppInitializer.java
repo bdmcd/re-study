@@ -32,15 +32,10 @@ public class FirebaseAppInitializer {
     }
 
     private static String readApiKey() throws FileNotFoundException {
-<<<<<<< Updated upstream
-        File apiKeyFile = new File("./firebase/api-key.txt");
-        Scanner apiKeyScanner = new Scanner(apiKeyFile);
-=======
         InputStream apiKeyStream =
                 FirebaseAppInitializer.class.getResourceAsStream("/firebase/api-key.txt");
 
         Scanner apiKeyScanner = new Scanner(apiKeyStream);
->>>>>>> Stashed changes
         String apiKey = apiKeyScanner.useDelimiter("\\A").next();
         apiKeyScanner.close();
 
