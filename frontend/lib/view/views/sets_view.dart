@@ -202,10 +202,10 @@ class SetsView extends StatelessWidget {
     var i = 0;
     while (i < userSets.length) {
       var temp = <Widget>[
-        setBlock(context, Icons.alarm_on, userSets[i]),
+        setBlock(context, Icons.assignment, userSets[i]),
       ];
       if (i < userSets.length - 1) {
-        temp.add(setBlock(context, Icons.alarm_on, userSets[i + 1]));
+        temp.add(setBlock(context, Icons.assignment, userSets[i + 1]));
       }
 
       sets.add(
