@@ -15,6 +15,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   static AuthBloc of(BuildContext context) => BlocProvider.of<AuthBloc>(context);
 
   MockAuthenticater _auth = AuthFactory.instance.authenticater;
+  // final _auth = AuthFactory.instance.authenticater;
 
   AuthBloc() {
     init();
