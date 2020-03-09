@@ -103,7 +103,7 @@ public class SetDaoDynamoDB  implements SetDaoInterface {
                 setList.add(set);
             }
         }
-        //todo add a today set.
+        //todo add a today set. with todaysetuid as the set guid
 
         Set[] newSetList = new Set[setList.size()];
         for(int i = 0; i < setList.size(); i++){

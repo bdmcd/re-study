@@ -89,16 +89,13 @@ public class CardDaoDynamoDB implements CardDaoInterface {
                 //todo log with lambdda logger.
             }
         }
-        //if newsetguid != setGuid
-            // delete the current card
-            //create new card.
-        // attributeValuesUpdate.put(setGuidAttr, new AttributeValueUpdate().withValue(new AttributeValue().withS(request.getNewSetGuid())));
+
         attributeValuesUpdate.put(answerAttr, new AttributeValueUpdate().withValue(new AttributeValue().withS(request.getAnswer())));
         attributeValuesUpdate.put(questionAttr, new AttributeValueUpdate().withValue(new AttributeValue().withS(request.getQuestion())));
         attributeValuesUpdate.put(nextSessionAttr, new AttributeValueUpdate().withValue(new AttributeValue().withN("10"))); //todo add the increments for smart schedueling
         attributeValuesUpdate.put(nextIncrementAttr, new AttributeValueUpdate().withValue(new AttributeValue().withN("10"))); //todo add the increments for smart schedualing
         attributeValuesUpdate.put(deletedAttr, new AttributeValueUpdate().withValue(new AttributeValue().withBOOL(request.isDeleted())));
-        // note that the creator Guid will never updated.
+        // note that the creator card Guid or the creator guid will never be updated.
 
         UpdateItemRequest updateItemRequest = new UpdateItemRequest(tableName, attributeValues, attributeValuesUpdate);
         amazonDynamoDB.updateItem(updateItemRequest);
@@ -115,7 +112,7 @@ public class CardDaoDynamoDB implements CardDaoInterface {
 
     @Override
     public Card[] GetCards(GetCardsRequest request) {
-        //todo if setguid  = today get the sets for today. the creator guid index tabel needed.
+        //todo if setguid  = "todaysetuid" get the sets for today. the creator guid index table needed.
         Map<String, String> attrNames = new TreeMap<>();
         attrNames.put("#set", setGuidAttr);
 
