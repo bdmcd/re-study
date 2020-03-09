@@ -38,3 +38,4 @@ lib/generated_plugin_registrant.dart
 
 # Backend firebase config files
 backend/RestudyServer/firebase
+backend/RestudyServer/src/firebase
