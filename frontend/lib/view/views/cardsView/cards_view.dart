@@ -168,6 +168,8 @@ class CardsViewState extends State<CardsView> {
                                   _editCard(context);
                                 },
                               ),
+                              includeDate: true,
+                              daysToNextReview: "4 days",
                             )
                           ],
                         ),

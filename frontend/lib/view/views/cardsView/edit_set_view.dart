@@ -118,6 +118,8 @@ class EditSetViewState extends State<EditSetView> {
                                       _deleteCard(context);
                                     },
                                   ),
+                                  includeDate: true,
+                                  daysToNextReview: "3 days",
                                 ),
                               )),
 
@@ -137,6 +139,8 @@ class EditSetViewState extends State<EditSetView> {
                                       _deleteCard(context);
                                     },
                                   ),
+                                  includeDate: true,
+                                  daysToNextReview: "3 days",
                                 ),
                               )),
 

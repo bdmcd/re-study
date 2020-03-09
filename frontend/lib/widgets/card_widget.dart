@@ -9,14 +9,18 @@ class CardWidget extends StatefulWidget {
   final String answerText;
   final IconButton actionIconButton;
   final bool includeIcon;
+  final bool includeDate;
+  final String daysToNextReview;
 
-  CardWidget(
-      {Key key,
-      @required this.questionText,
-      @required this.answerText,
-      this.actionIconButton,
-      this.includeIcon = false})
-      : super(key: key);
+  CardWidget({
+    Key key,
+    @required this.questionText,
+    @required this.answerText,
+    this.actionIconButton,
+    this.includeIcon = false,
+    this.includeDate = false,
+    this.daysToNextReview,
+  }) : super(key: key);
 
   @override
   _CardWidgetState createState() => _CardWidgetState();
@@ -74,6 +78,18 @@ class _CardWidgetState extends State<CardWidget> {
                         : Container(),
                     bottom: 0,
                     right: 0,
+                  ),
+                  Positioned(
+                    child: widget.includeDate
+                        ? Text(
+                            "Next review - " + widget.daysToNextReview,
+                            style: TextStyle(fontStyle: FontStyle.italic,
+                            fontSize: 14,
+                            color: TEXT_HEADER_GREY),
+                          )
+                        : Container(),
+                    bottom: 15,
+                    left: 15,
                   )
                 ],
               ),
