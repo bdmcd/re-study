@@ -13,6 +13,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.document.spec.DeleteItemSpec;
 import com.amazonaws.services.dynamodbv2.model.*;
 
 import java.util.*;
@@ -74,6 +75,23 @@ public class CardDaoDynamoDB implements CardDaoInterface {
 
         Map<String, AttributeValueUpdate> attributeValuesUpdate = new HashMap<>();
         // cannot update the setGuid because it is part of the key. (could delete the card and recreate it?)
+        if (!request.getSetGuid().equals(request.getNewSetGuid())) {
+            try {
+                Table table = dynamoDB.getTable(tableName);
+                DeleteItemSpec spec = new DeleteItemSpec().withPrimaryKey(guidAttr, request.getGuid(), setGuidAttr, request.getSetGuid());
+                table.deleteItem(spec);
+
+                attributeValues = new HashMap<>();
+                attributeValues.put(guidAttr,new AttributeValue().withS(request.getGuid()));
+                attributeValues.put(setGuidAttr,new AttributeValue().withS(request.getNewSetGuid()));
+            }
+            catch (Exception e) {
+                //todo log with lambdda logger.
+            }
+        }
+        //if newsetguid != setGuid
+            // delete the current card
+            //create new card.
         // attributeValuesUpdate.put(setGuidAttr, new AttributeValueUpdate().withValue(new AttributeValue().withS(request.getNewSetGuid())));
         attributeValuesUpdate.put(answerAttr, new AttributeValueUpdate().withValue(new AttributeValue().withS(request.getAnswer())));
         attributeValuesUpdate.put(questionAttr, new AttributeValueUpdate().withValue(new AttributeValue().withS(request.getQuestion())));

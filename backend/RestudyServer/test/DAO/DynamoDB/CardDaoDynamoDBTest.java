@@ -54,6 +54,7 @@ class CardDaoDynamoDBTest {
         UpdateCardRequest updaterequest = new UpdateCardRequest();
         updaterequest.setGuid(card.getGuid());
         updaterequest.setSetGuid(card.getSetGuid());
+        updaterequest.setNewSetGuid("newSetGuid");
 
 //        request.setNewSetGuid("updateSetGuid"); cannot update the part of the key unless you wnat to delete the card and recreate it.
         updaterequest.setAnswer("wrong updated new 1");
