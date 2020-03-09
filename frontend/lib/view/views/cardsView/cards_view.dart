@@ -124,8 +124,7 @@ class CardsViewState extends State<CardsView> {
                                   borderRadius: BorderRadius.circular(4.0),
                                 ),
                                 child: InkWell(
-                                  splashColor:
-                                      APP_PRIMARY_COLOR.withAlpha(30),
+                                  splashColor: APP_PRIMARY_COLOR.withAlpha(30),
                                   onTap: () {
                                     _addCard(context);
                                   },
