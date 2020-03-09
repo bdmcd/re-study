@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/bloc/cards_bloc.dart';
+import 'package:restudy/widgets/card_widget.dart';
 import 'package:restudy/widgets/divider_line_painter.dart';
 import 'package:restudy/styles/spacings.dart';
 import 'package:restudy/styles/colors.dart';
@@ -38,13 +39,11 @@ class EditSetViewState extends State<EditSetView> {
           title: Text("Edit Set"),
           actions: <Widget>[
             FlatButton(
-              onPressed: (state is CardsLoadingState)
-                  ? null
-                  : () {
-                      if (_formKey.currentState.validate()) {
-                        _saveSet(context);
-                      }
-                    },
+              onPressed: () {
+                if (_formKey.currentState.validate()) {
+                  _saveSet(context);
+                }
+              },
               child: Text(
                 "Done",
                 style: TextStyle(
@@ -55,75 +54,123 @@ class EditSetViewState extends State<EditSetView> {
           ],
         ),
         body: BlocBuilder<CardsBloc, CardsState>(builder: (context, state) {
-          return Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          return ListView(
+            children: <Widget>[
+              Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  child: Column(
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: STD_VERTICAL_MARGIN * 2,
-                            left: 0,
-                            right: 0,
-                            bottom: 0.0),
-                        child: TestFieldInputFieldWidget(
-                          initialValue: "Set Name",
-                          header: "Set Name",
-                          userInput: (String value) {},
-                          validator: (String setName) {
-                            if (setName.isEmpty) {
-                              return 'Please enter a set name';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.only(
-                              top: STD_VERTICAL_MARGIN * 2,
-                              right: STD_HORIZONTAL_MARGIN,
-                              left: STD_HORIZONTAL_MARGIN),
-                          child: Center(
-                            child: Text(
-                              "No cards",
-                              style: TextStyle(
-                                color: TEXT_HEADER_GREY,
-                                fontSize: TEXT_BODY_FONT_SIZE,
-                              ),
-                            ),
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.only(
-                              top: STD_VERTICAL_MARGIN * 2,
-                              right: STD_HORIZONTAL_MARGIN,
-                              left: STD_HORIZONTAL_MARGIN),
-                          child: ButtonTheme(
-                            minWidth: MediaQuery.of(context).size.width,
-                            height: STD_BUTTON_HEIGHT,
-                            child: FlatButton(
-                              onPressed: () {
-                                if (_formKey.currentState.validate()) {
-                                  _deleteSet(context);
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: STD_VERTICAL_MARGIN * 2,
+                                left: 0,
+                                right: 0,
+                                bottom: STD_VERTICAL_MARGIN * 2),
+                            child: TestFieldInputFieldWidget(
+                              initialValue: "Set Name",
+                              header: "Set Name",
+                              userInput: (String value) {},
+                              validator: (String setName) {
+                                if (setName.isEmpty) {
+                                  return 'Please enter a set name';
                                 }
+                                return null;
                               },
-                              child: Text(
-                                "Delete set",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: BUT_FONT_SIZE,
-                                ),
-                              ),
-                              color: APP_DESTRUCTIVE_RED,
                             ),
-                          )),
+                          ),
+                          // IF NO CARDS
+
+                          // Padding(
+                          //     padding: const EdgeInsets.only(
+                          //         top: STD_VERTICAL_MARGIN * 2,
+                          //         right: STD_HORIZONTAL_MARGIN,
+                          //         left: STD_HORIZONTAL_MARGIN),
+                          //     child: Center(
+                          //       child: Text(
+                          //         "No cards",
+                          //         style: TextStyle(
+                          //           color: TEXT_HEADER_GREY,
+                          //           fontSize: TEXT_BODY_FONT_SIZE,
+                          //         ),
+                          //       ),
+                          //     )),
+
+                          // IF CARDS EXIST
+
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 0.0,
+                                  right: STD_HORIZONTAL_MARGIN,
+                                  left: STD_HORIZONTAL_MARGIN),
+                              child: Center(
+                                child: CardWidget(
+                                  answerText: "Answer",
+                                  questionText: "Question",
+                                  includeIcon: true,
+                                  actionIconButton: IconButton(
+                                    icon: Icon(Icons.delete_forever),
+                                    color: APP_DESTRUCTIVE_RED,
+                                    onPressed: () {
+                                      _deleteCard(context);
+                                    },
+                                  ),
+                                ),
+                              )),
+
+                              Padding(
+                              padding: const EdgeInsets.only(
+                                  right: STD_HORIZONTAL_MARGIN,
+                                  left: STD_HORIZONTAL_MARGIN),
+                              child: Center(
+                                child: CardWidget(
+                                  answerText: "Answer",
+                                  questionText: "Question",
+                                  includeIcon: true,
+                                  actionIconButton: IconButton(
+                                    icon: Icon(Icons.delete_forever),
+                                    color: APP_DESTRUCTIVE_RED,
+                                    onPressed: () {
+                                      _deleteCard(context);
+                                    },
+                                  ),
+                                ),
+                              )),
+
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  top: STD_VERTICAL_MARGIN * 2,
+                                  right: STD_HORIZONTAL_MARGIN,
+                                  left: STD_HORIZONTAL_MARGIN),
+                              child: ButtonTheme(
+                                minWidth: MediaQuery.of(context).size.width,
+                                height: STD_BUTTON_HEIGHT,
+                                child: FlatButton(
+                                  onPressed: () {
+                                    if (_formKey.currentState.validate()) {
+                                      _deleteSet(context);
+                                    }
+                                  },
+                                  child: Text(
+                                    "Delete set",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: BUT_FONT_SIZE,
+                                    ),
+                                  ),
+                                  color: APP_DESTRUCTIVE_RED,
+                                ),
+                              )),
+                        ],
+                      ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
           );
         }),
       );
@@ -136,6 +183,10 @@ class EditSetViewState extends State<EditSetView> {
 
   _deleteSet(context) {
     CardsBloc.of(context).add(CardsDeleteSetEvent());
+  }
+
+  _deleteCard(context) {
+    CardsBloc.of(context).add(CardsDeleteCardFromEditSetEvent());
   }
 
   _backToSet(context) {
