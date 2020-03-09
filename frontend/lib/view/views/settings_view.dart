@@ -8,7 +8,22 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Settings")),
+      appBar: AppBar(title: Text("Settings"),
+        leading: Container(),
+        actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                _backToSets(context);
+              },
+              child: Text(
+                "Close",
+                style: TextStyle(
+                    color: APP_PRIMARY_COLOR, fontSize: BUT_FONT_SIZE),
+              ),
+              shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+            )
+          ],
+      ),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthUnauthenticatedState) {
@@ -49,5 +64,9 @@ class SettingsView extends StatelessWidget {
         }
       ),
     );
+  }
+
+  _backToSets(BuildContext context) {
+    Navigator.of(context).pop();
   }
 }

@@ -8,6 +8,8 @@ import 'package:restudy/styles/colors.dart';
 import 'package:restudy/view/views/settings_view.dart';
 import 'package:restudy/widgets/text_input_field_widget.dart';
 
+import 'cardsView/cards_view.dart';
+
 class SetsView extends StatelessWidget {
   double boxSize;
   Authenticater _auth = AuthFactory.instance.authenticater;
@@ -269,6 +271,9 @@ class SetsView extends StatelessWidget {
   _openSet(BuildContext context, String setGuid) {
     print("Open Set " + setGuid);
     // change to cards view for setGuid's set
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => CardsView(setGuid: setGuid,)),
+    );
   }
 
   _openSettings(BuildContext prevContext) {
@@ -277,7 +282,8 @@ class SetsView extends StatelessWidget {
         builder: (context) => BlocProvider.value(
           value: AuthBloc.of(prevContext),
           child: SettingsView(),
-        )
+        ),
+        fullscreenDialog: true,
       )
     );
   }
