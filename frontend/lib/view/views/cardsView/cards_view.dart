@@ -37,16 +37,12 @@ class CardsViewState extends State<CardsView> {
             } else if (state is CardsAddingCardState) {
               _navigateToAddCardView(context);
             } else if (state is CardsDoneLoadingState) {
-              Navigator.of(context).pop();
+              _doneLoading(context);
             } else if (state is CardsLoadingState) {
-              Navigator.of(context).push(LoadingWidget());
+              _loading(context);
             }
           },
           builder: (context, state) {
-            // if (state is CardsLoadingState) {
-
-              // return LoadingWidget();
-            // }
             return Scaffold(
               appBar: AppBar(
                 title: Text("Set Name"),
@@ -68,122 +64,117 @@ class CardsViewState extends State<CardsView> {
                       })
                 ],
               ),
-              body: Stack(
+              body: ListView(
                 children: <Widget>[
-                  ListView(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: STD_VERTICAL_MARGIN * 2,
-                                left: STD_HORIZONTAL_MARGIN,
-                                right: STD_HORIZONTAL_MARGIN,
-                                bottom: 0.0),
-                            child: Text(
-                              "Set Name",
-                              style: TextStyle(
-                                  color: TEXT_BLACK,
-                                  fontSize: 32.0,
-                                  fontWeight: FontWeight.w600),
-                            ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: STD_VERTICAL_MARGIN * 2,
+                            left: STD_HORIZONTAL_MARGIN,
+                            right: STD_HORIZONTAL_MARGIN,
+                            bottom: 0.0),
+                        child: Text(
+                          "Set Name",
+                          style: TextStyle(
+                              color: TEXT_BLACK,
+                              fontSize: 32.0,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 0.0,
+                            left: STD_HORIZONTAL_MARGIN,
+                            right: STD_HORIZONTAL_MARGIN,
+                            bottom: 0.0),
+                        child: Text(
+                          "0% Accuracy",
+                          style: TextStyle(
+                            color: TEXT_BLACK,
+                            fontSize: TEXT_BODY_FONT_SIZE,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 0.0,
-                                left: STD_HORIZONTAL_MARGIN,
-                                right: STD_HORIZONTAL_MARGIN,
-                                bottom: 0.0),
-                            child: Text(
-                              "0% Accuracy",
-                              style: TextStyle(
-                                color: TEXT_BLACK,
-                                fontSize: TEXT_BODY_FONT_SIZE,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: STD_VERTICAL_MARGIN,
-                                left: STD_HORIZONTAL_MARGIN,
-                                right: STD_HORIZONTAL_MARGIN,
-                                bottom: 0.0),
-                            child: CustomPaint(
-                                painter: DividerLinePainter(
-                              width: MediaQuery.of(context).size.width -
-                                  (STD_HORIZONTAL_MARGIN * 2),
-                            )),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: STD_VERTICAL_MARGIN,
-                                left: STD_HORIZONTAL_MARGIN,
-                                right: STD_HORIZONTAL_MARGIN,
-                                bottom: 0.0),
-                            child: Column(
-                              children: <Widget>[
-                                Center(
-                                  child: Card(
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide(color: BORDER_GREY),
-                                      borderRadius: BorderRadius.circular(4.0),
-                                    ),
-                                    child: InkWell(
-                                      splashColor:
-                                          APP_PRIMARY_COLOR.withAlpha(30),
-                                      onTap: () {
-                                        _addCard(context);
-                                      },
-                                      child: Container(
-                                        width: MediaQuery.of(context).size.width,
-                                        height: CARD_HEIGHT,
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                            top: 30,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: STD_VERTICAL_MARGIN,
+                            left: STD_HORIZONTAL_MARGIN,
+                            right: STD_HORIZONTAL_MARGIN,
+                            bottom: 0.0),
+                        child: CustomPaint(
+                            painter: DividerLinePainter(
+                          width: MediaQuery.of(context).size.width -
+                              (STD_HORIZONTAL_MARGIN * 2),
+                        )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: STD_VERTICAL_MARGIN,
+                            left: STD_HORIZONTAL_MARGIN,
+                            right: STD_HORIZONTAL_MARGIN,
+                            bottom: 0.0),
+                        child: Column(
+                          children: <Widget>[
+                            Center(
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(color: BORDER_GREY),
+                                  borderRadius: BorderRadius.circular(4.0),
+                                ),
+                                child: InkWell(
+                                  splashColor:
+                                      APP_PRIMARY_COLOR.withAlpha(30),
+                                  onTap: () {
+                                    _addCard(context);
+                                  },
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: CARD_HEIGHT,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                        top: 30,
+                                      ),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Icon(
+                                            Icons.add,
+                                            size: ICON_LARGE_SIZE,
+                                            color: APP_PRIMARY_COLOR,
                                           ),
-                                          child: Column(
-                                            children: <Widget>[
-                                              Icon(
-                                                Icons.add,
-                                                size: ICON_LARGE_SIZE,
-                                                color: APP_PRIMARY_COLOR,
-                                              ),
-                                              Text(
-                                                "Add Card",
-                                                style: TextStyle(
-                                                  fontSize:
-                                                      TEXT_FIELD_INPUT_FONT_SIZE,
-                                                  color: APP_PRIMARY_COLOR,
-                                                ),
-                                              ),
-                                            ],
+                                          Text(
+                                            "Add Card",
+                                            style: TextStyle(
+                                              fontSize:
+                                                  TEXT_FIELD_INPUT_FONT_SIZE,
+                                              color: APP_PRIMARY_COLOR,
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
                                     ),
                                   ),
                                 ),
-                                CardWidget(
-                                  answerText: "Answer",
-                                  questionText: "Question",
-                                  includeIcon: true,
-                                  actionIconButton: IconButton(
-                                    icon: Icon(Icons.edit),
-                                    color: SECONDARY_BUTTON_COLOR,
-                                    onPressed: () {
-                                      _editCard(context);
-                                    },
-                                  ),
-                                )
-                              ],
+                              ),
                             ),
-                          ),
-                        ],
+                            CardWidget(
+                              answerText: "Answer",
+                              questionText: "Question",
+                              includeIcon: true,
+                              actionIconButton: IconButton(
+                                icon: Icon(Icons.edit),
+                                color: SECONDARY_BUTTON_COLOR,
+                                onPressed: () {
+                                  _editCard(context);
+                                },
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                  // state is CardsLoadingState ? LoadingWidget() : Container(),
                 ],
               ),
               floatingActionButton: Padding(
@@ -229,8 +220,16 @@ class CardsViewState extends State<CardsView> {
     CardsBloc.of(context).add(CardsEditCardEvent());
   }
 
+  _loading(BuildContext context) {
+    Navigator.of(context).push(LoadingWidget());
+  }
+
+  _doneLoading(BuildContext context) {
+    Navigator.of(context).pop();
+  }
+
   _navigateToEditCardView(BuildContext prevContext) {
-    Navigator.of(prevContext).push(new MaterialPageRoute(
+    Navigator.of(prevContext).push(MaterialPageRoute(
         builder: (context) => BlocProvider.value(
               value: CardsBloc.of(prevContext),
               child: EditCardView(),
@@ -239,7 +238,7 @@ class CardsViewState extends State<CardsView> {
   }
 
   _navigateToEditSetView(BuildContext prevContext) {
-    Navigator.of(prevContext).push(new MaterialPageRoute(
+    Navigator.of(prevContext).push(MaterialPageRoute(
         builder: (context) => BlocProvider.value(
               value: CardsBloc.of(prevContext),
               child: EditSetView(),
@@ -249,7 +248,7 @@ class CardsViewState extends State<CardsView> {
 
   _navigateToAddCardView(BuildContext prevContext) {
     Navigator.of(prevContext).push(
-      new MaterialPageRoute(
+      MaterialPageRoute(
           builder: (context) => BlocProvider.value(
                 value: CardsBloc.of(prevContext),
                 child: AddCardView(),
