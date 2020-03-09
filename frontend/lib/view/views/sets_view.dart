@@ -5,10 +5,8 @@ import 'package:restudy/bloc/auth_bloc.dart';
 import 'package:restudy/bloc/sets_bloc.dart';
 import 'package:restudy/model/flash_card_set.dart';
 import 'package:restudy/styles/colors.dart';
-import 'package:restudy/widgets/loading_widget.dart';
 import 'package:restudy/view/views/settings_view.dart';
 import 'package:restudy/widgets/text_input_field_widget.dart';
-import 'package:restudy/model/set_info.dart';
 
 class SetsView extends StatelessWidget {
   double boxSize;
@@ -172,14 +170,6 @@ class SetsView extends StatelessWidget {
                   style: TextStyle(fontSize: 17),
                 ),
               ),
-              // Text(
-              //   setInfo.numCards.toString() + " cards",
-              //   style: TextStyle(color: Colors.grey),
-              // ),
-              // Text(
-              //   setInfo.accuracy.toString() + "% accuracy",
-              //   style: TextStyle(color: Colors.grey),
-              // ),
             ],
           ),
           onPressed: () {
@@ -191,20 +181,8 @@ class SetsView extends StatelessWidget {
     );
   }
 
-  final mockSets = [
-    SetInfo(setTitle: "Biology", accuracy: 10.3, numCards: 17, guid: "1"),
-    SetInfo(setTitle: "Chemistry", accuracy: 5.7, numCards: 20, guid: "2"),
-    SetInfo(setTitle: "CS 428", accuracy: 80.9, numCards: 13, guid: "3"),
-    SetInfo(setTitle: "English", accuracy: 12.4, numCards: 8, guid: "4"),
-    SetInfo(setTitle: "Spanish", accuracy: 33.0, numCards: 42, guid: "5"),
-    SetInfo(
-        setTitle: "Book of Mormon", accuracy: 46.2, numCards: 14, guid: "6"),
-  ];
-
   final mockTodaySet = FlashcardSet(
     name: "Today's Set",
-    // accuracy: 8.2,
-    // numCards: 24,
     id: "TODAY",
   );
 
