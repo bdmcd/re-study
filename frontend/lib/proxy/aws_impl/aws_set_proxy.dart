@@ -5,7 +5,15 @@ import 'package:restudy/model/create_set_request.dart';
 
 class AWSSetProxy implements FlashcardSetProxy {
   @override
-  Future<FlashcardSet> createSet(CreateSetRequest request) {
+  Future<FlashcardSet> createSet(request) {
+    // TODO: implement createSet
     return null;
   }
+
+  @override
+  Future<FlashcardSet> updateSet(request) {
+    // TODO: implement updateSet
+    return null;
+  }
+
 }

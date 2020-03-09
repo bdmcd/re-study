@@ -19,7 +19,7 @@ class SetsBloc extends Bloc<SetsEvent, SetsState> {
   Authenticater _auth = AuthFactory.instance.authenticater;
 
   SetsBloc() {
-    init();
+    this.init();
   }
 
   Future<void> init() async {
@@ -45,13 +45,13 @@ class SetsBloc extends Bloc<SetsEvent, SetsState> {
   }
 
   Stream<SetsState> _initialize(SetsInitEvent event) async* {
+    print("INITIALIZE SETS");
     final authUser = await _auth.currentUser;
 
     // get sets
+    final request = GetSetsRequest(userGuid: authUser?.uid);
     final proxy = ProxyFactory.instance.userProxy;
-    final request = GetSetsRequest(userGuid: authUser.uid);
     List<FlashcardSet> flashcards = await proxy.getSets(request);
-    print("In init sets");
     yield SetsInitialState(flashcards);
   }
 

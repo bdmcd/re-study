@@ -18,17 +18,19 @@ class MockUserProxy implements UserProxy {
   }
 
   @override
-  Future<List<FlashcardSet>> getSets(GetSetsRequest request) {
+  Future<List<FlashcardSet>> getSets(GetSetsRequest request) async {
+    print("IN GET SETS MOCK");
     // TODO: implement getSets
-    // final mockSets = [
-    //   SetInfo(setTitle: "Biology", accuracy: 10.3, numCards: 17, guid: "1"),
-    //   SetInfo(setTitle: "Chemistry", accuracy: 5.7, numCards: 20, guid: "2"),
-    //   SetInfo(setTitle: "CS 428", accuracy: 80.9, numCards: 13, guid: "3"),
-    //   SetInfo(setTitle: "English", accuracy: 12.4, numCards: 8, guid: "4"),
-    //   SetInfo(setTitle: "Spanish", accuracy: 33.0, numCards: 42, guid: "5"),
-    //   SetInfo(
-    //       setTitle: "Book of Mormon", accuracy: 46.2, numCards: 14, guid: "6"),
-    // ];
-    return null;
+    await Future.delayed(Duration(milliseconds: 200));
+
+    final mockSets = [
+      FlashcardSet(name: "Biology", creatorId: "1", id: "1"),
+      FlashcardSet(name: "Chemistry", creatorId: "2", id: "2"),
+      FlashcardSet(name: "CS 428", creatorId: "3", id: "3"),
+      FlashcardSet(name: "English", creatorId: "4", id: "4"),
+      FlashcardSet(name: "Spanish", creatorId: "5", id: "5"),
+      FlashcardSet(name: "Book of Mormon", creatorId: "6", id: "6"),
+    ];
+    return mockSets;
   }
 }

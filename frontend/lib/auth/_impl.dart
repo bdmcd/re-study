@@ -9,7 +9,7 @@ enum AuthImpl {
 
 class AuthImplementation {
   // Change this variable to switch between auth implementations
-  static const AuthImpl _impl = AuthImpl.FIREBASE;
+  static const AuthImpl _impl = AuthImpl.MOCK;
 
   static AuthFactory createInstance() {
     switch(_impl) {
