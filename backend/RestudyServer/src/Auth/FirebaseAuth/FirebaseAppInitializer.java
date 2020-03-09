@@ -19,7 +19,7 @@ public class FirebaseAppInitializer {
             apiKey = readApiKey();
 
             FileInputStream serviceAccount =
-                    new FileInputStream("./firebase/restudy-fe85d-firebase-adminsdk-6v08x-498efd7c8e.json");
+                    new FileInputStream("src/firebase/restudy-fe85d-firebase-adminsdk-6v08x-498efd7c8e.json");
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -33,7 +33,7 @@ public class FirebaseAppInitializer {
     }
 
     private static String readApiKey() throws FileNotFoundException {
-        File apiKeyFile = new File("./firebase/api-key.txt");
+        File apiKeyFile = new File("src/firebase/api-key.txt");
         Scanner apiKeyScanner = new Scanner(apiKeyFile);
         String apiKey = apiKeyScanner.useDelimiter("\\A").next();
         apiKeyScanner.close();
