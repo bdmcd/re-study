@@ -4,6 +4,7 @@ public class Set {
     private String guid;
     private String name;
     private String creatorGuid;
+    private boolean deleted;
 
 
     public Set(){}
@@ -25,6 +26,10 @@ public class Set {
         return creatorGuid;
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
     public void setGuid(String guid) {
         this.guid = guid;
     }
@@ -37,4 +42,7 @@ public class Set {
         this.creatorGuid = creatorGuid;
     }
 
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 }
