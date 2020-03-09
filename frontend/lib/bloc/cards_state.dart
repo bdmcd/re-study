@@ -5,8 +5,12 @@ abstract class CardsState extends Equatable {
 }
 
 class CardsInitialState extends CardsState {
+  final List<Flashcard> flashcards;
+
+  CardsInitialState({@required this.flashcards});
+
   @override
-  List<Object> get props => [];
+  List<Object> get props => [flashcards];
 }
 
 class CardsEditingSetState extends CardsState {

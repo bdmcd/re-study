@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/bloc/cards_bloc.dart';
+import 'package:restudy/model/flash_card.dart';
 import 'package:restudy/view/views/cardsView/add_card_view.dart';
 import 'package:restudy/view/views/cardsView/edit_card_view.dart';
 import 'package:restudy/widgets/card_widget.dart';
@@ -43,160 +44,158 @@ class CardsViewState extends State<CardsView> {
             }
           },
           builder: (context, state) {
-            return Scaffold(
-              appBar: AppBar(
-                title: Text("Set Name"),
-                leading: IconButton(
-                  color: APP_PRIMARY_COLOR,
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    _backToSets(context);
-                  },
-                ),
-                actions: <Widget>[
-                  IconButton(
-                      icon: Icon(
-                        Icons.edit,
-                        color: APP_PRIMARY_COLOR,
-                      ),
-                      onPressed: () {
-                        _editSet(context);
-                      })
-                ],
-              ),
-              body: ListView(
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: STD_VERTICAL_MARGIN * 2,
-                            left: STD_HORIZONTAL_MARGIN,
-                            right: STD_HORIZONTAL_MARGIN,
-                            bottom: 0.0),
-                        child: Text(
-                          "Set Name",
-                          style: TextStyle(
-                              color: TEXT_BLACK,
-                              fontSize: 32.0,
-                              fontWeight: FontWeight.w600),
+            if (state is CardsInitialState) {
+              var flashcards = <Widget>[];
+
+              for (var flashcard in state.flashcards) {
+                flashcards.add(_buildCard(context, flashcard));
+              }
+
+              return Scaffold(
+                appBar: AppBar(
+                  title: Text("Set Name"),
+                  leading: IconButton(
+                    color: APP_PRIMARY_COLOR,
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () {
+                      _backToSets(context);
+                    },
+                  ),
+                  actions: <Widget>[
+                    IconButton(
+                        icon: Icon(
+                          Icons.edit,
+                          color: APP_PRIMARY_COLOR,
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 0.0,
-                            left: STD_HORIZONTAL_MARGIN,
-                            right: STD_HORIZONTAL_MARGIN,
-                            bottom: 0.0),
-                        child: Text(
-                          "0% Accuracy",
-                          style: TextStyle(
-                            color: TEXT_BLACK,
-                            fontSize: TEXT_BODY_FONT_SIZE,
+                        onPressed: () {
+                          _editSet(context);
+                        })
+                  ],
+                ),
+                body: ListView(
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: STD_VERTICAL_MARGIN * 2,
+                              left: STD_HORIZONTAL_MARGIN,
+                              right: STD_HORIZONTAL_MARGIN,
+                              bottom: 0.0),
+                          child: Text(
+                            "Set Name",
+                            style: TextStyle(
+                                color: TEXT_BLACK,
+                                fontSize: 32.0,
+                                fontWeight: FontWeight.w600),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: STD_VERTICAL_MARGIN,
-                            left: STD_HORIZONTAL_MARGIN,
-                            right: STD_HORIZONTAL_MARGIN,
-                            bottom: 0.0),
-                        child: CustomPaint(
-                            painter: DividerLinePainter(
-                          width: MediaQuery.of(context).size.width -
-                              (STD_HORIZONTAL_MARGIN * 2),
-                        )),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: STD_VERTICAL_MARGIN,
-                            left: STD_HORIZONTAL_MARGIN,
-                            right: STD_HORIZONTAL_MARGIN,
-                            bottom: 0.0),
-                        child: Column(
-                          children: <Widget>[
-                            Center(
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(color: BORDER_GREY),
-                                  borderRadius: BorderRadius.circular(4.0),
-                                ),
-                                child: InkWell(
-                                  splashColor: APP_PRIMARY_COLOR.withAlpha(30),
-                                  onTap: () {
-                                    _addCard(context);
-                                  },
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: CARD_HEIGHT,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                        top: 30,
-                                      ),
-                                      child: Column(
-                                        children: <Widget>[
-                                          Icon(
-                                            Icons.add,
-                                            size: ICON_LARGE_SIZE,
-                                            color: APP_PRIMARY_COLOR,
-                                          ),
-                                          Text(
-                                            "Add Card",
-                                            style: TextStyle(
-                                              fontSize:
-                                                  TEXT_FIELD_INPUT_FONT_SIZE,
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: STD_VERTICAL_MARGIN,
+                              left: STD_HORIZONTAL_MARGIN,
+                              right: STD_HORIZONTAL_MARGIN,
+                              bottom: 0.0),
+                          child: CustomPaint(
+                              painter: DividerLinePainter(
+                            width: MediaQuery.of(context).size.width -
+                                (STD_HORIZONTAL_MARGIN * 2),
+                          )),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: STD_VERTICAL_MARGIN,
+                              left: STD_HORIZONTAL_MARGIN,
+                              right: STD_HORIZONTAL_MARGIN,
+                              bottom: 0.0),
+                          child: Column(
+                            children: <Widget>[
+                              Center(
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(color: BORDER_GREY),
+                                    borderRadius: BorderRadius.circular(4.0),
+                                  ),
+                                  child: InkWell(
+                                    splashColor:
+                                        APP_PRIMARY_COLOR.withAlpha(30),
+                                    onTap: () {
+                                      _addCard(context);
+                                    },
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: CARD_HEIGHT,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                          top: 30,
+                                        ),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Icon(
+                                              Icons.add,
+                                              size: ICON_LARGE_SIZE,
                                               color: APP_PRIMARY_COLOR,
                                             ),
-                                          ),
-                                        ],
+                                            Text(
+                                              "Add Card",
+                                              style: TextStyle(
+                                                fontSize:
+                                                    TEXT_FIELD_INPUT_FONT_SIZE,
+                                                color: APP_PRIMARY_COLOR,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            CardWidget(
-                              answerText: "Answer",
-                              questionText: "Question",
-                              includeIcon: true,
-                              actionIconButton: IconButton(
-                                icon: Icon(Icons.edit),
-                                color: SECONDARY_BUTTON_COLOR,
-                                onPressed: () {
-                                  _editCard(context);
-                                },
-                              ),
-                              includeDate: true,
-                              daysToNextReview: "4 days",
-                            )
-                          ],
+                              Column(children: flashcards,),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              floatingActionButton: Padding(
-                padding: const EdgeInsets.only(bottom: 20.0),
-                child: FloatingActionButton.extended(
-                  onPressed: () {
-                    _studySet(context);
-                  },
-                  label: Text(
-                    'Study',
-                    style: TextStyle(fontSize: BUT_FONT_SIZE),
-                  ),
-                  icon: Icon(Icons.done_all),
-                  backgroundColor: APP_PRIMARY_COLOR,
+                      ],
+                    ),
+                  ],
                 ),
-              ),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerFloat,
-            );
+                floatingActionButton: Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: FloatingActionButton.extended(
+                    onPressed: () {
+                      _studySet(context);
+                    },
+                    label: Text(
+                      'Study',
+                      style: TextStyle(fontSize: BUT_FONT_SIZE),
+                    ),
+                    icon: Icon(Icons.done_all),
+                    backgroundColor: APP_PRIMARY_COLOR,
+                  ),
+                ),
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.centerFloat,
+              );
+            }
+            return Container();
           },
         ),
+      ),
+    );
+  }
+
+  Widget _buildCard(BuildContext context, Flashcard flashcard) {
+    return CardWidget(
+      answerText: flashcard.answer,
+      questionText: flashcard.question,
+      includeIcon: true,
+      actionIconButton: IconButton(
+        icon: Icon(Icons.edit),
+        color: SECONDARY_BUTTON_COLOR,
+        onPressed: () {
+          _editCard(context);
+        },
       ),
     );
   }

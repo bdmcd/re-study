@@ -118,8 +118,6 @@ class EditSetViewState extends State<EditSetView> {
                                       _showDeleteCardAlertDialog(context);
                                     },
                                   ),
-                                  includeDate: true,
-                                  daysToNextReview: "3 days",
                                 ),
                               )),
 
@@ -139,8 +137,6 @@ class EditSetViewState extends State<EditSetView> {
                                       _showDeleteCardAlertDialog(context);
                                     },
                                   ),
-                                  includeDate: true,
-                                  daysToNextReview: "3 days",
                                 ),
                               )),
 

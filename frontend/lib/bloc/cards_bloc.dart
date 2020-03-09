@@ -4,27 +4,31 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restudy/auth/auth.dart';
+import 'package:restudy/model/flash_card.dart';
 import 'package:restudy/model/flash_card_set.dart';
+import 'package:restudy/proxy/factory.dart';
 import 'package:restudy/proxy/mock_impl/mock_set_proxy.dart';
+import 'package:restudy/request/get_cards_request.dart';
 
 part 'cards_event.dart';
 part 'cards_state.dart';
 
 class CardsBloc extends Bloc<CardsEvent, CardsState> {
   static CardsBloc of(BuildContext context) => BlocProvider.of<CardsBloc>(context);
-  
-  MockSetProxy _set = MockSetProxy();
+  Authenticater _auth = AuthFactory.instance.authenticater;
+  final String setGuid;
 
-  CardsBloc(setGuid) {
-    init();
+  CardsBloc(this.setGuid) {
+    init(this.setGuid);
   }
   
-  Future<void> init() async {
+  Future<void> init(setGuid) async {
     this.add(CardsInitEvent());
   }
 
   @override
-  CardsState get initialState => CardsInitialState();
+  CardsState get initialState => CardsInitialState(flashcards: List<Flashcard>());
 
   @override
   Stream<CardsState> mapEventToState(
@@ -62,13 +66,18 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     } else if (event is CardsDeleteCardFromEditSetEvent) {
       yield* _cardsDeleteCardFromEditSet(event);
     }
-
   }
 
-  Stream<CardsState> _initialize(CardsEvent event) async* {
-      final _set = FlashcardSet();
+  Future<List<Flashcard>> getCards() async {
+    final request = GetCardsRequest(setGuid: this.setGuid);
+      final proxy = ProxyFactory.instance.setProxy;
+
+      return await proxy.getCards(request);
+  }
+
+  Stream<CardsState> _initialize(CardsInitEvent event) async* {
       // TODO: get set from proxy
-      yield CardsInitialState();
+      yield CardsInitialState(flashcards: await getCards());
   }
 
   Stream<CardsState> _flashError(CardsState errorState, CardsState afterErrorState) async* {
@@ -86,7 +95,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
     try {
       yield CardsDoneLoadingState();
-      yield CardsInitialState();
+      yield CardsInitialState(flashcards: await getCards());
     } catch(e) {
       print('Unknown exception caught in CardsBloc._saveSet() $e');
       yield* _flashError(CardsErrorState("Could not save set"), savedState);
@@ -178,7 +187,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
     try {
       yield CardsDoneLoadingState();
-      yield CardsInitialState();
+      yield CardsInitialState(flashcards: await getCards());
     } catch(e) {
       print('Unknown exception caught in CardsBloc._saveCard() $e');
       yield* _flashError(CardsErrorState("Could not save card"), savedState);
@@ -208,7 +217,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
     try {
       yield CardsDoneLoadingState();
-      yield CardsInitialState();
+      yield CardsInitialState(flashcards: await getCards());
     } catch(e) {
       print('Unknown exception caught in CardsBloc._cancelAddCard() $e'); 
       yield* _flashError(CardsErrorState("Could not cancel add card"), savedState);
@@ -225,7 +234,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
     try {
       yield CardsDoneLoadingState();
-      yield CardsInitialState();
+      yield CardsInitialState(flashcards: await getCards());
     } catch(e) {
       print('Unknown exception caught in CardsBloc._cancelAddCard() $e');
       yield* _flashError(CardsErrorState("Could not save add card"), savedState);
@@ -241,7 +250,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     try {
       // TODO: Add delete cards logic
       yield CardsDoneLoadingState();
-      yield CardsInitialState();
+      yield CardsInitialState(flashcards: await getCards());
     } catch(e) {
       print('Unknown exception caught in CardsBloc._deleteCard() $e');
       yield* _flashError(CardsErrorState("Could not delete card"), savedState);
