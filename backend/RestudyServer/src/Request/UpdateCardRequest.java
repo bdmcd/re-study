@@ -6,7 +6,7 @@ public class UpdateCardRequest {
     private String newSetGuid;
     private String question;
     private String answer;
-    private boolean deleted;
+    private Boolean deleted;
     private String token;
 
     public String getGuid() {
@@ -30,7 +30,7 @@ public class UpdateCardRequest {
     public String getNewSetGuid() {
         return newSetGuid;
     }
-    public boolean isDeleted() {
+    public Boolean isDeleted() {
         return deleted;
     }
 
@@ -51,7 +51,7 @@ public class UpdateCardRequest {
         this.setGuid = setGuid;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
 

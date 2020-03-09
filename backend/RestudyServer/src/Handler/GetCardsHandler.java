@@ -16,14 +16,14 @@ public class GetCardsHandler {
             return new GetCardsResult(Codes.BAD_REQUEST, "Request SetGuid cannot be null or empty");
         }
 
-        try {
-            AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
-//            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
-            authFactory.createAuthService().authenticate(request.getToken());
-        } catch(AuthException e) {
-            //TODO: Log the exception here
-            return new GetCardsResult(Codes.UNAUTHORIZED, "User not authorized");
-        }
+//        try {
+//            AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
+////            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
+//            authFactory.createAuthService().authenticate(request.getToken());
+//        } catch(AuthException e) {
+//            //TODO: Log the exception here
+//            return new GetCardsResult(Codes.UNAUTHORIZED, "User not authorized");
+//        }
 
         return GetCardsService.processRequest(request);
     }

@@ -46,6 +46,7 @@ public class SetDaoDynamoDBTest {
         updaterequest.setName("updated Name");
         updaterequest.setGuid(set.getGuid());
         updaterequest.setCreatorGuid(set.getCreatorGuid());
+        updaterequest.setDeleted(true);
 
         try {
             set = sDao.UpdateSet(updaterequest);

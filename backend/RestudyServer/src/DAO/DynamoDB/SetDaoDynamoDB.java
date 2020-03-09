@@ -22,6 +22,7 @@ public class SetDaoDynamoDB  implements SetDaoInterface {
     private static String creatorGuidAttr = "creatorGuid";
     private static String guidAttr = "guid";
     private static String nameAttr = "name";
+    private static String deletedAttr = "deleted";
 
     // DynamoDB client
     private static AmazonDynamoDB amazonDynamoDB = AmazonDynamoDBClientBuilder
@@ -36,7 +37,8 @@ public class SetDaoDynamoDB  implements SetDaoInterface {
         String uuid = UUID.randomUUID().toString();
         try {
             Item item = new Item().withPrimaryKey(creatorGuidAttr, request.getCreatorGuid(), guidAttr, uuid)
-                    .withString(nameAttr, request.getName());
+                    .withString(nameAttr, request.getName())
+                    .withBoolean(deletedAttr, false);
             table.putItem(item);
         } catch(Exception e) {
             System.out.println(e.getMessage());
@@ -58,6 +60,7 @@ public class SetDaoDynamoDB  implements SetDaoInterface {
         Map<String, AttributeValueUpdate> attributeValuesUpdate = new HashMap<>();
 
         attributeValuesUpdate.put(nameAttr, new AttributeValueUpdate().withValue(new AttributeValue().withS(request.getName())));
+        attributeValuesUpdate.put(deletedAttr, new AttributeValueUpdate().withValue(new AttributeValue().withBOOL(request.getDeleted())));
 
 
         UpdateItemRequest updateItemRequest = new UpdateItemRequest(tableName, attributeValues, attributeValuesUpdate);
@@ -95,6 +98,7 @@ public class SetDaoDynamoDB  implements SetDaoInterface {
                 set.setGuid(item.get(guidAttr).getS());
                 set.setCreatorGuid(item.get(creatorGuidAttr).getS());
                 set.setName(item.get(nameAttr).getS());
+                set.setDeleted(item.get(deletedAttr).getBOOL());
                 setList.add(set);
             }
         }

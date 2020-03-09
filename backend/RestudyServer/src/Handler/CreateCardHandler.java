@@ -17,20 +17,22 @@ public class CreateCardHandler {
             return new CreateCardResult(Codes.BAD_REQUEST, "Received null request");
         } else if (request.getSetGuid() == null || request.getSetGuid().isEmpty()) {
             return new CreateCardResult(Codes.BAD_REQUEST, "Request SetGuid cannot be null or empty");
+        } else if (request.getCreatorGuid() == null || request.getCreatorGuid().isEmpty()) {
+            return new CreateCardResult(Codes.BAD_REQUEST, "Request CreatorGuid cannot be null or empty");
         } else if (request.getQuestion() == null || request.getQuestion().isEmpty()) {
             return new CreateCardResult(Codes.BAD_REQUEST, "Request Question cannot be null or empty");
         } else if (request.getAnswer() == null || request.getAnswer().isEmpty()) {
             return new CreateCardResult(Codes.BAD_REQUEST, "Request Answer cannot be null or empty");
         }
 
-        try {
-            AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
-//            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
-            authFactory.createAuthService().authenticate(request.getToken());
-        } catch(AuthException e) {
-            //TODO: Log the exception here
-            return new CreateCardResult(Codes.UNAUTHORIZED, "User not authorized");
-        }
+//        try {
+//            AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
+////            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
+//            authFactory.createAuthService().authenticate(request.getToken());
+//        } catch(AuthException e) {
+//            //TODO: Log the exception here
+//            return new CreateCardResult(Codes.UNAUTHORIZED, "User not authorized");
+//        }
 
         return CreateCardService.processRequest(request);
     }
