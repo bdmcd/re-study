@@ -5,6 +5,9 @@ abstract class CardsEvent extends Equatable {
 }
 
 class CardsInitEvent extends CardsEvent {
+
+  CardsInitEvent();
+
   @override
   List<Object> get props => [];
 }

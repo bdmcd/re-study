@@ -9,8 +9,6 @@ class CardWidget extends StatefulWidget {
   final String answerText;
   final IconButton actionIconButton;
   final bool includeIcon;
-  final bool includeDate;
-  final String daysToNextReview;
 
   CardWidget({
     Key key,
@@ -18,8 +16,6 @@ class CardWidget extends StatefulWidget {
     @required this.answerText,
     this.actionIconButton,
     this.includeIcon = false,
-    this.includeDate = false,
-    this.daysToNextReview,
   }) : super(key: key);
 
   @override
@@ -79,18 +75,6 @@ class _CardWidgetState extends State<CardWidget> {
                     bottom: 0,
                     right: 0,
                   ),
-                  Positioned(
-                    child: widget.includeDate
-                        ? Text(
-                            "Next review - " + widget.daysToNextReview,
-                            style: TextStyle(fontStyle: FontStyle.italic,
-                            fontSize: 14,
-                            color: TEXT_HEADER_GREY),
-                          )
-                        : Container(),
-                    bottom: 12,
-                    left: 15,
-                  )
                 ],
               ),
             ),
