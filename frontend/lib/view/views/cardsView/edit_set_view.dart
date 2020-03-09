@@ -115,7 +115,7 @@ class EditSetViewState extends State<EditSetView> {
                                     icon: Icon(Icons.delete_forever),
                                     color: APP_DESTRUCTIVE_RED,
                                     onPressed: () {
-                                      _deleteCard(context);
+                                      _showDeleteCardAlertDialog(context);
                                     },
                                   ),
                                   includeDate: true,
@@ -123,7 +123,7 @@ class EditSetViewState extends State<EditSetView> {
                                 ),
                               )),
 
-                              Padding(
+                          Padding(
                               padding: const EdgeInsets.only(
                                   right: STD_HORIZONTAL_MARGIN,
                                   left: STD_HORIZONTAL_MARGIN),
@@ -136,7 +136,7 @@ class EditSetViewState extends State<EditSetView> {
                                     icon: Icon(Icons.delete_forever),
                                     color: APP_DESTRUCTIVE_RED,
                                     onPressed: () {
-                                      _deleteCard(context);
+                                      _showDeleteCardAlertDialog(context);
                                     },
                                   ),
                                   includeDate: true,
@@ -155,7 +155,7 @@ class EditSetViewState extends State<EditSetView> {
                                 child: FlatButton(
                                   onPressed: () {
                                     if (_formKey.currentState.validate()) {
-                                      _deleteSet(context);
+                                      _showDeleteSetAlertDialog(context);
                                     }
                                   },
                                   child: Text(
@@ -201,5 +201,77 @@ class EditSetViewState extends State<EditSetView> {
     // TODO: If time permits, fix this to use route names instead... this is kind of hacky
     int count = 0;
     Navigator.of(context).popUntil((_) => count++ >= 2);
+  }
+
+  _showDeleteSetAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel", style: TextStyle(color: TEXT_HEADER_GREY)),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget deleteButton = FlatButton(
+      child: Text("Delete", style: TextStyle(color: APP_DESTRUCTIVE_RED)),
+      onPressed: () {
+        Navigator.of(context).pop();
+        _deleteSet(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Delete Set"),
+      content: Text(
+          "This action cannot be undone."),
+      actions: [
+        cancelButton,
+        deleteButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  _showDeleteCardAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel", style: TextStyle(color: TEXT_HEADER_GREY)),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget deleteButton = FlatButton(
+      child: Text("Delete", style: TextStyle(color: APP_DESTRUCTIVE_RED)),
+      onPressed: () {
+        Navigator.of(context).pop();
+        _deleteCard(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Delete Card"),
+      content: Text(
+          "This action cannot be undone."),
+      actions: [
+        cancelButton,
+        deleteButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

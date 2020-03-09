@@ -113,7 +113,7 @@ class EditCardViewState extends State<EditCardView> {
                                 minWidth: 170.0,
                                 child: FlatButton(
                                   onPressed: () {
-                                    _deleteCard(context);
+                                    _showDeleteCardAlertDialog(context);
                                   },
                                   child: Text(
                                     "Delete card",
@@ -182,5 +182,41 @@ class EditCardViewState extends State<EditCardView> {
               child: MoveCardView(),
             ),
             fullscreenDialog: true));
+  }
+
+  _showDeleteCardAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel", style: TextStyle(color: TEXT_HEADER_GREY)),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget deleteButton = FlatButton(
+      child: Text("Delete", style: TextStyle(color: APP_DESTRUCTIVE_RED)),
+      onPressed: () {
+        Navigator.of(context).pop();
+        _deleteCard(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Delete Card"),
+      content: Text(
+          "This action cannot be undone."),
+      actions: [
+        cancelButton,
+        deleteButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
