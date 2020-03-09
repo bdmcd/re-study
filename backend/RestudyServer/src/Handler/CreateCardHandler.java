@@ -13,7 +13,10 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
 
 public class CreateCardHandler {
-    public CreateCardResult HandleRequest(CreateCardRequest request) {
+    public CreateCardResult HandleRequest(CreateCardRequest request, Context context) {
+        LambdaLogger logger = context.getLogger();
+        logger.log("starting Create Card ");
+
         if (request == null) {
             return new CreateCardResult(Codes.BAD_REQUEST, "Received null request");
         } else if (request.getSetGuid() == null || request.getSetGuid().isEmpty()) {
@@ -27,11 +30,12 @@ public class CreateCardHandler {
         }
 
         try {
-//            AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
-            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
+            AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
+//            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
             authFactory.createAuthService().authenticate(request.getToken());
         } catch(AuthException e) {
             //TODO: Log the exception here
+            logger.log(e.getMessage());
             return new CreateCardResult(Codes.UNAUTHORIZED, "User not authorized");
         }
 
