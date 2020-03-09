@@ -4,10 +4,9 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class FirebaseAppInitializer {
@@ -18,8 +17,8 @@ public class FirebaseAppInitializer {
         if (!isInitialized) {
             apiKey = readApiKey();
 
-            FileInputStream serviceAccount =
-                    new FileInputStream("src/firebase/restudy-fe85d-firebase-adminsdk-6v08x-498efd7c8e.json");
+            InputStream serviceAccount =
+                    FirebaseAppInitializer.class.getResourceAsStream("/firebase/restudy-fe85d-firebase-adminsdk-6v08x-498efd7c8e.json");
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -33,8 +32,10 @@ public class FirebaseAppInitializer {
     }
 
     private static String readApiKey() throws FileNotFoundException {
-        File apiKeyFile = new File("src/firebase/api-key.txt");
-        Scanner apiKeyScanner = new Scanner(apiKeyFile);
+        InputStream apiKeyStream =
+                FirebaseAppInitializer.class.getResourceAsStream("/firebase/api-key.txt");
+
+        Scanner apiKeyScanner = new Scanner(apiKeyStream);
         String apiKey = apiKeyScanner.useDelimiter("\\A").next();
         apiKeyScanner.close();
 

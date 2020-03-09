@@ -8,9 +8,10 @@ import Request.UpdateCardRequest;
 import Result.Codes;
 import Result.UpdateCardResult;
 import Service.UpdateCardService;
+import com.amazonaws.services.lambda.runtime.Context;
 
 public class UpdateCardHandler {
-    public UpdateCardResult HandleRequest(UpdateCardRequest request) {
+    public UpdateCardResult HandleRequest(UpdateCardRequest request, Context context) {
 
         if (request == null) {
             return new UpdateCardResult(Codes.BAD_REQUEST, "Received null request");
@@ -27,8 +28,7 @@ public class UpdateCardHandler {
         }
 
         try {
-//            AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
-            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
+            AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
             authFactory.createAuthService().authenticate(request.getToken());
         } catch(AuthException e) {
             //TODO: Log the exception here
