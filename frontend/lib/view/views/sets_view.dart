@@ -20,17 +20,6 @@ class SetsView extends StatelessWidget {
     return BlocProvider<SetsBloc>(
       create: (_) => SetsBloc(),
       child: BlocConsumer<SetsBloc, SetsState>(
-        listener: (context, state) {
-          print("in listener");
-          if (state is AuthErrorState) {
-            Scaffold.of(context).hideCurrentSnackBar();
-            Scaffold.of(context)
-                .showSnackBar(SnackBar(content: Text(state.error)));
-          } else if (state is SetsLoadingState) {
-            print("view sets");
-            _viewSets(context);
-          }
-        },
         builder: (context, state) {
           print(state);
           if (state is SetsInitialState) {
@@ -38,21 +27,14 @@ class SetsView extends StatelessWidget {
             return setsView(context, state);
           } else if (state is AddSetState) {
             return addSetView(context);
-<<<<<<< HEAD
-          } else {
-
-            // _viewSets(context);
-            return LoadingWidget();
-=======
           }
-          return setsView(context);
+          return setsView(context, state);
         },
         listener: (context, state) {
           if (state is AddSetsErrorState) {
             Scaffold.of(context).hideCurrentSnackBar();
             Scaffold.of(context)
                 .showSnackBar(SnackBar(content: Text(state.error)));
->>>>>>> frontend
           }
         },
       ),
