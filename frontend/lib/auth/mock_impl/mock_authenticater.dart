@@ -1,8 +1,11 @@
-
 import 'package:restudy/auth/auth.dart';
 
 class MockAuthenticater implements Authenticater {
-  AuthUser _user;
+  AuthUser _user = AuthUser(
+    email: "user1@gmail.com",
+    uid: "uid_user1@gmail.com",
+    token: () async => "mock_token",
+  );
 
   Map<String, String> _mockUserMap = {
     "user1@gmail.com": "Password1",
@@ -10,7 +13,7 @@ class MockAuthenticater implements Authenticater {
   };
 
   @override
-  Future<AuthUser> get currentUser async => _user;
+  Future<AuthUser> get currentUser async => this._user;
 
   @override
   Future<bool> get signedIn async => (await currentUser) != null;
@@ -25,30 +28,28 @@ class MockAuthenticater implements Authenticater {
 
     _mockUserMap[email] = password;
 
-    _user = AuthUser(
+    this._user = AuthUser(
       email: email,
       uid: "uid_$email",
       token: () async => "mock_token",
     );
 
-    return _user;
+    return this._user;
   }
 
   @override
   Future<AuthUser> signInWithEmail({String email, String password}) async {
     await Future.delayed(Duration(milliseconds: 1000));
+    print(email + password);
 
     if (_mockUserMap[email] != password) {
       throw InvalidEmailOrPasswordException();
     }
 
-    _user = AuthUser(
-      email: email,
-      uid: "uid_$email",
-      token: () async => "mock_token"
-    );
+    this._user = AuthUser(
+        email: email, uid: "uid_$email", token: () async => "mock_token");
 
-    return _user;
+    return this._user;
   }
 
   @override

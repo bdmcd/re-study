@@ -12,7 +12,6 @@ part 'flash_card_set.g.dart';
 
 @JsonSerializable()
 class FlashcardSet {
-
   @JsonKey(name: 'guid')
   final String id;
 

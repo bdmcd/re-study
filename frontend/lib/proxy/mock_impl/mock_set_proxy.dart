@@ -1,5 +1,3 @@
-
-
 import 'package:restudy/model/flash_card_set.dart';
 import 'package:restudy/proxy/proxy.dart';
 
