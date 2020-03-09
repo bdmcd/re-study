@@ -6,8 +6,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/model/flash_card_set.dart';
 import 'package:restudy/proxy/factory.dart';
-import 'package:restudy/model/create_set_request.dart';
-import 'package:restudy/model/get_sets_request.dart';
+import 'package:restudy/request/create_set_request.dart';
+import 'package:restudy/request/get_sets_request.dart';
 
 part 'sets_event.dart';
 part 'sets_state.dart';

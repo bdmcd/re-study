@@ -1,5 +1,5 @@
 import 'package:restudy/model/flash_card_set.dart';
-import 'package:restudy/model/create_set_request.dart';
+import 'package:restudy/request/create_set_request.dart';
 
 abstract class FlashcardSetProxy {
   Future<FlashcardSet> createSet(CreateSetRequest request);
