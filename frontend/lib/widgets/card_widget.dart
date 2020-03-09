@@ -88,7 +88,7 @@ class _CardWidgetState extends State<CardWidget> {
                             color: TEXT_HEADER_GREY),
                           )
                         : Container(),
-                    bottom: 15,
+                    bottom: 12,
                     left: 15,
                   )
                 ],
