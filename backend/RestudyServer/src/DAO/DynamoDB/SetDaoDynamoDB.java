@@ -99,9 +99,11 @@ public class SetDaoDynamoDB  implements SetDaoInterface {
                 set.setCreatorGuid(item.get(creatorGuidAttr).getS());
                 set.setName(item.get(nameAttr).getS());
                 set.setDeleted(item.get(deletedAttr).getBOOL());
+                //todo ? if !deleted ?
                 setList.add(set);
             }
         }
+        //todo add a today set.
 
         Set[] newSetList = new Set[setList.size()];
         for(int i = 0; i < setList.size(); i++){

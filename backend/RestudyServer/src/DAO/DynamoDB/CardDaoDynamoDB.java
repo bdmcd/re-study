@@ -95,8 +95,8 @@ public class CardDaoDynamoDB implements CardDaoInterface {
         // attributeValuesUpdate.put(setGuidAttr, new AttributeValueUpdate().withValue(new AttributeValue().withS(request.getNewSetGuid())));
         attributeValuesUpdate.put(answerAttr, new AttributeValueUpdate().withValue(new AttributeValue().withS(request.getAnswer())));
         attributeValuesUpdate.put(questionAttr, new AttributeValueUpdate().withValue(new AttributeValue().withS(request.getQuestion())));
-        attributeValuesUpdate.put(nextSessionAttr, new AttributeValueUpdate().withValue(new AttributeValue().withN("10")));
-        attributeValuesUpdate.put(nextIncrementAttr, new AttributeValueUpdate().withValue(new AttributeValue().withN("10")));
+        attributeValuesUpdate.put(nextSessionAttr, new AttributeValueUpdate().withValue(new AttributeValue().withN("10"))); //todo add the increments for smart schedueling
+        attributeValuesUpdate.put(nextIncrementAttr, new AttributeValueUpdate().withValue(new AttributeValue().withN("10"))); //todo add the increments for smart schedualing
         attributeValuesUpdate.put(deletedAttr, new AttributeValueUpdate().withValue(new AttributeValue().withBOOL(request.isDeleted())));
         // note that the creator Guid will never updated.
 
@@ -115,6 +115,7 @@ public class CardDaoDynamoDB implements CardDaoInterface {
 
     @Override
     public Card[] GetCards(GetCardsRequest request) {
+        //todo if setguid  = today get the sets for today. the creator guid index tabel needed.
         Map<String, String> attrNames = new TreeMap<>();
         attrNames.put("#set", setGuidAttr);
 
@@ -139,6 +140,7 @@ public class CardDaoDynamoDB implements CardDaoInterface {
                 card.setQuestion(item.get(questionAttr).getS());
                 card.setAnswer(item.get(answerAttr).getS());
                 card.setDeleted(item.get(deletedAttr).getBOOL());
+                //todo ? if !deleted ?
                 cardList.add(card);
             }
         }
