@@ -7,9 +7,10 @@ import Request.RegisterUserRequest;
 import Result.Codes;
 import Result.RegisterUserResult;
 import Service.RegisterUserService;
+import com.amazonaws.services.lambda.runtime.Context;
 
 public class RegisterUserHandler {
-    public RegisterUserResult HandleRequest(RegisterUserRequest request) {
+    public RegisterUserResult HandleRequest(RegisterUserRequest request, Context context) {
         if (request == null) {
             return new RegisterUserResult(Codes.BAD_REQUEST, "Received null request");
         } else if (request.getGuid() == null || request.getGuid().isEmpty()) {
@@ -20,7 +21,6 @@ public class RegisterUserHandler {
 
         try {
             AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
-//            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
             authFactory.createAuthService().authenticate(request.getToken());
         } catch(AuthException e) {
             //TODO: Log the exception here

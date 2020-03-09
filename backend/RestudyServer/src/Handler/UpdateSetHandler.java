@@ -7,9 +7,10 @@ import Request.UpdateSetRequest;
 import Result.Codes;
 import Result.UpdateSetResult;
 import Service.UpdateSetService;
+import com.amazonaws.services.lambda.runtime.Context;
 
 public class UpdateSetHandler {
-    public UpdateSetResult HandleRequest(UpdateSetRequest request) {
+    public UpdateSetResult HandleRequest(UpdateSetRequest request, Context context) {
         if (request == null) {
             return new UpdateSetResult(Codes.BAD_REQUEST, "Received null request");
         } else if (request.getGuid() == null || request.getGuid().isEmpty()) {
@@ -20,7 +21,6 @@ public class UpdateSetHandler {
 
         try {
             AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
-//            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
             authFactory.createAuthService().authenticate(request.getToken());
         } catch(AuthException e) {
             //TODO: Log the exception here
