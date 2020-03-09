@@ -13,9 +13,9 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
 
 public class CreateCardHandler {
-    public CreateCardResult HandleRequest(CreateCardRequest request/**, Context context**/) {
-//        LambdaLogger logger = context.getLogger();
-//        logger.log("starting Create Card ");
+    public CreateCardResult HandleRequest(CreateCardRequest request, Context context) {
+        LambdaLogger logger = context.getLogger();
+        logger.log("starting Create Card ");
 
         if (request == null) {
             return new CreateCardResult(Codes.BAD_REQUEST, "Received null request");
@@ -35,7 +35,7 @@ public class CreateCardHandler {
             authFactory.createAuthService().authenticate(request.getToken());
         } catch(AuthException e) {
             //TODO: Log the exception here
-//            logger.log(e.getMessage());
+            logger.log(e.getMessage());
             return new CreateCardResult(Codes.UNAUTHORIZED, "User not authorized");
         }
 
