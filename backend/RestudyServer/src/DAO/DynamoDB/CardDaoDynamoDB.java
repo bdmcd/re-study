@@ -112,7 +112,12 @@ public class CardDaoDynamoDB implements CardDaoInterface {
 
     @Override
     public Card[] GetCards(GetCardsRequest request) {
-        //todo if setguid  = "todaysetuid" get the sets for today. the creator guid index table needed.
+        //todo if setguid  = "todaysetuid" get the sets for today. the creator guid index table needed. or not:
+        // Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+        //        eav.put(":val1", new AttributeValue().withS(partitionKey));
+        //        eav.put(":val2", new AttributeValue().withS(twoWeeksAgoStr.toString()));
+        //        DynamoDBQueryExpression<Reply> queryExpression = new DynamoDBQueryExpression<Reply>()
+        //            .withKeyConditionExpression("Id = :val1 and ReplyDateTime > :val2").withExpressionAttributeValues(eav); example
         Map<String, String> attrNames = new TreeMap<>();
         attrNames.put("#set", setGuidAttr);
 
