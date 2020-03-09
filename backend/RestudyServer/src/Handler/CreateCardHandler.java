@@ -2,6 +2,7 @@ package Handler;
 
 import Auth.AuthException;
 import Auth.AuthServiceFactoryInterface;
+import Auth.DummyAuth.DummyAuthServiceFactory;
 import Auth.FirebaseAuth.FirebaseAuthServiceFactory;
 import Request.CreateCardRequest;
 import Result.Codes;
@@ -25,14 +26,14 @@ public class CreateCardHandler {
             return new CreateCardResult(Codes.BAD_REQUEST, "Request Answer cannot be null or empty");
         }
 
-//        try {
+        try {
 //            AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
-////            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
-//            authFactory.createAuthService().authenticate(request.getToken());
-//        } catch(AuthException e) {
-//            //TODO: Log the exception here
-//            return new CreateCardResult(Codes.UNAUTHORIZED, "User not authorized");
-//        }
+            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
+            authFactory.createAuthService().authenticate(request.getToken());
+        } catch(AuthException e) {
+            //TODO: Log the exception here
+            return new CreateCardResult(Codes.UNAUTHORIZED, "User not authorized");
+        }
 
         return CreateCardService.processRequest(request);
     }

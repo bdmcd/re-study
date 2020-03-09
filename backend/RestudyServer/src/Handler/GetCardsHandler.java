@@ -2,6 +2,7 @@ package Handler;
 
 import Auth.AuthException;
 import Auth.AuthServiceFactoryInterface;
+import Auth.DummyAuth.DummyAuthServiceFactory;
 import Auth.FirebaseAuth.FirebaseAuthServiceFactory;
 import Request.GetCardsRequest;
 import Result.Codes;
@@ -16,14 +17,14 @@ public class GetCardsHandler {
             return new GetCardsResult(Codes.BAD_REQUEST, "Request SetGuid cannot be null or empty");
         }
 
-//        try {
+        try {
 //            AuthServiceFactoryInterface authFactory = new FirebaseAuthServiceFactory();
-////            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
-//            authFactory.createAuthService().authenticate(request.getToken());
-//        } catch(AuthException e) {
-//            //TODO: Log the exception here
-//            return new GetCardsResult(Codes.UNAUTHORIZED, "User not authorized");
-//        }
+            AuthServiceFactoryInterface authFactory = new DummyAuthServiceFactory();
+            authFactory.createAuthService().authenticate(request.getToken());
+        } catch(AuthException e) {
+            //TODO: Log the exception here
+            return new GetCardsResult(Codes.UNAUTHORIZED, "User not authorized");
+        }
 
         return GetCardsService.processRequest(request);
     }
