@@ -152,7 +152,9 @@ class CardsViewState extends State<CardsView> {
                                   ),
                                 ),
                               ),
-                              Column(children: flashcards,),
+                              Column(
+                                children: flashcards,
+                              ),
                             ],
                           ),
                         ),
@@ -171,7 +173,9 @@ class CardsViewState extends State<CardsView> {
                       style: TextStyle(fontSize: BUT_FONT_SIZE),
                     ),
                     icon: Icon(Icons.done_all),
-                    backgroundColor: APP_PRIMARY_COLOR,
+                    backgroundColor: flashcards.length == 0
+                        ? TEXT_HEADER_GREY
+                        : APP_PRIMARY_COLOR,
                   ),
                 ),
                 floatingActionButtonLocation:

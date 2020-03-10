@@ -25,58 +25,52 @@ class CardWidget extends StatefulWidget {
 class _CardWidgetState extends State<CardWidget> {
   bool front = true;
 
-  void _flipCard() {
+  void _flipCard(PointerEvent details) {
     setState(() {
       this.front = !this.front;
     });
   }
 
+  // TODO: make card flip
+
   @override
   Widget build(BuildContext context) {
-    String text;
-    text = this.front ? this.widget.questionText : this.widget.answerText;
     return Center(
-      child: Card(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: BORDER_GREY),
-          borderRadius: BorderRadius.circular(4.0),
-        ),
-        child: InkWell(
-          splashColor: APP_PRIMARY_COLOR.withAlpha(30),
-          onTap: () {
-            this._flipCard();
-          },
+      child: Listener(
+        onPointerDown: _flipCard,
+        onPointerUp: _flipCard,
+        child: Card(
+          color: this.front ? Colors.white : Color.fromARGB(255, 245, 245, 245),
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: BORDER_GREY),
+            borderRadius: BorderRadius.circular(4.0),
+          ),
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: CARD_HEIGHT,
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: STD_VERTICAL_MARGIN * 2,
-              ),
-              child: Stack(
-                children: <Widget>[
-                  Positioned.fill(
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          text,
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                        ),
-                        Icon(Icons.sync),
-                      ],
+            child: Stack(
+              children: <Widget>[
+                Positioned.fill(
+                  child: Center(
+                    child: Text(
+                      this.front 
+                          ? this.widget.questionText
+                          : this.widget.answerText,
+                      style: TextStyle(
+                        fontSize: TEXT_BODY_FONT_SIZE,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
-                  Positioned(
-                    child: widget.includeIcon
-                        ? widget.actionIconButton
-                        : Container(),
-                    bottom: 0,
-                    right: 0,
-                  ),
-                ],
-              ),
+                ),
+                Positioned(
+                  child: widget.includeIcon 
+                      ? widget.actionIconButton
+                      : Container(),
+                  bottom: 0,
+                  right: 0,
+                ),
+              ],
             ),
           ),
         ),
@@ -84,3 +78,4 @@ class _CardWidgetState extends State<CardWidget> {
     );
   }
 }
+
