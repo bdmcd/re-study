@@ -84,6 +84,7 @@ class EditSetViewState extends State<EditSetView> {
                           ),
                           // IF NO CARDS
 
+                          // if (flashcards.isEmpty) {
                           // Padding(
                           //     padding: const EdgeInsets.only(
                           //         top: STD_VERTICAL_MARGIN * 2,
@@ -98,6 +99,7 @@ class EditSetViewState extends State<EditSetView> {
                           //         ),
                           //       ),
                           //     )),
+                          // }
 
                           // IF CARDS EXIST
 

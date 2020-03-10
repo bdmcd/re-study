@@ -5,6 +5,7 @@ import 'package:restudy/bloc/cards_bloc.dart';
 import 'package:restudy/model/flash_card.dart';
 import 'package:restudy/view/views/cardsView/add_card_view.dart';
 import 'package:restudy/view/views/cardsView/edit_card_view.dart';
+import 'package:restudy/view/views/study_set_view.dart';
 import 'package:restudy/widgets/card_widget.dart';
 import 'package:restudy/widgets/divider_line_painter.dart';
 import 'package:restudy/styles/spacings.dart';
@@ -41,6 +42,8 @@ class CardsViewState extends State<CardsView> {
               _doneLoading(context);
             } else if (state is CardsLoadingState) {
               _loading(context);
+            } else if (state is CardsStudySetState) {
+              _navigateToStudySet(context);
             }
           },
           builder: (context, state) {
@@ -166,6 +169,9 @@ class CardsViewState extends State<CardsView> {
                   padding: const EdgeInsets.only(bottom: 20.0),
                   child: FloatingActionButton.extended(
                     onPressed: () {
+                      if (flashcards.isEmpty) {
+                        return null;
+                      }
                       _studySet(context);
                     },
                     label: Text(
@@ -173,7 +179,7 @@ class CardsViewState extends State<CardsView> {
                       style: TextStyle(fontSize: BUT_FONT_SIZE),
                     ),
                     icon: Icon(Icons.done_all),
-                    backgroundColor: flashcards.length == 0
+                    backgroundColor: flashcards.isEmpty
                         ? TEXT_HEADER_GREY
                         : APP_PRIMARY_COLOR,
                   ),
@@ -256,6 +262,17 @@ class CardsViewState extends State<CardsView> {
           builder: (context) => BlocProvider.value(
                 value: CardsBloc.of(prevContext),
                 child: AddCardView(),
+              ),
+          fullscreenDialog: true),
+    );
+  }
+
+  _navigateToStudySet(BuildContext prevContext) {
+    Navigator.of(prevContext).push(
+      MaterialPageRoute(
+          builder: (context) => BlocProvider.value(
+                value: CardsBloc.of(prevContext),
+                child: StudySetView(),
               ),
           fullscreenDialog: true),
     );

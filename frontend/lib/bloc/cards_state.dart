@@ -28,7 +28,7 @@ class CardsLoadingState extends CardsState {
   List<Object> get props => [];
 }
 
-class CardsStudyState extends CardsState {
+class CardsStudySetState extends CardsState {
   @override
   List<Object> get props => [];
 }

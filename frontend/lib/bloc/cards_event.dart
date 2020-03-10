@@ -47,6 +47,11 @@ class CardsStudyEvent extends CardsEvent {
   List<Object> get props => [];
 }
 
+class CardsDoneStudyingEvent extends CardsEvent {
+  @override
+  List<Object> get props => [];
+}
+
 class CardsEditCardEvent extends CardsEvent {
   @override
   List<Object> get props => [];
