@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/bloc/cards_bloc.dart';
@@ -15,6 +17,46 @@ class StudySetView extends StatefulWidget {
 
 class StudySetViewState extends State<StudySetView> {
   bool doneStudying = false;
+  int index = 0;
+  List<bool> answerList;
+  // List<Flashcard> allFlashcards;
+  final allFlashcards = [
+    Flashcard(
+        answer: "Blue",
+        question: "What color is the sky?",
+        creatorId: "98h7gy23efwr",
+        setId: "90238dj98jd",
+        retentionScore: 90.0,
+        id: Random().nextInt(100).toString()),
+    Flashcard(
+        answer: "Clear",
+        question: "What color is the water?",
+        creatorId: "98h7gy23efwr",
+        setId: "90238dj98jd",
+        retentionScore: 90.0,
+        id: Random().nextInt(100).toString()),
+    Flashcard(
+        answer: "Yellow",
+        question: "What color is the sun?",
+        creatorId: "98h7gy23efwr",
+        setId: "90238dj98jd",
+        retentionScore: 90.0,
+        id: Random().nextInt(100).toString()),
+    Flashcard(
+        answer: "Green",
+        question: "What color is the grass?",
+        creatorId: "98h7gy23efwr",
+        setId: "90238dj98jd",
+        retentionScore: 90.0,
+        id: Random().nextInt(100).toString()),
+    Flashcard(
+        answer: "Red",
+        question: "What color is the blood?",
+        creatorId: "98h7gy23efwr",
+        setId: "90238dj98jd",
+        retentionScore: 90.0,
+        id: Random().nextInt(100).toString()),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +102,7 @@ class StudySetViewState extends State<StudySetView> {
           ],
         ),
         body: Center(
-          child: Column(
+          child: !this.doneStudying ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -69,14 +111,24 @@ class StudySetViewState extends State<StudySetView> {
                     left: STD_HORIZONTAL_MARGIN,
                     right: STD_HORIZONTAL_MARGIN,
                     bottom: STD_VERTICAL_MARGIN / 2),
-                child: _buildCard(
-                    context,
-                    Flashcard(
-                        answer: "Blue",
-                        question: "What is the color of the sky?")),
+                child: AnimatedSwitcher(
+                    transitionBuilder:
+                        (Widget child, Animation<double> animation) {
+                      return SlideTransition(
+
+                        position: Tween<Offset>(
+                          begin: const Offset(0, -1),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      );
+                    },
+                    duration: Duration(milliseconds: 500),
+                    switchOutCurve: Threshold(0),
+                    child: _buildCard(context, this.allFlashcards[this.index])),
               ),
               Text(
-                "1 of 5",
+                (this.index + 1).toString() + " of 5",
                 style: TextStyle(
                     color: TEXT_HEADER_GREY,
                     fontSize: TEXT_BODY_FONT_SIZE,
@@ -101,7 +153,9 @@ class StudySetViewState extends State<StudySetView> {
                             side: BorderSide(color: BORDER_GREY),
                             borderRadius: BorderRadius.circular(4.0),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            _nextCard();
+                          },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -132,7 +186,9 @@ class StudySetViewState extends State<StudySetView> {
                             side: BorderSide(color: BORDER_GREY),
                             borderRadius: BorderRadius.circular(4.0),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            _nextCard();
+                          },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -156,18 +212,43 @@ class StudySetViewState extends State<StudySetView> {
                     ],
                   )),
             ],
-          ),
+          ) : _showResults(context),
         ),
       );
     });
   }
 
-  _nextCard() {}
+  _nextCard() {
+    if (this.index == this.allFlashcards.length - 1) {
+      this.doneStudying = true;
+    } else {
+      this.index++;
+    }
+    setState(() {});
+  }
 
   Widget _buildCard(BuildContext context, Flashcard flashcard) {
     return CardWidget(
+      key: Key(flashcard.id),
       answerText: flashcard.answer,
       questionText: flashcard.question,
+    );
+  }
+
+  Widget _showResults(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(
+            bottom: STD_VERTICAL_MARGIN,
+          ),
+          child: 
+            Image(image: AssetImage("images/study_results_perfect.png")),
+        ),
+        Text("Perfect!", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700, color: TEXT_HEADER_GREY),),
+      ],
     );
   }
 

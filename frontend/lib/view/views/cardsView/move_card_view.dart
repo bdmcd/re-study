@@ -39,7 +39,7 @@ class MoveCardViewState extends State<MoveCardView> {
             if (state is CardsCancelledMoveCardState) {
               print("Back to editing state");
               _backToEditingState(context);
-            } else if (state is CardsCardMovedState) {
+            } else if (state is CardsInitialState) {
               _backToSet(context);
             } else if (state is CardsErrorState) {
               Scaffold.of(context)
@@ -93,8 +93,7 @@ class MoveCardViewState extends State<MoveCardView> {
   }
 
   _backToSet(BuildContext context) {
-    int count = 0;
-    Navigator.of(context).popUntil((_) => count++ >= 2);
+    Navigator.of(context).pop();
   }
 
   _moveCardToSet(BuildContext context) {
