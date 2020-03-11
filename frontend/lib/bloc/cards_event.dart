@@ -105,6 +105,10 @@ class CardsCancelAddCardEvent extends CardsEvent {
 }
 
 class CardsSaveAddCardEvent extends CardsEvent {
+  final String question;
+  final String answer;
+
+  CardsSaveAddCardEvent({@required this.question, @required this.answer});
   @override
-  List<Object> get props => [];
+  List<Object> get props => [question, answer];
 }

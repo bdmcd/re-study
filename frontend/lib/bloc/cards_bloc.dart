@@ -9,6 +9,7 @@ import 'package:restudy/model/flash_card.dart';
 import 'package:restudy/model/flash_card_set.dart';
 import 'package:restudy/proxy/factory.dart';
 import 'package:restudy/proxy/mock_impl/mock_set_proxy.dart';
+import 'package:restudy/request/create_flashcard_request.dart';
 import 'package:restudy/request/get_cards_request.dart';
 import 'package:restudy/request/get_sets_request.dart';
 import 'package:restudy/request/update_flashcard_request.dart';
@@ -222,10 +223,11 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     final savedState = state;
     yield CardsLoadingState();
 
-    // TODO: save card to DB
-
-
     try {
+      final authUser = await _auth.currentUser;
+      final request = CreateFlashcardRequest(question: event.question, answer: event.answer, creatorId: authUser.uid, setId: this.setGuid);
+      final proxy = ProxyFactory.instance.cardProxy;
+      await proxy.createCard(request);
       yield CardsDoneLoadingState();
       yield CardsInitialState(flashcards: await getCards());
     } catch(e) {
@@ -256,7 +258,7 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
     try {
       yield CardsDoneLoadingState();
-      yield CardsEditingSetState(cards: await getCards()); // What should I yield so view doesnt change?
+      yield CardsEditingSetState(cards: await getCards());
     } catch(e) {
       print('Unknown exception caught in CardsBloc._deleteCard() $e');
       yield* _flashError(CardsErrorState("Could not delete card"), savedState);
