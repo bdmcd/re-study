@@ -10,6 +10,9 @@ import 'package:restudy/model/flash_card_set.dart';
 import 'package:restudy/proxy/factory.dart';
 import 'package:restudy/proxy/mock_impl/mock_set_proxy.dart';
 import 'package:restudy/request/get_cards_request.dart';
+import 'package:restudy/request/get_sets_request.dart';
+import 'package:restudy/request/update_flashcard_request.dart';
+import 'package:restudy/request/update_set_request.dart';
 
 part 'cards_event.dart';
 part 'cards_state.dart';
@@ -70,13 +73,13 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
 
   Future<List<Flashcard>> getCards() async {
     final request = GetCardsRequest(setGuid: this.setGuid);
-      final proxy = ProxyFactory.instance.setProxy;
+    final proxy = ProxyFactory.instance.setProxy;
+    print(this.setGuid);
 
-      return await proxy.getCards(request);
+    return await proxy.getCards(request);
   }
 
   Stream<CardsState> _initialize(CardsInitEvent event) async* {
-      // TODO: get set from proxy
       yield CardsInitialState(flashcards: await getCards());
   }
 
@@ -85,15 +88,14 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     yield afterErrorState;
   }
 
-  Stream<CardsState> _saveSet(CardsEvent event) async* {
+  Stream<CardsState> _saveSet(CardsSaveSetEvent event) async* {
     final savedState = state;
     yield CardsLoadingState();
 
-    await Future.delayed(Duration(milliseconds: 200));
-
-    // TODO: Save the set here
-
     try {
+      final request = UpdateSetRequest(guid: event.setGuid, name: event.updatedName);
+      final proxy = ProxyFactory.instance.setProxy;
+      await proxy.updateSet(request);
       yield CardsDoneLoadingState();
       yield CardsInitialState(flashcards: await getCards());
     } catch(e) {
@@ -106,11 +108,13 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     final savedState = state;
     yield CardsLoadingState();
 
-    await Future.delayed(Duration(milliseconds: 200));
-
     try {
+      final authUser = await _auth.currentUser;
+      final request = GetSetsRequest(userGuid: authUser.uid);
+      final proxy = ProxyFactory.instance.userProxy;
+      List<FlashcardSet> userSets = await proxy.getSets(request);
       yield CardsDoneLoadingState();
-      yield CardsMovingCardState();
+      yield CardsMovingCardState(setInfo: userSets);
     } catch(e) {
       print('Unknown exception caught in CardsBloc._goToMoveCard() $e');
       yield* _flashError(CardsErrorState("Could not go to move card view"), savedState);
@@ -121,8 +125,6 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     final savedState = state;
     yield CardsLoadingState();
 
-    await Future.delayed(Duration(milliseconds: 200));
-
     try {
       yield CardsDoneLoadingState();
       yield CardsCancelledMoveCardState();
@@ -132,15 +134,14 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     }
   }
 
-  Stream<CardsState> _moveCardToSet(CardsEvent event) async* {
+  Stream<CardsState> _moveCardToSet(CardsMoveCardToSetEvent event) async* {
     final savedState = state;
     yield CardsLoadingState();
 
-    await Future.delayed(Duration(milliseconds: 200));
-
-    // add moving to set
-
     try {
+      final request = UpdateFlashcardRequest(cardId: event.cardGuid, setId: event.setId);
+      final proxy = ProxyFactory.instance.cardProxy;
+      await proxy.updateCard(request);
       yield CardsDoneLoadingState();
       yield CardsCardMovedState();
     } catch(e) {
@@ -149,43 +150,40 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     }
   }
 
-  Stream<CardsState> _editSet(CardsEvent event) async* {
+  Stream<CardsState> _editSet(CardsEditSetEvent event) async* {
     final savedState = state;
     yield CardsLoadingState();
 
-    await Future.delayed(Duration(milliseconds: 200));
-
     try {
+      List<Flashcard> flashCards = await getCards();
       yield CardsDoneLoadingState();
-      yield CardsEditingSetState();
+      yield CardsEditingSetState(cards: flashCards);
     } catch(e) {
       print('Unknown exception caught in CardsBloc._editSet() $e');
       yield* _flashError(CardsErrorState("Could not edit set"), savedState);
     }
   }
 
-  Stream<CardsState> _editCard(CardsEvent event) async* {
+  Stream<CardsState> _editCard(CardsEditCardEvent event) async* {
     final savedState = state;
     yield CardsLoadingState();
-
-    await Future.delayed(Duration(milliseconds: 200));
-
     try {
       yield CardsDoneLoadingState();
-      yield CardsEditingCardState();
+      yield CardsEditingCardState(card: event.card);
     } catch(e) {
       print('Unknown exception caught in CardsBloc._editCard() $e');
       yield* _flashError(CardsErrorState("Could not edit card"), savedState);
     }
   }
 
-  Stream<CardsState> _saveCard(CardsEvent event) async* {
+  Stream<CardsState> _saveCard(CardsSaveCardEvent event) async* {
     final savedState = state;
     yield CardsLoadingState();
 
-    await Future.delayed(Duration(milliseconds: 200));
-
     try {
+      final request = UpdateFlashcardRequest(question: event.question, answer: event.answer, cardId: event.guid);
+      final proxy = ProxyFactory.instance.cardProxy;
+      await proxy.updateCard(request);
       yield CardsDoneLoadingState();
       yield CardsInitialState(flashcards: await getCards());
     } catch(e) {
@@ -197,8 +195,6 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
   Stream<CardsState> _goToAddCard(CardsEvent event) async* {
     final savedState = state;
     yield CardsLoadingState();
-
-    await Future.delayed(Duration(milliseconds: 200));
 
     try {
       yield CardsDoneLoadingState();
@@ -213,8 +209,6 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     final savedState = state;
     yield CardsLoadingState();
 
-    await Future.delayed(Duration(milliseconds: 200));
-
     try {
       yield CardsDoneLoadingState();
       yield CardsInitialState(flashcards: await getCards());
@@ -224,13 +218,12 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     }
   }
 
-  Stream<CardsState> _saveAddCard(CardsEvent event) async* {
+  Stream<CardsState> _saveAddCard(CardsSaveAddCardEvent event) async* {
     final savedState = state;
     yield CardsLoadingState();
 
-    await Future.delayed(Duration(milliseconds: 200));
-
     // TODO: save card to DB
+
 
     try {
       yield CardsDoneLoadingState();
@@ -241,14 +234,14 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     }
   }
 
-  Stream<CardsState> _deleteCard(CardsEvent event) async* {
+  Stream<CardsState> _deleteCard(CardsDeleteCardEvent event) async* {
     final savedState = state;
     yield CardsLoadingState();
 
-    await Future.delayed(Duration(milliseconds: 200));
-
     try {
-      // TODO: Add delete cards logic
+      final request = UpdateFlashcardRequest(cardId: event.card.id, deleted: true);
+      final proxy = ProxyFactory.instance.cardProxy;
+      await proxy.updateCard(request);
       yield CardsDoneLoadingState();
       yield CardsInitialState(flashcards: await getCards());
     } catch(e) {
@@ -261,26 +254,24 @@ class CardsBloc extends Bloc<CardsEvent, CardsState> {
     final savedState = state;
     yield CardsLoadingState();
 
-    await Future.delayed(Duration(milliseconds: 200));
-
     try {
       yield CardsDoneLoadingState();
-      yield CardsStillEditingSetState(); // What should I yield so view doesnt change?
+      yield CardsEditingSetState(cards: await getCards()); // What should I yield so view doesnt change?
     } catch(e) {
       print('Unknown exception caught in CardsBloc._deleteCard() $e');
       yield* _flashError(CardsErrorState("Could not delete card"), savedState);
     }
   }
 
-  Stream<CardsState> _deleteSet(CardsEvent event) async* {
+  Stream<CardsState> _deleteSet(CardsDeleteSetEvent event) async* {
     final savedState = state;
     print("delete set");
     yield CardsLoadingState();
 
-    await Future.delayed(Duration(milliseconds: 200));
-
     try {
-      // TODO: Add delete cards logic
+      final request = UpdateSetRequest(guid: this.setGuid, deleted: true);
+      final proxy = ProxyFactory.instance.setProxy;
+      await proxy.updateSet(request);
       print("delete set");
       yield CardsDoneLoadingState();
       yield CardsDeletedState();

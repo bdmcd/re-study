@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/bloc/cards_bloc.dart';
+import 'package:restudy/model/flash_card.dart';
+import 'package:restudy/model/flash_card_set.dart';
 import 'package:restudy/widgets/card_widget.dart';
 import 'package:restudy/widgets/divider_line_painter.dart';
 import 'package:restudy/styles/spacings.dart';
@@ -8,18 +10,25 @@ import 'package:restudy/styles/colors.dart';
 import 'package:restudy/widgets/text_input_field_widget.dart';
 
 class EditSetView extends StatefulWidget {
-  EditSetView() : super(key: ValueKey<int>(1));
+  final List<Flashcard> cards;
+  final String setId;
+  // final FlashcardSet cardSet;
+  EditSetView({this.cards, this.setId}) : super(key: ValueKey<int>(1));
 
   @override
   EditSetViewState createState() {
-    return EditSetViewState();
+    return EditSetViewState(cards: this.cards);
   }
 }
 
 class EditSetViewState extends State<EditSetView> {
   final _formKey = GlobalKey<FormState>();
-  final List<Card> cards = List(0);
+  final List<Flashcard> cards;
+  final String setId;
   final Key key = null;
+  // final FlashcardSet cardSet;
+
+  EditSetViewState({@required this.cards, @required this.setId});
 
   @override
   Widget build(BuildContext context) {
@@ -54,127 +63,117 @@ class EditSetViewState extends State<EditSetView> {
           ],
         ),
         body: BlocBuilder<CardsBloc, CardsState>(builder: (context, state) {
-          return ListView(
-            children: <Widget>[
-              Form(
-                key: _formKey,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: STD_VERTICAL_MARGIN * 2,
-                                left: 0,
-                                right: 0,
-                                bottom: STD_VERTICAL_MARGIN * 2),
-                            child: TestFieldInputFieldWidget(
-                              initialValue: "Set Name",
-                              header: "Set Name",
-                              userInput: (String value) {},
-                              validator: (String setName) {
-                                if (setName.isEmpty) {
-                                  return 'Please enter a set name';
-                                }
-                                return null;
-                              },
-                            ),
+          if (state is CardsEditingSetState) {
+            var cardItems = <Widget>[];
+            for (var card in state.cards) {
+              cardItems.add(cardItem(context, card));
+            }
+            return ListView(
+              children: <Widget>[
+                Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: STD_VERTICAL_MARGIN * 2,
+                              left: 0,
+                              right: 0,
+                              bottom: STD_VERTICAL_MARGIN * 2),
+                          child: TestFieldInputFieldWidget(
+                            initialValue: "Set Name",
+                            header: "Set Name",
+                            userInput: (String value) {},
+                            validator: (String setName) {
+                              if (setName.isEmpty) {
+                                return 'Please enter a set name';
+                              }
+                              return null;
+                            },
                           ),
-                          // IF NO CARDS
-
-                          // Padding(
-                          //     padding: const EdgeInsets.only(
-                          //         top: STD_VERTICAL_MARGIN * 2,
-                          //         right: STD_HORIZONTAL_MARGIN,
-                          //         left: STD_HORIZONTAL_MARGIN),
-                          //     child: Center(
-                          //       child: Text(
-                          //         "No cards",
-                          //         style: TextStyle(
-                          //           color: TEXT_HEADER_GREY,
-                          //           fontSize: TEXT_BODY_FONT_SIZE,
-                          //         ),
-                          //       ),
-                          //     )),
-
-                          // IF CARDS EXIST
-
-                          Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 0.0,
-                                  right: STD_HORIZONTAL_MARGIN,
-                                  left: STD_HORIZONTAL_MARGIN),
-                              child: Center(
-                                child: CardWidget(
-                                  answerText: "Answer",
-                                  questionText: "Question",
-                                  includeIcon: true,
-                                  actionIconButton: IconButton(
-                                    icon: Icon(Icons.delete_forever),
-                                    color: APP_DESTRUCTIVE_RED,
-                                    onPressed: () {
-                                      _showDeleteCardAlertDialog(context);
-                                    },
-                                  ),
-                                ),
-                              )),
-
-                          Padding(
-                              padding: const EdgeInsets.only(
-                                  right: STD_HORIZONTAL_MARGIN,
-                                  left: STD_HORIZONTAL_MARGIN),
-                              child: Center(
-                                child: CardWidget(
-                                  answerText: "Answer",
-                                  questionText: "Question",
-                                  includeIcon: true,
-                                  actionIconButton: IconButton(
-                                    icon: Icon(Icons.delete_forever),
-                                    color: APP_DESTRUCTIVE_RED,
-                                    onPressed: () {
-                                      _showDeleteCardAlertDialog(context);
-                                    },
-                                  ),
-                                ),
-                              )),
-
-                          Padding(
-                              padding: const EdgeInsets.only(
-                                  top: STD_VERTICAL_MARGIN * 2,
-                                  right: STD_HORIZONTAL_MARGIN,
-                                  left: STD_HORIZONTAL_MARGIN),
-                              child: ButtonTheme(
-                                minWidth: MediaQuery.of(context).size.width,
-                                height: STD_BUTTON_HEIGHT,
-                                child: FlatButton(
-                                  onPressed: () {
-                                    if (_formKey.currentState.validate()) {
-                                      _showDeleteSetAlertDialog(context);
-                                    }
-                                  },
-                                  child: Text(
-                                    "Delete set",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: BUT_FONT_SIZE,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: cardItems.length > 0
+                              ? cardItems
+                              : Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: STD_VERTICAL_MARGIN * 2,
+                                      right: STD_HORIZONTAL_MARGIN,
+                                      left: STD_HORIZONTAL_MARGIN),
+                                  child: Center(
+                                    child: Text(
+                                      "No cards",
+                                      style: TextStyle(
+                                        color: TEXT_HEADER_GREY,
+                                        fontSize: TEXT_BODY_FONT_SIZE,
+                                      ),
                                     ),
                                   ),
-                                  color: APP_DESTRUCTIVE_RED,
                                 ),
-                              )),
-                        ],
-                      ),
-                    ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: STD_VERTICAL_MARGIN * 2,
+                              right: STD_HORIZONTAL_MARGIN,
+                              left: STD_HORIZONTAL_MARGIN),
+                          child: ButtonTheme(
+                            minWidth: MediaQuery.of(context).size.width,
+                            height: STD_BUTTON_HEIGHT,
+                            child: FlatButton(
+                              onPressed: () {
+                                if (_formKey.currentState.validate()) {
+                                  _showDeleteSetAlertDialog(context);
+                                }
+                              },
+                              child: Text(
+                                "Delete set",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: BUT_FONT_SIZE,
+                                ),
+                              ),
+                              color: APP_DESTRUCTIVE_RED,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          );
+              ],
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
         }),
       );
     });
+  }
+
+  Widget cardItem(context, Flashcard card) {
+    return Padding(
+      padding: const EdgeInsets.only(
+          right: STD_HORIZONTAL_MARGIN, left: STD_HORIZONTAL_MARGIN),
+      child: Center(
+        child: CardWidget(
+          answerText: card.answer,
+          questionText: card.question,
+          includeIcon: true,
+          actionIconButton: IconButton(
+            icon: Icon(Icons.delete_forever),
+            color: APP_DESTRUCTIVE_RED,
+            onPressed: () {
+              _showDeleteCardAlertDialog(context);
+            },
+          ),
+        ),
+      ),
+    );
   }
 
   _saveSet(context) {
@@ -182,7 +181,7 @@ class EditSetViewState extends State<EditSetView> {
   }
 
   _deleteSet(context) {
-    CardsBloc.of(context).add(CardsDeleteSetEvent());
+    CardsBloc.of(context).add(CardsDeleteSetEvent(setId: this.setId));
   }
 
   _deleteCard(context) {
@@ -218,8 +217,7 @@ class EditSetViewState extends State<EditSetView> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Delete Set"),
-      content: Text(
-          "This action cannot be undone."),
+      content: Text("This action cannot be undone."),
       actions: [
         cancelButton,
         deleteButton,
@@ -254,8 +252,7 @@ class EditSetViewState extends State<EditSetView> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Delete Card"),
-      content: Text(
-          "This action cannot be undone."),
+      content: Text("This action cannot be undone."),
       actions: [
         cancelButton,
         deleteButton,

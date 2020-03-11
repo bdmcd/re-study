@@ -176,7 +176,7 @@ class SetsView extends StatelessWidget {
           ),
           onPressed: () {
             // get cards from set via setInfo.guid
-            _openSet(context, setInfo.id);
+            _openSet(context, setInfo.id, setInfo.name);
           },
         ),
       ),
@@ -268,11 +268,11 @@ class SetsView extends StatelessWidget {
     SetsBloc.of(context).add(SetsInitEvent());
   }
 
-  _openSet(BuildContext context, String setGuid) {
+  _openSet(BuildContext context, String setGuid, String setName) {
     print("Open Set " + setGuid);
     // change to cards view for setGuid's set
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => CardsView(setGuid: setGuid,)),
+      MaterialPageRoute(builder: (context) => CardsView(setGuid: setGuid, setName: setName,)),
     );
   }
 
