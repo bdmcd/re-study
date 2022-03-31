@@ -6,13 +6,20 @@ import 'package:restudy/styles/colors.dart';
 import 'package:restudy/widgets/loading_widget.dart';
 
 class MoveCardView extends StatefulWidget {
+  final String cardId;
+
+  const MoveCardView({this.cardId});
   @override
   MoveCardViewState createState() {
-    return MoveCardViewState();
+    return MoveCardViewState(cardId: this.cardId);
   }
 }
 
 class MoveCardViewState extends State<MoveCardView> {
+  final String cardId;
+
+  MoveCardViewState({this.cardId});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,40 +54,53 @@ class MoveCardViewState extends State<MoveCardView> {
             }
           },
           builder: (context, state) {
-            return ListView(
-              children: <Widget>[
-                false
-                    ? Padding(
-                        padding: const EdgeInsets.only(
-                            top: STD_VERTICAL_MARGIN * 2,
-                            right: STD_HORIZONTAL_MARGIN,
-                            left: STD_HORIZONTAL_MARGIN),
-                        child: Center(
-                          child: Text(
-                            "No other sets",
-                            style: TextStyle(
-                              color: TEXT_HEADER_GREY,
-                              fontSize: TEXT_BODY_FONT_SIZE,
+            var sets = <Widget>[];
+            if (state is CardsMovingCardState) {
+              for (var userSet in state.setInfo) {
+                sets.add(setListItem(context, userSet.name, userSet.id));
+              }
+              return ListView(
+                children: sets.length == 0
+                    ? <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: STD_VERTICAL_MARGIN * 2,
+                              right: STD_HORIZONTAL_MARGIN,
+                              left: STD_HORIZONTAL_MARGIN),
+                          child: Center(
+                            child: Text(
+                              "No other sets",
+                              style: TextStyle(
+                                color: TEXT_HEADER_GREY,
+                                fontSize: TEXT_BODY_FONT_SIZE,
+                              ),
                             ),
                           ),
-                        ))
-                    : ListTile(
-                        title: Text(
-                          "This is another set",
-                          style: TextStyle(
-                            color: TEXT_BLACK,
-                            fontSize: BUT_FONT_SIZE,
-                          ),
                         ),
-                        onTap: () {
-                          _moveCardToSet(context);
-                        },
-                      )
-              ],
-            );
+                      ]
+                    : sets,
+              );
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
           },
         ),
       ),
+    );
+  }
+
+  Widget setListItem(BuildContext context, String setName, String setId) {
+    return ListTile(
+      title: Text(
+        setName,
+        style: TextStyle(
+          color: TEXT_BLACK,
+          fontSize: BUT_FONT_SIZE,
+        ),
+      ),
+      onTap: () {
+        _moveCardToSet(context, setId);
+      },
     );
   }
 
@@ -94,10 +114,11 @@ class MoveCardViewState extends State<MoveCardView> {
 
   _backToSet(BuildContext context) {
     int count = 0;
-    Navigator.of(context).popUntil((_) => count++ >= 2);
+    Navigator.of(context).popUntil((_) => count++ >= 3);
   }
 
-  _moveCardToSet(BuildContext context) {
-    CardsBloc.of(context).add(CardsMoveCardToSetEvent());
+  _moveCardToSet(BuildContext context, String setId) {
+    CardsBloc.of(context)
+        .add(CardsMoveCardToSetEvent(cardGuid: this.cardId, setId: setId));
   }
 }

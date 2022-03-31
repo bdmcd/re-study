@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/bloc/cards_bloc.dart';
+import 'package:restudy/model/flash_card.dart';
 import 'package:restudy/view/views/cardsView/cards_view.dart';
 import 'package:restudy/widgets/divider_line_painter.dart';
 import 'package:restudy/widgets/loading_widget.dart';
@@ -13,9 +14,13 @@ import 'package:restudy/styles/colors.dart';
 import 'move_card_view.dart';
 
 class EditCardView extends StatefulWidget {
+  final Flashcard card;
+
+  const EditCardView({@required this.card});
+
   @override
   EditCardViewState createState() {
-    return EditCardViewState();
+    return EditCardViewState(card: this.card);
   }
 }
 
@@ -24,6 +29,10 @@ class EditCardViewState extends State<EditCardView> {
   final _formKey = GlobalKey<FormState>();
   String answer = "";
   String question = "";
+  String guid;
+  final Flashcard card;
+
+  EditCardViewState({@required this.card});
 
   @override
   Widget build(BuildContext context) {
@@ -159,11 +168,15 @@ class EditCardViewState extends State<EditCardView> {
   }
 
   _saveCard(BuildContext context) {
-    CardsBloc.of(context).add(CardsSaveCardEvent());
+    CardsBloc.of(context).add(CardsSaveCardEvent(
+      guid: this.card.id,
+      question: this.question,
+      answer: this.answer,
+    ));
   }
 
   _deleteCard(BuildContext context) {
-    CardsBloc.of(context).add(CardsDeleteCardEvent());
+    CardsBloc.of(context).add(CardsDeleteCardEvent(card: this.card));
   }
 
   _moveCard(BuildContext context) {
@@ -179,9 +192,11 @@ class EditCardViewState extends State<EditCardView> {
     Navigator.of(prevContext).push(new MaterialPageRoute(
         builder: (context) => BlocProvider.value(
               value: CardsBloc.of(prevContext),
-              child: MoveCardView(),
+              child: MoveCardView(
+                cardId: this.card.id,
+              ),
             ),
-            fullscreenDialog: true));
+        fullscreenDialog: true));
   }
 
   _showDeleteCardAlertDialog(BuildContext context) {
@@ -203,8 +218,7 @@ class EditCardViewState extends State<EditCardView> {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Delete Card"),
-      content: Text(
-          "This action cannot be undone."),
+      content: Text("This action cannot be undone."),
       actions: [
         cancelButton,
         deleteButton,

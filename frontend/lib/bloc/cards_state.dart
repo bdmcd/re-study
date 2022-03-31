@@ -14,8 +14,11 @@ class CardsInitialState extends CardsState {
 }
 
 class CardsEditingSetState extends CardsState {
+  final List<Flashcard> cards;
+
+  CardsEditingSetState({this.cards});
   @override
-  List<Object> get props => [];
+  List<Object> get props => [cards];
 }
 
 class CardsAddingCardState extends CardsState {
@@ -34,6 +37,9 @@ class CardsStudyState extends CardsState {
 }
 
 class CardsEditingCardState extends CardsState {
+  final Flashcard card;
+
+  CardsEditingCardState({this.card});
   @override
   List<Object> get props => [];
 }
@@ -44,8 +50,11 @@ class CardsStillEditingSetState extends CardsState {
 }
 
 class CardsMovingCardState extends CardsState {
+  final List<FlashcardSet> setInfo;
+
+  CardsMovingCardState({this.setInfo});
   @override
-  List<Object> get props => [];
+  List<Object> get props => [setInfo];
 }
 
 class CardsDeletedState extends CardsState {

@@ -14,8 +14,9 @@ import 'edit_set_view.dart';
 
 class CardsView extends StatefulWidget {
   final setGuid;
+  final String setName;
 
-  CardsView({@required this.setGuid});
+  CardsView({@required this.setGuid, @required this.setName});
 
   @override
   CardsViewState createState() {
@@ -34,7 +35,7 @@ class CardsViewState extends State<CardsView> {
             if (state is CardsEditingSetState) {
               _navigateToEditSetView(context);
             } else if (state is CardsEditingCardState) {
-              _navigateToEditCardView(context);
+              _navigateToEditCardView(context, state);
             } else if (state is CardsAddingCardState) {
               _navigateToAddCardView(context);
             } else if (state is CardsDoneLoadingState) {
@@ -53,7 +54,7 @@ class CardsViewState extends State<CardsView> {
 
               return Scaffold(
                 appBar: AppBar(
-                  title: Text("Set Name"),
+                  title: Text(widget.setName),
                   leading: IconButton(
                     color: APP_PRIMARY_COLOR,
                     icon: Icon(Icons.arrow_back),
@@ -84,7 +85,7 @@ class CardsViewState extends State<CardsView> {
                               right: STD_HORIZONTAL_MARGIN,
                               bottom: 0.0),
                           child: Text(
-                            "Set Name",
+                            widget.setName,
                             style: TextStyle(
                                 color: TEXT_BLACK,
                                 fontSize: 32.0,
@@ -194,7 +195,7 @@ class CardsViewState extends State<CardsView> {
         icon: Icon(Icons.edit),
         color: SECONDARY_BUTTON_COLOR,
         onPressed: () {
-          _editCard(context);
+          _editCard(context, flashcard);
         },
       ),
     );
@@ -216,8 +217,8 @@ class CardsViewState extends State<CardsView> {
     CardsBloc.of(context).add(CardsStudyEvent());
   }
 
-  _editCard(BuildContext context) {
-    CardsBloc.of(context).add(CardsEditCardEvent());
+  _editCard(BuildContext context, Flashcard card) {
+    CardsBloc.of(context).add(CardsEditCardEvent(card: card));
   }
 
   _loading(BuildContext context) {
@@ -228,11 +229,11 @@ class CardsViewState extends State<CardsView> {
     Navigator.of(context).pop();
   }
 
-  _navigateToEditCardView(BuildContext prevContext) {
+  _navigateToEditCardView(BuildContext prevContext, CardsEditingCardState state) {
     Navigator.of(prevContext).push(MaterialPageRoute(
         builder: (context) => BlocProvider.value(
               value: CardsBloc.of(prevContext),
-              child: EditCardView(),
+              child: EditCardView(card: state.card,),
             ),
         fullscreenDialog: true));
   }

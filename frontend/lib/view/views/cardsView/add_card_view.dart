@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restudy/bloc/cards_bloc.dart';
+import 'package:restudy/model/flash_card.dart';
 import 'package:restudy/view/views/cardsView/cards_view.dart';
 import 'package:restudy/widgets/divider_line_painter.dart';
 import 'package:restudy/widgets/loading_widget.dart';
@@ -127,7 +128,10 @@ class AddCardViewState extends State<AddCardView> {
   }
 
   _addCard(BuildContext context) {
-    CardsBloc.of(context).add(CardsSaveAddCardEvent());
+    CardsBloc.of(context).add(CardsSaveAddCardEvent(
+      question: this.question,
+      answer: this.answer,
+    ));
   }
 
   _backToSet(BuildContext context) {
